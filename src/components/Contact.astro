@@ -1,0 +1,149 @@
+---
+interface Props {
+  formspreeUrl?: string;
+}
+
+const { formspreeUrl = "" } = Astro.props;
+const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
+---
+
+<section id="contact" class="scroll-mt-6 px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-xl">
+    <h2 class="text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">Talk to Us</h2>
+    <p class="text-lg leading-relaxed text-argmin-mid">
+      We are working with a limited number of design partners. If your team is spending on AI inference and
+      cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.
+      You can also reach us directly at
+      <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">
+        richard@argmin.co
+      </a>.
+    </p>
+
+    <div id="form-container" class="mt-10" aria-live="polite">
+      <form id="contact-form" class="space-y-4">
+        <div>
+          <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            placeholder="Your name"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+          />
+        </div>
+        <div>
+          <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="work@company.com"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+          />
+        </div>
+        <div>
+          <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+          <input
+            id="company"
+            name="company"
+            type="text"
+            required
+            placeholder="Company name"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+          />
+        </div>
+        <div>
+          <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder="Tell us about your AI spend challenge"
+            class="w-full rounded-lg border border-gray-300 px-4 py-3 text-base text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+          ></textarea>
+        </div>
+        <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+        <button
+          id="submit-btn"
+          type="submit"
+          class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          Get in Touch
+        </button>
+        <p id="form-error" class="hidden text-center text-sm text-red-600">
+          Submission failed. Please email us directly at
+          <a class="underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">richard@argmin.co</a>.
+        </p>
+      </form>
+    </div>
+
+    <noscript>
+      <p class="mt-6 text-center text-sm text-argmin-mid">
+        JavaScript is required to submit this form. Please email
+        <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">
+          richard@argmin.co
+        </a>
+        directly.
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<script is:inline define:vars={{ endpoint }}>
+  const form = document.getElementById("contact-form");
+  const button = document.getElementById("submit-btn");
+  const container = document.getElementById("form-container");
+  const error = document.getElementById("form-error");
+
+  if (
+    form instanceof HTMLFormElement &&
+    button instanceof HTMLButtonElement &&
+    container instanceof HTMLElement
+  ) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get("name")?.toString().trim() ?? "",
+        email: formData.get("email")?.toString().trim() ?? "",
+        company: formData.get("company")?.toString().trim() ?? "",
+        message: formData.get("message")?.toString().trim() ?? "",
+        _gotcha: formData.get("_gotcha")?.toString().trim() ?? "",
+      };
+
+      button.disabled = true;
+      button.textContent = "Sending...";
+      error?.classList.add("hidden");
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Form submission failed");
+        }
+
+        container.innerHTML =
+          '<p class="py-8 text-center text-xl text-argmin-dark">Thank you. We will be in touch shortly.</p>';
+        window.plausible && window.plausible("form_submit");
+      } catch (submissionError) {
+        button.disabled = false;
+        button.textContent = "Get in Touch";
+        error?.classList.remove("hidden");
+      }
+    });
+  }
+</script>

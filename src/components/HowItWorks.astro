@@ -1,0 +1,37 @@
+---
+const steps = [
+  {
+    number: "01",
+    title: "Measure",
+    description:
+      "Read-only connectors to your cloud billing, API gateways, identity providers, CI/CD and HR systems. No agents, no code changes.",
+  },
+  {
+    number: "02",
+    title: "Attribute",
+    description:
+      "A graph-based heuristic engine resolves every inference call through model, service, code owner, identity, org unit, and budget. Confidence-scored and auditable.",
+  },
+  {
+    number: "03",
+    title: "Intervene",
+    description:
+      "Policy engine acts at request time: route to equivalent cheaper models, overlay team budgets, simulate cost impact before deploy. Advisory by default; hard stops only by explicit opt-in.",
+  },
+];
+---
+
+<section id="how" class="px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">How It Works</h2>
+    <div class="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
+      {steps.map((step) => (
+        <article>
+          <p class="text-sm font-semibold tracking-[0.2em] text-argmin-light">{step.number}</p>
+          <h3 class="mt-4 text-xl font-bold text-argmin-accent">{step.title}</h3>
+          <p class="mt-3 text-base leading-relaxed text-argmin-mid">{step.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

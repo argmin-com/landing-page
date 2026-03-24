@@ -1,0 +1,37 @@
+---
+const items = [
+  {
+    title: "Attribution, not allocation",
+    description:
+      "Cloud bills show totals. We show which team called which model, from which service, for what purpose, and at what cost.",
+  },
+  {
+    title: "Decision-time intervention",
+    description:
+      "We act at the moment of inference: routing to cheaper equivalent models, enforcing budgets, flagging waste before money is spent.",
+  },
+  {
+    title: "Zero operational risk",
+    description:
+      "Fail-open architecture with a 50ms latency budget. Read-only connectors. Deploys inside your VPC. If we go down, your traffic does not.",
+  },
+  {
+    title: "Confidence-scored, not assumed",
+    description:
+      "Enterprise data is fragmented, inconsistent, and incomplete. Argmin does not assume clean data. Our engine resolves attribution through heuristic entity reconciliation without requiring resource tags. It learns, improves, and grows with you.",
+  },
+];
+---
+
+<section id="value" class="bg-argmin-bg px-6 py-20 md:py-28">
+  <div class="mx-auto max-w-5xl">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
+      {items.map((item) => (
+        <article class="p-6 md:p-8">
+          <h2 class="mb-3 text-xl font-bold text-argmin-dark">{item.title}</h2>
+          <p class="text-base leading-relaxed text-argmin-mid">{item.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
