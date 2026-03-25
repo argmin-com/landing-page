@@ -41,7 +41,16 @@ const ogImage = "https://argmin.co/og-image.png";
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
+    <script is:inline>
+      const hostname = window.location.hostname;
+      if (hostname === "argmin.co" || hostname.endsWith(".argmin.co")) {
+        const script = document.createElement("script");
+        script.defer = true;
+        script.dataset.domain = "argmin.co";
+        script.src = "https://plausible.io/js/script.js";
+        document.head.appendChild(script);
+      }
+    </script>
   </head>
   <body class="font-sans text-argmin-dark antialiased">
     <Navbar hiddenUntilReveal={!showNavbarImmediately} />
