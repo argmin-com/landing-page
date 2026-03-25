@@ -25,10 +25,11 @@ const items = [
 
 <section id="value" class="bg-argmin-bg px-6 py-20 md:py-28">
   <div class="mx-auto max-w-5xl">
+    <h2 class="sr-only">Value propositions</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
       {items.map((item) => (
         <article class="p-6 md:p-8">
-          <h2 class="mb-3 text-xl font-bold text-argmin-dark">{item.title}</h2>
+          <h3 class="mb-3 text-xl font-bold text-argmin-dark">{item.title}</h3>
           <p class="text-base leading-relaxed text-argmin-mid">{item.description}</p>
         </article>
       ))}

@@ -9,7 +9,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
 
 <section id="contact" class="scroll-mt-6 px-6 py-20 md:py-28">
   <div class="mx-auto max-w-xl">
-    <h2 class="text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">Talk to Us</h2>
+    <h2 id="contact-heading" class="text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">Talk to Us</h2>
     <p class="text-lg leading-relaxed text-argmin-mid">
       We are working with a limited number of design partners. If your team is spending on AI inference and
       cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.
@@ -20,7 +20,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
     </p>
 
     <div id="form-container" class="mt-10" aria-live="polite">
-      <form id="contact-form" class="space-y-4">
+      <div id="contact-form" class="space-y-4" role="form" aria-labelledby="contact-heading">
         <div>
           <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
           <input
@@ -67,7 +67,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
         <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
         <button
           id="submit-btn"
-          type="submit"
+          type="button"
           class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           Get in Touch
@@ -76,7 +76,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
           Submission failed. Please email us directly at
           <a class="underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">richard@argmin.co</a>.
         </p>
-      </form>
+      </div>
     </div>
 
     <noscript>
@@ -92,30 +92,37 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
 </section>
 
 <script is:inline define:vars={{ endpoint }}>
-  const form = document.getElementById("contact-form");
   const button = document.getElementById("submit-btn");
   const container = document.getElementById("form-container");
   const error = document.getElementById("form-error");
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const companyField = document.getElementById("company");
+  const messageField = document.getElementById("message");
+  const gotchaField = document.getElementById("gotcha");
 
   if (
-    form instanceof HTMLFormElement &&
     button instanceof HTMLButtonElement &&
-    container instanceof HTMLElement
+    container instanceof HTMLElement &&
+    nameField instanceof HTMLInputElement &&
+    emailField instanceof HTMLInputElement &&
+    companyField instanceof HTMLInputElement &&
+    messageField instanceof HTMLTextAreaElement &&
+    gotchaField instanceof HTMLInputElement
   ) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      if (!form.reportValidity()) {
-        return;
+    button.addEventListener("click", async () => {
+      for (const field of [nameField, emailField, companyField]) {
+        if (!field.reportValidity()) {
+          return;
+        }
       }
 
-      const formData = new FormData(form);
       const payload = {
-        name: formData.get("name")?.toString().trim() ?? "",
-        email: formData.get("email")?.toString().trim() ?? "",
-        company: formData.get("company")?.toString().trim() ?? "",
-        message: formData.get("message")?.toString().trim() ?? "",
-        _gotcha: formData.get("_gotcha")?.toString().trim() ?? "",
+        name: nameField.value.trim(),
+        email: emailField.value.trim(),
+        company: companyField.value.trim(),
+        message: messageField.value.trim(),
+        _gotcha: gotchaField.value.trim(),
       };
 
       button.disabled = true;
