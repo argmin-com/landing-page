@@ -3,8 +3,8 @@ interface Props {
   formspreeUrl?: string;
 }
 
-const { formspreeUrl = "" } = Astro.props;
-const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
+const { formspreeUrl } = Astro.props;
+const endpoint = formspreeUrl ?? "";
 ---
 
 <section id="contact" class="scroll-mt-6 px-6 py-20 md:py-28">
@@ -82,8 +82,8 @@ const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
     <noscript>
       <p class="mt-6 text-center text-sm text-argmin-mid">
         JavaScript is required to submit this form. Please email
-        <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">
-          richard@argmin.co
+        <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">
+          contact@argmin.co
         </a>
         directly.
       </p>

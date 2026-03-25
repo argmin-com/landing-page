@@ -64,7 +64,7 @@ Local validation completed on March 24, 2026:
 - Lighthouse against the built static output: 100 performance / 100 accessibility / 100 best practices / 100 SEO
 - Browser validation via Playwright CLI:
   - hero CTA updates the URL hash to `#contact` and scrolls the contact section near the top of the viewport
-  - failure path shows `Submission failed. Please email us directly at richard@argmin.co.`
+  - failure path shows `Submission failed. Please email us directly at contact@argmin.co.`
   - mocked success path replaces the form with `Thank you. We will be in touch shortly.`
   - mobile pass at `390x844` showed no horizontal overflow and single-column layout for the multi-column sections
 
