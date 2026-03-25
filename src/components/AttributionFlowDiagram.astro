@@ -190,17 +190,17 @@ const inputNodes = [
 
 <style>
   .attribution-diagram {
-    --diagram-border: #243249;
-    --diagram-muted: #8ea0c1;
-    --diagram-text: #eff4ff;
+    --diagram-border: #cfd8e3;
+    --diagram-muted: #111111;
+    --diagram-text: #111111;
     --diagram-accent: #5da8ff;
-    --diagram-soft: rgba(93, 168, 255, 0.14);
-    --diagram-dim-opacity: 0.18;
+    --diagram-soft: rgba(93, 168, 255, 0.12);
+    --diagram-dim-opacity: 0.26;
   }
 
   .pipe-shell {
     fill: none;
-    stroke: rgba(36, 50, 73, 0.95);
+    stroke: rgba(207, 216, 227, 0.95);
     stroke-linecap: round;
     stroke-width: 18;
   }
@@ -220,7 +220,7 @@ const inputNodes = [
   .node-shell,
   .output-shell,
   .dashboard-shell {
-    fill: #101827;
+    fill: #ffffff;
     stroke: var(--diagram-border);
     stroke-width: 2;
   }
@@ -234,7 +234,7 @@ const inputNodes = [
   }
 
   .engine-shell {
-    fill: #101827;
+    fill: #ffffff;
     stroke: rgba(93, 168, 255, 0.46);
     stroke-width: 3;
   }
@@ -266,7 +266,7 @@ const inputNodes = [
   }
 
   .icon-fill {
-    fill: rgba(45, 106, 159, 0.08);
+    fill: rgba(93, 168, 255, 0.1);
     stroke: var(--diagram-accent);
     stroke-width: 1.5;
   }
@@ -299,7 +299,7 @@ const inputNodes = [
   .diagram-keyword {
     border: 1px solid var(--diagram-border);
     border-radius: 999px;
-    background: #101827;
+    background: #ffffff;
     color: var(--diagram-muted);
     font-size: 0.95rem;
     font-weight: 500;
@@ -311,7 +311,7 @@ const inputNodes = [
   .diagram-keyword:hover,
   .diagram-keyword:focus-visible {
     border-color: var(--diagram-accent);
-    color: var(--diagram-accent);
+    color: var(--diagram-text);
     outline: none;
   }
 

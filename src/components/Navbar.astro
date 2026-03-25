@@ -6,14 +6,14 @@ interface Props {
 const { hiddenUntilReveal = false } = Astro.props;
 const navClass = hiddenUntilReveal ? "initial-hidden" : "";
 const linkClass =
-  "text-base font-bold text-white transition-colors duration-200 hover:text-argmin-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent";
+  "text-base font-bold text-argmin-dark transition-colors duration-200 hover:text-argmin-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent";
 ---
 
 <header class:list={["px-6 pt-8 pb-6 md:px-8 md:pt-10", navClass]}>
   <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-6">
     <a
       href="/#problem"
-      class="text-xl font-bold tracking-[0.08em] text-white transition-colors duration-200 hover:text-argmin-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+      class="text-xl font-bold tracking-[0.08em] text-argmin-dark transition-colors duration-200 hover:text-argmin-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
     >
       Argmin
     </a>
@@ -26,7 +26,7 @@ const linkClass =
         <li>
           <a
             href="/demo"
-            class="inline-flex items-center justify-center rounded-lg bg-argmin-accent px-4 py-2 text-sm font-semibold text-slate-950 transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+            class="inline-flex items-center justify-center rounded-lg bg-argmin-accent px-4 py-2 text-sm font-semibold text-argmin-dark transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
           >
             Request a Demo
           </a>

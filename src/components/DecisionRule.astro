@@ -1,0 +1,101 @@
+<section id="decision-rule" class="px-6 py-10 md:py-14">
+  <div class="mx-auto max-w-6xl">
+    <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start lg:gap-12">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-[0.24em] text-argmin-dark">Why Argmin</p>
+        <h2 class="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-argmin-dark md:text-5xl">
+          Every inference request is a decision problem.
+        </h2>
+        <p class="mt-5 max-w-3xl text-lg leading-relaxed text-argmin-dark md:text-xl">
+          Argmin asks a simple question at request time: which action minimizes total risk-adjusted cost?
+        </p>
+        <div class="mt-8 rounded-[2rem] border border-argmin-border bg-white/80 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur md:p-8">
+          <p class="text-sm uppercase tracking-[0.18em] text-argmin-dark">Decision Rule</p>
+          <div class="equation-wrap mt-6 overflow-x-auto">
+            <div class="equation min-w-[320px] text-argmin-dark">
+              <div class="equation-operator">arg&nbsp;min</div>
+              <div class="equation-subscript">a ∈ Actions</div>
+              <div class="equation-expression">TRAC(a)</div>
+            </div>
+          </div>
+          <p class="mt-6 max-w-2xl text-base leading-relaxed text-argmin-dark">
+            The decision engine retrieves attribution data and conditionally permits, modifies, or redirects
+            the request based on the lowest-risk, lowest-cost available action.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid gap-4">
+        <article class="rounded-[1.75rem] border border-argmin-border bg-argmin-surface/80 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-argmin-dark">Actions</p>
+          <p class="mt-3 text-2xl font-semibold tracking-[-0.03em] text-argmin-dark">The available moves.</p>
+          <p class="mt-3 text-base leading-relaxed text-argmin-dark">
+            Model choice, routing decision, region, and configuration. Argmin evaluates the viable options
+            before the request goes through.
+          </p>
+        </article>
+
+        <article class="rounded-[1.75rem] border border-argmin-border bg-argmin-surface/80 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-argmin-dark">TRAC</p>
+          <p class="mt-3 text-2xl font-semibold tracking-[-0.03em] text-argmin-dark">Total Risk-Adjusted Cost.</p>
+          <p class="mt-3 text-base leading-relaxed text-argmin-dark">
+            Direct cost plus a confidence risk premium. Not just what the request costs, but how risky that
+            choice is for the business.
+          </p>
+        </article>
+
+        <article class="rounded-[1.75rem] border border-argmin-border bg-gradient-to-br from-argmin-accent/18 via-white/90 to-white/65 p-6 shadow-[0_24px_60px_rgba(15,23,42,0.08)] backdrop-blur">
+          <p class="text-sm font-semibold uppercase tracking-[0.2em] text-argmin-dark">Plain English</p>
+          <p class="mt-3 text-lg leading-relaxed text-argmin-dark">
+            Argmin chooses the best request path available, then enforces that choice in real time.
+          </p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .equation {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: end;
+    gap: 0.6rem;
+    font-family:
+      "Iowan Old Style",
+      "Palatino Linotype",
+      "Book Antiqua",
+      "Times New Roman",
+      serif;
+    line-height: 1;
+  }
+
+  .equation-operator {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.05em;
+  }
+
+  .equation-subscript {
+    align-self: end;
+    padding-bottom: 0.22rem;
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem);
+    color: rgb(17 17 17);
+  }
+
+  .equation-expression {
+    font-size: clamp(2.4rem, 4.6vw, 4rem);
+    letter-spacing: -0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .equation {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+      align-items: start;
+    }
+
+    .equation-subscript {
+      padding-bottom: 0;
+    }
+  }
+</style>
