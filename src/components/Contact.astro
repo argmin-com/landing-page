@@ -140,7 +140,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/YOUR_ID";
         });
 
         if (!response.ok) {
-          throw new Error("Form submission failed");
+          throw new Error(`Form submission failed: ${response.status}`);
         }
 
         container.innerHTML =

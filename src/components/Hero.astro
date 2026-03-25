@@ -48,11 +48,19 @@ const nodes = ["Model", "Service", "Code", "Identity", "Org", "Budget"];
     </div>
 
     <a
+      id="cta-link"
       href="#contact"
-      onclick="window.plausible && window.plausible('cta_click')"
       class="mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
     >
       Request a Demo
     </a>
   </div>
 </section>
+
+<script>
+  const ctaLink = document.getElementById("cta-link");
+  ctaLink?.addEventListener("click", () => {
+    const w = window as Window & { plausible?: (event: string) => void };
+    w.plausible?.("cta_click");
+  });
+</script>
