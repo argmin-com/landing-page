@@ -6,9 +6,6 @@ on:
       - main
     paths:
       - .github/workflows/ci.yml
-      - .github/workflows/codeql.yml
-      - .github/workflows/lighthouse.yml
-      - .github/workflows/dependency-review.yml
       - astro.config.mjs
       - package.json
       - package-lock.json
@@ -22,9 +19,6 @@ on:
       - main
     paths:
       - .github/workflows/ci.yml
-      - .github/workflows/codeql.yml
-      - .github/workflows/lighthouse.yml
-      - .github/workflows/dependency-review.yml
       - astro.config.mjs
       - package.json
       - package-lock.json
