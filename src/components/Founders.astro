@@ -3,6 +3,7 @@ interface Props {
   title?: string;
   intro?: string;
   stack?: boolean;
+  imagesOnly?: boolean;
 }
 
 const founders = [
@@ -26,45 +27,63 @@ const founders = [
   },
 ];
 
-const { title = "Founders", intro, stack = false } = Astro.props;
+const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.props;
 ---
 
-<section id="founders" class="bg-argmin-bg px-6 py-10 md:py-14">
+<section id="founders" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
   <div class="mx-auto max-w-6xl">
-    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">{title}</h2>
-    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-argmin-mid">{intro}</p>}
-    <div class:list={["mt-8 grid grid-cols-1 gap-12", stack ? "max-w-4xl mx-auto" : "md:grid-cols-2"]}>
+    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-white">{title}</h2>
+    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-white">{intro}</p>}
+    <div class:list={["mt-8 grid grid-cols-1 gap-8", stack ? "max-w-4xl mx-auto" : "max-w-3xl mx-auto md:grid-cols-2"]}>
       {founders.map((founder) => (
-        <article class="text-center">
-          <picture>
-            <source srcset={founder.webp} type="image/webp" />
-            <img
-              src={founder.jpg}
-              alt={founder.alt}
-              class="mx-auto mb-4 h-32 w-32 rounded-full object-cover md:h-40 md:w-40"
-              width="200"
-              height="200"
-              loading="lazy"
-            />
-          </picture>
-          <div class="flex items-center justify-center gap-2">
-            <h3 class="text-xl font-bold text-argmin-dark">{founder.name}</h3>
-            <a
-              href={founder.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`View ${founder.name} on LinkedIn`}
-              class="text-argmin-accent transition-colors duration-200 hover:text-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
-            >
-              <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
-                <path
-                  d="M4.98 3.5A2.49 2.49 0 1 1 5 8.48a2.49 2.49 0 0 1-.02-4.98ZM3 9h4v12H3Zm7 0h3.83v1.64h.05c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.85 0-2.13 1.44-2.13 2.93V21h-4Z"
-                />
-              </svg>
-            </a>
-          </div>
-          <p class="mb-3 mt-2 text-sm font-medium text-argmin-accent">{founder.title}</p>
-          <p class="text-left text-base leading-relaxed text-argmin-mid md:text-center">{founder.bio}</p>
+        <article class="p-8 text-center">
+          <a
+            href={founder.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${founder.name} on LinkedIn`}
+            class="inline-block transition-transform duration-200 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-argmin-accent"
+          >
+            <picture>
+              <source srcset={founder.webp} type="image/webp" />
+              <img
+                src={founder.jpg}
+                alt={founder.alt}
+                class="mx-auto mb-4 h-52 w-40 rounded-3xl object-cover shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-64 md:w-48"
+                width="200"
+                height="200"
+                loading="lazy"
+              />
+            </picture>
+          </a>
+          {imagesOnly && (
+            <>
+              <p class="text-lg font-bold text-white">{founder.name}</p>
+              <p class="text-sm font-medium text-white">{founder.title}</p>
+            </>
+          )}
+          {!imagesOnly && (
+            <>
+              <div class="flex items-center justify-center gap-2">
+                <h3 class="text-xl font-bold text-white">{founder.name}</h3>
+                <a
+                  href={founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${founder.name} on LinkedIn`}
+                  class="text-argmin-accent transition-colors duration-200 hover:text-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+                >
+                  <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
+                    <path
+                      d="M4.98 3.5A2.49 2.49 0 1 1 5 8.48a2.49 2.49 0 0 1-.02-4.98ZM3 9h4v12H3Zm7 0h3.83v1.64h.05c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.85 0-2.13 1.44-2.13 2.93V21h-4Z"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <p class="mb-3 mt-2 text-sm font-medium text-white">{founder.title}</p>
+              <p class="text-left text-base leading-relaxed text-white md:text-center">{founder.bio}</p>
+            </>
+          )}
         </article>
       ))}
     </div>

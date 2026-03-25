@@ -23,14 +23,14 @@ const items = [
 ];
 ---
 
-<section id="value" class="bg-argmin-bg px-6 py-10 md:py-14">
+<section id="value" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
   <div class="mx-auto max-w-6xl">
     <h2 class="sr-only">Value propositions</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
       {items.map((item) => (
-        <article class="p-6 md:p-8">
-          <h3 class="mb-3 text-xl font-bold text-argmin-dark">{item.title}</h3>
-          <p class="text-base leading-relaxed text-argmin-mid">{item.description}</p>
+        <article class="rounded-3xl border border-argmin-border bg-argmin-surface/80 p-6 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur md:p-8">
+          <h3 class="mb-3 text-xl font-bold text-white">{item.title}</h3>
+          <p class="text-base leading-relaxed text-white">{item.description}</p>
         </article>
       ))}
     </div>
