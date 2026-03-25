@@ -49,8 +49,8 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - 18.20.8
           - 20
+          - 22
 
     steps:
       - name: Check out repository
