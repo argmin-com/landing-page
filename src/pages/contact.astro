@@ -3,13 +3,16 @@ import ContactSection from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const formspreeUrl =
-  import.meta.env.PUBLIC_FORMSPREE_URL ?? "https://formspree.io/f/mlgornql";
+const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
 ---
 
-<BaseLayout title="Contact Us | Argmin" canonicalUrl="https://argmin.co/contact">
+<BaseLayout
+  title="Contact Us | Argmin"
+  description="Get in touch with the Argmin team. We are working with a limited number of design partners on AI cost attribution."
+  canonicalUrl="https://argmin.co/contact"
+>
   <main>
     <ContactSection title="Contact Us" formspreeUrl={formspreeUrl} />
-    <Footer />
   </main>
+  <Footer />
 </BaseLayout>
