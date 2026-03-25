@@ -104,15 +104,19 @@ const mobileLinkClass =
     }
 
     document.addEventListener("click", (event) => {
-      if (!navRoot.contains(event.target)) {
+      const target = event.target;
+      if (!(target instanceof Node) || !navRoot.contains(target)) {
         setOpen(false);
       }
     });
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
-        setOpen(false);
-        toggle.focus();
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        if (isOpen) {
+          setOpen(false);
+          toggle.focus();
+        }
       }
     });
   }
