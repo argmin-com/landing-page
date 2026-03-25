@@ -32,8 +32,8 @@ const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.p
 
 <section id="founders" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
   <div class="mx-auto max-w-6xl">
-    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-white">{title}</h2>
-    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-white">{intro}</p>}
+    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-dark">{title}</h2>
+    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-argmin-dark">{intro}</p>}
     <div class:list={["mt-8 grid grid-cols-1 gap-8", stack ? "max-w-4xl mx-auto" : "max-w-3xl mx-auto md:grid-cols-2"]}>
       {founders.map((founder) => (
         <article class="p-8 text-center">
@@ -58,20 +58,20 @@ const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.p
           </a>
           {imagesOnly && (
             <>
-              <p class="text-lg font-bold text-white">{founder.name}</p>
-              <p class="text-sm font-medium text-white">{founder.title}</p>
+              <p class="text-lg font-bold text-argmin-dark">{founder.name}</p>
+              <p class="text-sm font-medium text-argmin-dark">{founder.title}</p>
             </>
           )}
           {!imagesOnly && (
             <>
               <div class="flex items-center justify-center gap-2">
-                <h3 class="text-xl font-bold text-white">{founder.name}</h3>
+                <h3 class="text-xl font-bold text-argmin-dark">{founder.name}</h3>
                 <a
                   href={founder.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View ${founder.name} on LinkedIn`}
-                  class="text-argmin-accent transition-colors duration-200 hover:text-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+                  class="text-argmin-dark transition-colors duration-200 hover:text-argmin-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
                 >
                   <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
                     <path
@@ -80,8 +80,8 @@ const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.p
                   </svg>
                 </a>
               </div>
-              <p class="mb-3 mt-2 text-sm font-medium text-white">{founder.title}</p>
-              <p class="text-left text-base leading-relaxed text-white md:text-center">{founder.bio}</p>
+              <p class="mb-3 mt-2 text-sm font-medium text-argmin-dark">{founder.title}</p>
+              <p class="text-left text-base leading-relaxed text-argmin-dark md:text-center">{founder.bio}</p>
             </>
           )}
         </article>

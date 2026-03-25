@@ -5,15 +5,15 @@ export default {
     extend: {
       colors: {
         argmin: {
-          dark: "#f5f7fb",
-          mid: "#eef4ff",
-          light: "#dbe7ff",
+          dark: "#111111",
+          mid: "#4b5563",
+          light: "#5f6b7a",
           accent: "#5da8ff",
-          "accent-hover": "#7ab7ff",
-          bg: "#001a3a",
-          surface: "#08203f",
-          "surface-alt": "#04172f",
-          border: "#17365f",
+          "accent-hover": "#3d8dea",
+          bg: "#f8f8f6",
+          surface: "#ffffff",
+          "surface-alt": "#f1f4f8",
+          border: "#d7dee8",
         },
       },
       fontFamily: {

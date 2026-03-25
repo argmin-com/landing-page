@@ -4,15 +4,15 @@
 
 html {
   scroll-behavior: smooth;
-  background: #001a3a;
+  background: #f8f8f6;
 }
 
 body {
   background:
-    radial-gradient(circle at top, rgba(93, 168, 255, 0.14), transparent 30%),
-    radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.08), transparent 24%),
-    linear-gradient(180deg, #001a3a 0%, #02162f 48%, #000f24 100%);
-  color: #f5f7fb;
+    radial-gradient(circle at top, rgba(93, 168, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 18% 16%, rgba(125, 211, 252, 0.1), transparent 22%),
+    linear-gradient(180deg, #fcfcfa 0%, #f8f8f6 48%, #f3f5f2 100%);
+  color: #111111;
 }
 
 .initial-hidden {
