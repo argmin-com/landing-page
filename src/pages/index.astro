@@ -1,4 +1,5 @@
 ---
+import AttributionFlowDiagram from "../components/AttributionFlowDiagram.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import Founders from "../components/Founders.astro";
@@ -19,6 +20,18 @@ const formspreeUrl =
       <Problem />
       <ValueProps />
       <HowItWorks />
+      <section class="px-6 py-10 md:py-14">
+        <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center text-center">
+          <AttributionFlowDiagram />
+          <a
+            href="/demo"
+            onclick="window.plausible && window.plausible('cta_click')"
+            class="mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+          >
+            Request a Demo
+          </a>
+        </div>
+      </section>
       <Founders />
       <Contact formspreeUrl={formspreeUrl} />
     </div>
@@ -33,10 +46,16 @@ const formspreeUrl =
       window.removeEventListener("scroll", reveal);
       window.removeEventListener("touchstart", reveal);
       window.removeEventListener("keydown", reveal);
+      window.removeEventListener("hashchange", reveal);
     };
+
+    if (window.location.hash) {
+      reveal();
+    }
 
     window.addEventListener("scroll", reveal, { passive: true, once: true });
     window.addEventListener("touchstart", reveal, { passive: true, once: true });
     window.addEventListener("keydown", reveal, { once: true });
+    window.addEventListener("hashchange", reveal, { once: true });
   }
 </script>

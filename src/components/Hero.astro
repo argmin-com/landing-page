@@ -3,65 +3,18 @@ interface Props {
   revealContent?: boolean;
 }
 
-const nodes = ["Model", "Service", "Code", "Identity", "Org", "Budget"];
 const { revealContent = true } = Astro.props;
 const revealClass = revealContent ? "" : "initial-hidden";
 ---
 
 <section class="flex min-h-screen items-center">
-  <div class="mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-6 py-20 text-center">
-    <h1 class="max-w-3xl text-4xl font-bold leading-tight text-argmin-dark md:text-5xl lg:text-6xl">
+  <div class="mx-auto flex w-full max-w-6xl -translate-y-6 flex-col items-center justify-center px-6 py-16 text-center md:-translate-y-8 md:py-20">
+    <h1 class="max-w-4xl text-5xl font-bold leading-tight text-argmin-dark md:text-6xl lg:text-7xl">
       Your AI spend is invisible. We make it attributable.
     </h1>
     <p class:list={["mt-6 max-w-2xl text-lg leading-relaxed text-argmin-mid md:text-xl", revealClass]}>
       Deploys inside your environment. Builds a graph linking every inference call to the team and budget that
       owns it. Intervenes at decision time.
     </p>
-
-    <div class:list={["mt-10 hidden w-full max-w-4xl sm:block", revealClass]} aria-hidden="true">
-      <svg viewBox="0 0 800 120" class="h-auto w-full">
-        {nodes.map((node, index) => {
-          const x = 30 + index * 124;
-          const isLast = index === nodes.length - 1;
-
-          return (
-            <>
-              <rect
-                x={x}
-                y="34"
-                width="90"
-                height="52"
-                rx="26"
-                fill="#ffffff"
-                stroke="#2d6a9f"
-                stroke-width="2"
-              />
-              <text
-                x={x + 45}
-                y="66"
-                fill="#1a1a1a"
-                font-size="15"
-                font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif"
-                text-anchor="middle"
-              >
-                {node}
-              </text>
-              {!isLast && <line x1={x + 90} y1="60" x2={x + 124} y2="60" stroke="#cfd8e3" stroke-width="2" />}
-            </>
-          );
-        })}
-      </svg>
-    </div>
-
-    <a
-      href="/demo"
-      onclick="window.plausible && window.plausible('cta_click')"
-      class:list={[
-        "mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent",
-        revealClass,
-      ]}
-    >
-      Request a Demo
-    </a>
   </div>
 </section>
