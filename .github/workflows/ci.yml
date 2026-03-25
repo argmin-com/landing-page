@@ -12,6 +12,7 @@ on:
       - astro.config.mjs
       - package.json
       - package-lock.json
+      - scripts/**
       - public/**
       - src/**
       - tailwind.config.mjs
@@ -27,6 +28,7 @@ on:
       - astro.config.mjs
       - package.json
       - package-lock.json
+      - scripts/**
       - public/**
       - src/**
       - tailwind.config.mjs
@@ -71,6 +73,9 @@ jobs:
 
       - name: Build static site
         run: npm run build
+
+      - name: Validate contact fallbacks
+        run: npm run validate:contact-fallbacks
 
       - name: Summarize build output
         run: |

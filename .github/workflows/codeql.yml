@@ -9,6 +9,7 @@ on:
       - astro.config.mjs
       - package.json
       - package-lock.json
+      - scripts/**
       - public/**
       - src/**
       - tailwind.config.mjs
@@ -21,6 +22,7 @@ on:
       - astro.config.mjs
       - package.json
       - package-lock.json
+      - scripts/**
       - public/**
       - src/**
       - tailwind.config.mjs
