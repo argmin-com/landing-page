@@ -1,0 +1,151 @@
+name: Lighthouse
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/lighthouse.yml
+      - astro.config.mjs
+      - package.json
+      - package-lock.json
+      - public/**
+      - src/**
+      - tailwind.config.mjs
+      - tsconfig.json
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/lighthouse.yml
+      - astro.config.mjs
+      - package.json
+      - package-lock.json
+      - public/**
+      - src/**
+      - tailwind.config.mjs
+      - tsconfig.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Serve dist
+        run: |
+          python3 -m http.server 4173 -d dist >/tmp/landing-page-http.log 2>&1 &
+          echo $! >/tmp/landing-page-http.pid
+
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+
+          echo "Static server did not start in time" >&2
+          cat /tmp/landing-page-http.log >&2 || true
+          exit 1
+
+      - name: Run Lighthouse
+        run: |
+          mkdir -p lighthouse
+
+          npx --yes lighthouse@13 \
+            http://127.0.0.1:4173/ \
+            --only-categories=performance,accessibility,best-practices,seo \
+            --chrome-flags="--headless=new --no-sandbox" \
+            --quiet \
+            --output=json \
+            --output-path=./lighthouse/report.json
+
+      - name: Enforce Lighthouse thresholds
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from "node:fs";
+
+          const report = JSON.parse(readFileSync("lighthouse/report.json", "utf8"));
+          const thresholds = {
+            performance: 0.95,
+            accessibility: 1,
+            "best-practices": 0.95,
+            seo: 1,
+          };
+
+          const failures = [];
+
+          for (const [category, minScore] of Object.entries(thresholds)) {
+            const score = report.categories[category].score;
+            if (score < minScore) {
+              failures.push(`${category} score ${score} is below ${minScore}`);
+            }
+          }
+
+          const summaryLines = [
+            "### Lighthouse summary",
+            "",
+            `- Performance: ${Math.round(report.categories.performance.score * 100)}`,
+            `- Accessibility: ${Math.round(report.categories.accessibility.score * 100)}`,
+            `- Best practices: ${Math.round(report.categories["best-practices"].score * 100)}`,
+            `- SEO: ${Math.round(report.categories.seo.score * 100)}`,
+            `- Largest Contentful Paint: ${Math.round(report.audits["largest-contentful-paint"].numericValue)} ms`,
+            `- Total transfer size: ${(report.audits["total-byte-weight"].numericValue / 1024).toFixed(1)} KB`,
+          ];
+
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summaryLines.join("\n")}\n`);
+
+          if (failures.length > 0) {
+            console.error(failures.join("\n"));
+            process.exit(1);
+          }
+          NODE
+
+      - name: Collect server logs
+        if: always()
+        run: |
+          mkdir -p lighthouse
+          if [ -f /tmp/landing-page-http.log ]; then
+            cp /tmp/landing-page-http.log lighthouse/http-server.log
+          fi
+
+      - name: Upload Lighthouse artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: lighthouse-${{ github.sha }}
+          path: lighthouse
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Stop static server
+        if: always()
+        run: |
+          if [ -f /tmp/landing-page-http.pid ]; then
+            kill "$(cat /tmp/landing-page-http.pid)" || true
+          fi
