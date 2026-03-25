@@ -9,8 +9,7 @@ import Problem from "../components/Problem.astro";
 import ValueProps from "../components/ValueProps.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const formspreeUrl =
-  import.meta.env.PUBLIC_FORMSPREE_URL ?? "https://formspree.io/f/mlgornql";
+const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
 ---
 
 <BaseLayout showNavbarImmediately={false}>

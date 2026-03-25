@@ -5,12 +5,14 @@ interface Props {
   intro?: string;
 }
 
+const contactEmail = "contact@argmin.co";
 const {
   formspreeUrl = "",
   title = "Talk to Us",
   intro = "We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.",
 } = Astro.props;
-const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
+const endpoint = formspreeUrl.trim();
+const hasEndpoint = endpoint.length > 0;
 ---
 
 <section id="contact" class="scroll-mt-6 px-6 py-10 md:py-14">
@@ -19,13 +21,19 @@ const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
     <p class="mt-4 text-lg leading-relaxed text-white">
       {intro}{" "}
       You can also reach us directly at
-      <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">
-        contact@argmin.co
+      <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+        {contactEmail}
       </a>.
     </p>
 
     <div id="form-container" class="mt-10" aria-live="polite">
-      <div id="contact-form" class="space-y-4 p-6 md:p-8" role="form" aria-labelledby="contact-heading">
+      <div
+        id="contact-form"
+        class="space-y-4 p-6 md:p-8"
+        role="form"
+        aria-labelledby="contact-heading"
+        data-form-configured={String(hasEndpoint)}
+      >
         <div>
           <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
           <input
@@ -73,13 +81,22 @@ const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
         <button
           id="submit-btn"
           type="button"
-          class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-slate-950 transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
+          disabled={!hasEndpoint}
+          aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
+          class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
-          Get in Touch
+          {hasEndpoint ? "Get in Touch" : "Form Unavailable"}
         </button>
+        <p
+          id="form-config-error"
+          class={hasEndpoint ? "hidden text-center text-sm text-red-600" : "text-center text-sm text-red-600"}
+        >
+          Form submissions are currently unavailable. Please email
+          <a class="underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
         <p id="form-error" class="hidden text-center text-sm text-red-600">
           Submission failed. Please email us directly at
-          <a class="underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
+          <a class="underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
         </p>
       </div>
     </div>
@@ -87,8 +104,8 @@ const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
     <noscript>
       <p class="mt-6 text-center text-sm text-argmin-mid">
         JavaScript is required to submit this form. Please email
-        <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href="mailto:richard@argmin.co">
-          richard@argmin.co
+        <a class="font-medium text-argmin-accent underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+          {contactEmail}
         </a>
         directly.
       </p>
@@ -107,6 +124,7 @@ const endpoint = formspreeUrl || "https://formspree.io/f/mlgornql";
   const gotchaField = document.getElementById("gotcha");
 
   if (
+    endpoint &&
     button instanceof HTMLButtonElement &&
     container instanceof HTMLElement &&
     nameField instanceof HTMLInputElement &&

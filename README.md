@@ -31,6 +31,7 @@ Validation commands:
 ```bash
 npm run check
 npm run build
+npm run validate:contact-fallbacks
 ```
 
 ## Environment
@@ -41,7 +42,8 @@ Create `.env` from `.env.example` and provide a real Formspree endpoint:
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/<form_id>
 ```
 
-Without that value, the form still renders and the failure fallback path remains visible, but live submissions will not succeed.
+Without that value, the form fails closed: the submit button is disabled and the page renders an inline
+contact-email fallback instead of shipping a live Formspree endpoint.
 
 ## Deployment Contract
 
@@ -60,11 +62,12 @@ Local validation completed on March 24, 2026:
 
 - `npm run check`: passed with 0 errors, 0 warnings, 0 hints
 - `npm run build`: passed
+- `npm run validate:contact-fallbacks`: passes against the no-env build and verifies the inline config-missing fallback plus the no-JavaScript contact path
 - Dist artifact size: `dist/` totals about 36 KB on disk; Lighthouse measured about 47.8 KB transfer weight
 - Lighthouse against the built static output: 100 performance / 100 accessibility / 100 best practices / 100 SEO
 - Browser validation via Playwright CLI:
   - hero CTA updates the URL hash to `#contact` and scrolls the contact section near the top of the viewport
-  - failure path shows `Submission failed. Please email us directly at richard@argmin.co.`
+  - failure path shows `Submission failed. Please email us directly at contact@argmin.co.`
   - mocked success path replaces the form with `Thank you. We will be in touch shortly.`
   - mobile pass at `390x844` showed no horizontal overflow and single-column layout for the multi-column sections
 
