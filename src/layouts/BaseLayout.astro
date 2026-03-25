@@ -1,10 +1,21 @@
 ---
+import Navbar from "../components/Navbar.astro";
 import "../styles/global.css";
 
-const title = "Argmin | AI Cost Attribution and Optimization";
-const description =
-  "Argmin deploys inside your environment, attributes AI spend to teams and budgets, and intervenes at decision time. Enterprise AI cost intelligence.";
-const canonicalUrl = "https://argmin.co/";
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+  showNavbarImmediately?: boolean;
+}
+
+const {
+  title = "Argmin | AI Cost Attribution and Optimization",
+  description =
+    "Argmin deploys inside your environment, attributes AI spend to teams and budgets, and intervenes at decision time. Enterprise AI cost intelligence.",
+  canonicalUrl = "https://argmin.co/",
+  showNavbarImmediately = true,
+} = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
 ---
 
@@ -33,6 +44,7 @@ const ogImage = "https://argmin.co/og-image.png";
     <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
   </head>
   <body class="bg-white font-sans text-argmin-dark antialiased">
+    <Navbar hiddenUntilReveal={!showNavbarImmediately} />
     <slot />
   </body>
 </html>

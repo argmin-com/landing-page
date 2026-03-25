@@ -1,0 +1,15 @@
+---
+import ContactSection from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const formspreeUrl =
+  import.meta.env.PUBLIC_FORMSPREE_URL ?? "https://formspree.io/f/mlgornql";
+---
+
+<BaseLayout title="Contact Us | Argmin" canonicalUrl="https://argmin.co/contact">
+  <main>
+    <ContactSection title="Contact Us" formspreeUrl={formspreeUrl} />
+    <Footer />
+  </main>
+</BaseLayout>

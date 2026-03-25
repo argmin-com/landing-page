@@ -5,3 +5,14 @@
 html {
   scroll-behavior: smooth;
 }
+
+.initial-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.revealed .initial-hidden {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 200ms ease;
+}

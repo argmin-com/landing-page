@@ -1,5 +1,11 @@
 ---
+interface Props {
+  revealContent?: boolean;
+}
+
 const nodes = ["Model", "Service", "Code", "Identity", "Org", "Budget"];
+const { revealContent = true } = Astro.props;
+const revealClass = revealContent ? "" : "initial-hidden";
 ---
 
 <section class="flex min-h-screen items-center">
@@ -7,12 +13,12 @@ const nodes = ["Model", "Service", "Code", "Identity", "Org", "Budget"];
     <h1 class="max-w-3xl text-4xl font-bold leading-tight text-argmin-dark md:text-5xl lg:text-6xl">
       Your AI spend is invisible. We make it attributable.
     </h1>
-    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-argmin-mid md:text-xl">
+    <p class:list={["mt-6 max-w-2xl text-lg leading-relaxed text-argmin-mid md:text-xl", revealClass]}>
       Deploys inside your environment. Builds a graph linking every inference call to the team and budget that
       owns it. Intervenes at decision time.
     </p>
 
-    <div class="mt-10 hidden w-full max-w-4xl sm:block" aria-hidden="true">
+    <div class:list={["mt-10 hidden w-full max-w-4xl sm:block", revealClass]} aria-hidden="true">
       <svg viewBox="0 0 800 120" class="h-auto w-full">
         {nodes.map((node, index) => {
           const x = 30 + index * 124;
@@ -48,9 +54,12 @@ const nodes = ["Model", "Service", "Code", "Identity", "Org", "Budget"];
     </div>
 
     <a
-      href="#contact"
+      href="/demo"
       onclick="window.plausible && window.plausible('cta_click')"
-      class="mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+      class:list={[
+        "mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-white transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent",
+        revealClass,
+      ]}
     >
       Request a Demo
     </a>

@@ -1,4 +1,10 @@
 ---
+interface Props {
+  title?: string;
+  intro?: string;
+  stack?: boolean;
+}
+
 const founders = [
   {
     name: "Charlotte Wargniez",
@@ -19,12 +25,15 @@ const founders = [
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
 ];
+
+const { title = "Founders", intro, stack = false } = Astro.props;
 ---
 
 <section id="founders" class="bg-argmin-bg px-6 py-20 md:py-28">
   <div class="mx-auto max-w-4xl">
-    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">Founders</h2>
-    <div class="mt-14 grid grid-cols-1 gap-12 md:grid-cols-2">
+    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-light">{title}</h2>
+    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-argmin-mid">{intro}</p>}
+    <div class:list={["mt-14 grid grid-cols-1 gap-12", stack ? "max-w-3xl mx-auto" : "md:grid-cols-2"]}>
       {founders.map((founder) => (
         <article class="text-center">
           <picture>

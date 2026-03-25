@@ -12,14 +12,31 @@ const formspreeUrl =
   import.meta.env.PUBLIC_FORMSPREE_URL ?? "https://formspree.io/f/mlgornql";
 ---
 
-<BaseLayout>
+<BaseLayout showNavbarImmediately={false}>
   <main>
-    <Hero />
-    <Problem />
-    <ValueProps />
-    <HowItWorks />
-    <Founders />
-    <Contact formspreeUrl={formspreeUrl} />
+    <Hero revealContent={false} />
+    <div class="initial-hidden">
+      <Problem />
+      <ValueProps />
+      <HowItWorks />
+      <Founders />
+      <Contact formspreeUrl={formspreeUrl} />
+    </div>
     <Footer />
   </main>
 </BaseLayout>
+
+<script is:inline>
+  if (!document.body.classList.contains("revealed")) {
+    const reveal = () => {
+      document.body.classList.add("revealed");
+      window.removeEventListener("scroll", reveal);
+      window.removeEventListener("touchstart", reveal);
+      window.removeEventListener("keydown", reveal);
+    };
+
+    window.addEventListener("scroll", reveal, { passive: true, once: true });
+    window.addEventListener("touchstart", reveal, { passive: true, once: true });
+    window.addEventListener("keydown", reveal, { once: true });
+  }
+</script>
