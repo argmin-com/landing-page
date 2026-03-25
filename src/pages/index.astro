@@ -4,7 +4,6 @@ import Footer from "../components/Footer.astro";
 import Founders from "../components/Founders.astro";
 import Hero from "../components/Hero.astro";
 import HowItWorks from "../components/HowItWorks.astro";
-import Navbar from "../components/Navbar.astro";
 import Problem from "../components/Problem.astro";
 import ValueProps from "../components/ValueProps.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -13,7 +12,6 @@ const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
 ---
 
 <BaseLayout>
-  <Navbar />
   <main id="main">
     <Hero />
     <Problem />
@@ -21,6 +19,6 @@ const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
     <HowItWorks />
     <Founders />
     <Contact formspreeUrl={formspreeUrl} />
-    <Footer />
   </main>
+  <Footer />
 </BaseLayout>
