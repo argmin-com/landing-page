@@ -26,6 +26,8 @@ const { hero } = siteConfig;
           href="#contact"
           class="inline-flex items-center text-sm font-medium text-white underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
           data-cta-button
+          data-track-event="hero_leakage_estimate"
+          data-contact-template={hero.contactTemplate}
         >
           {hero.contactCtaLabel}
         </a>
@@ -43,12 +45,9 @@ const { hero } = siteConfig;
 
     <div class="fade-rise fade-rise-delay-1 lg:pl-8">
       <div class="hero-poster">
-        <div class="hero-poster-chip">Not another telemetry dashboard</div>
-        <h2 class="hero-poster-title">From model call to budget owner, with a decision attached.</h2>
-        <p class="hero-poster-copy">
-          Argmin connects the systems where the cost signal starts to the workflows where a team
-          can still do something about it.
-        </p>
+        <div class="hero-poster-chip">{hero.posterChip}</div>
+        <h2 class="hero-poster-title">{hero.posterTitle}</h2>
+        <p class="hero-poster-copy">{hero.posterCopy}</p>
 
         <div class="hero-moment-list" aria-label="Key decision moments">
           {hero.decisionMoments.map((moment) => (
