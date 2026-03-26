@@ -1,36 +1,33 @@
 ---
-const items = [
-  {
-    title: "Attribution, not allocation",
-    description:
-      "Cloud bills show totals. We show which team called which model, from which service, for what purpose, and at what cost.",
-  },
-  {
-    title: "Decision-time intervention",
-    description:
-      "We act at the moment of inference: routing to cheaper equivalent models, enforcing budgets, flagging waste before money is spent.",
-  },
-  {
-    title: "Zero operational risk",
-    description:
-      "Fail-open architecture with a 50ms latency budget. Read-only connectors. Deploys inside your VPC. If we go down, your traffic does not.",
-  },
-  {
-    title: "Confidence-scored, not assumed",
-    description:
-      "Enterprise data is fragmented, inconsistent, and incomplete. Argmin does not assume clean data. Our engine resolves attribution through heuristic entity reconciliation without requiring resource tags. It learns, improves, and grows with you.",
-  },
-];
+import { siteConfig } from "../content/site";
+
+const { valueProps } = siteConfig;
 ---
 
-<section id="value" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
-  <div class="mx-auto max-w-6xl">
-    <h2 class="sr-only">Value propositions</h2>
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
-      {items.map((item) => (
-        <article class="rounded-3xl border border-argmin-border bg-argmin-surface/80 p-6 shadow-[0_24px_60px_rgba(0,0,0,0.22)] backdrop-blur md:p-8">
-          <h3 class="mb-3 text-xl font-bold text-argmin-dark">{item.title}</h3>
-          <p class="text-base leading-relaxed text-argmin-dark">{item.description}</p>
+<section id="capabilities" class="border-b border-argmin-slate-300/70 bg-argmin-ice/45 px-6 py-16 md:py-24">
+  <div class="section-shell">
+    <div class="max-w-3xl js-reveal">
+      <p class="section-eyebrow">Capabilities</p>
+      <h2 class="section-title">Four things the system has to do well.</h2>
+      <p class="section-copy">
+        Buyers should understand the mechanism in one scan. The page should communicate function first and let the visual system stay calm.
+      </p>
+    </div>
+
+    <div class="mt-12 border-y border-argmin-slate-300/80">
+      {valueProps.map((item, index) => (
+        <article
+          class:list={[
+            "grid gap-4 py-6 md:grid-cols-[72px_minmax(0,0.36fr)_minmax(0,0.64fr)] md:gap-8 js-reveal",
+            index > 0 && "border-t border-argmin-slate-300/70",
+          ]}
+          data-reveal-delay={String(index * 70)}
+        >
+          <p class="font-mono text-sm text-argmin-slate-500">{item.label}</p>
+          <h3 class="font-display text-xl font-semibold tracking-[-0.02em] text-argmin-azure">
+            {item.title}
+          </h3>
+          <p class="text-base leading-7 text-argmin-slate-700">{item.description}</p>
         </article>
       ))}
     </div>

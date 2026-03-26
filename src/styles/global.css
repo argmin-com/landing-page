@@ -1,26 +1,261 @@
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/dm-sans/400.css";
+@import "@fontsource/dm-sans/500.css";
+@import "@fontsource/dm-sans/600.css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-brand-primary: #0f2b46;
+  --color-brand-accent: #2d6a9f;
+  --color-brand-interactive: #4a9fd9;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f3f4f6;
+  --color-bg-accent: #e8f4fd;
+  --color-text-primary: #111827;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #6b7280;
+  --color-border-default: #d1d5db;
+  --color-signal-success: #059669;
+  --color-signal-success-light: #d1fae5;
+  --color-signal-warning: #d97706;
+  --color-signal-warning-light: #fef3c7;
+  --color-signal-error: #dc2626;
+  --color-signal-error-light: #fee2e2;
+  --font-display: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "DM Sans", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --shadow-sm: 0 1px 2px 0 rgba(15, 43, 70, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(15, 43, 70, 0.07), 0 2px 4px -2px rgba(15, 43, 70, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(15, 43, 70, 0.08), 0 4px 6px -4px rgba(15, 43, 70, 0.04);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
 html {
-  background: #f8f8f6;
+  background-color: var(--color-bg-secondary);
+  scroll-behavior: smooth;
 }
 
 body {
-  background:
-    radial-gradient(circle at top, rgba(93, 168, 255, 0.12), transparent 28%),
-    radial-gradient(circle at 18% 16%, rgba(125, 211, 252, 0.1), transparent 22%),
-    linear-gradient(180deg, #fcfcfa 0%, #f8f8f6 48%, #f3f5f2 100%);
-  color: #111111;
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  text-rendering: optimizeLegibility;
 }
 
-.initial-hidden {
+main {
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--color-brand-primary);
+}
+
+a {
+  transition:
+    color 150ms ease-out,
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    opacity 150ms ease-out;
+}
+
+::selection {
+  background: rgb(45 106 159 / 0.18);
+  color: var(--color-brand-primary);
+}
+
+.section-shell {
+  width: min(100%, 1120px);
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent);
+}
+
+.section-title {
+  margin-top: 0.875rem;
+  max-width: 14ch;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: -0.028em;
+}
+
+.section-copy {
+  margin-top: 1rem;
+  max-width: 72ch;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+.primary-button,
+.secondary-button,
+.inverse-secondary-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1;
+  transition:
+    background-color 150ms ease-out,
+    border-color 150ms ease-out,
+    color 150ms ease-out,
+    transform 150ms ease-out,
+    box-shadow 150ms ease-out;
+}
+
+.primary-button {
+  background: var(--color-brand-accent);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.primary-button:hover {
+  background: var(--color-brand-interactive);
+}
+
+.secondary-button {
+  border: 1px solid var(--color-brand-accent);
+  background: white;
+  color: var(--color-brand-accent);
+}
+
+.secondary-button:hover {
+  background: var(--color-bg-accent);
+}
+
+.inverse-secondary-button {
+  border: 1px solid rgb(255 255 255 / 0.22);
+  background: rgb(255 255 255 / 0.04);
+  color: white;
+}
+
+.inverse-secondary-button:hover {
+  border-color: rgb(255 255 255 / 0.34);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.primary-button:focus-visible,
+.secondary-button:focus-visible,
+.inverse-secondary-button:focus-visible,
+.field-input:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 3px;
+}
+
+.surface-panel {
+  border: 1px solid rgb(209 213 219 / 0.92);
+  border-radius: var(--radius-xl);
+  background: rgb(255 255 255 / 0.96);
+  box-shadow: var(--shadow-md);
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: white;
+  padding: 0.75rem 0.875rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  transition:
+    border-color 150ms ease-out,
+    box-shadow 150ms ease-out,
+    background-color 150ms ease-out;
+}
+
+.field-input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.field-input:focus {
+  outline: none;
+  border-color: var(--color-brand-accent);
+  box-shadow: 0 0 0 3px rgb(45 106 159 / 0.12);
+}
+
+.field-input:disabled {
+  cursor: not-allowed;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-tertiary);
+}
+
+.form-status-success {
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+.js-ready .js-reveal {
   opacity: 0;
-  pointer-events: none;
+  transform: translateY(24px);
+  transition:
+    opacity 450ms ease-out,
+    transform 450ms ease-out;
 }
 
-body.revealed .initial-hidden {
+.js-ready .js-reveal.is-visible {
   opacity: 1;
-  pointer-events: auto;
-  transition: opacity 200ms ease;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js-ready .js-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .inverse-secondary-button,
+  .field-input,
+  a,
+  button {
+    transition: none;
+  }
 }

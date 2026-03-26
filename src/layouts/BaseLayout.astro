@@ -1,26 +1,22 @@
 ---
-import Navbar from "../components/Navbar.astro";
+import { siteConfig } from "../content/site";
 import "../styles/global.css";
 
 interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
-  showNavbarImmediately?: boolean;
 }
 
 const {
-  title = "Argmin | AI Cost Attribution and Optimization",
-  description =
-    "Argmin deploys inside your environment, attributes AI spend to teams and budgets, and intervenes at decision time. Enterprise AI cost intelligence.",
-  canonicalUrl = "https://argmin.co/",
-  showNavbarImmediately = true,
+  title = siteConfig.title,
+  description = siteConfig.description,
+  canonicalUrl = siteConfig.siteUrl,
 } = Astro.props;
-const ogImage = "https://argmin.co/og-image.png";
 ---
 
 <!doctype html>
-<html lang="en" class="motion-safe:scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,29 +27,20 @@ const ogImage = "https://argmin.co/og-image.png";
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={siteConfig.ogImage} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteConfig.name} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image" content={siteConfig.ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script is:inline>
-      const hostname = window.location.hostname;
-      if (hostname === "argmin.co" || hostname.endsWith(".argmin.co")) {
-        const script = document.createElement("script");
-        script.defer = true;
-        script.dataset.domain = "argmin.co";
-        script.src = "https://plausible.io/js/script.js";
-        document.head.appendChild(script);
-      }
-    </script>
   </head>
-  <body class="font-sans text-argmin-dark antialiased">
-    <Navbar hiddenUntilReveal={!showNavbarImmediately} />
+  <body class="bg-argmin-white font-body text-argmin-slate-700 antialiased">
     <slot />
+    <script is:inline type="module" src="/scripts/site.js"></script>
   </body>
 </html>
