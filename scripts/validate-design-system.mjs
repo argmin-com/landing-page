@@ -19,6 +19,7 @@ const howItWorks = read("src/components/HowItWorks.astro");
 const founders = read("src/components/Founders.astro");
 const contact = read("src/components/Contact.astro");
 const redirects = read("public/_redirects");
+const siteContent = read("src/content/site.ts");
 
 const prohibitedPaths = [
   "src/components/Navbar.astro",
@@ -85,6 +86,13 @@ const checks = [
     pass:
       packageJson.includes('"validate:design-system": "node scripts/validate-design-system.mjs"') &&
       packageJson.includes("npm run validate:design-system"),
+  },
+  {
+    description: "the repository no longer contains the reverted older hero copy",
+    pass:
+      !siteContent.includes("Enterprise AI consumption infrastructure") &&
+      !siteContent.includes("Your AI spend is invisible. Argmin makes it attributable.") &&
+      !siteContent.includes("AI Cost Attribution and Optimization"),
   },
 ];
 

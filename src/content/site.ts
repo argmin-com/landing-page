@@ -1,92 +1,92 @@
 export const siteConfig = {
   name: "Argmin",
   siteUrl: "https://argmin.co/",
-  title: "Argmin | AI Cost Attribution and Optimization",
+  title: "Argmin | Application-Level AI Cost Attribution for Enterprise AI",
   description:
-    "Argmin deploys inside your environment with read-only connectors, attributes AI spend to teams and budgets, and intervenes at decision time.",
+    "Argmin deploys inside the customer trust boundary and connects cloud telemetry, billing, source control, CI/CD, identity, and org context so every AI request can be attributed to the team and budget that owns it.",
   ogImage: "https://argmin.co/og-image.png",
   contactEmail: "richard@argmin.co",
   hero: {
     wordmark: "argmin",
-    eyebrow: "Enterprise AI consumption infrastructure",
-    headline: "Your AI spend is invisible. Argmin makes it attributable.",
+    eyebrow: "Application-level AI cost attribution",
+    headline: "Know which teams use which AI models, at what cost, and why.",
     subheadline:
-      "Deploys inside your environment with read-only connectors. Connects cloud telemetry, source control, CI/CD, identity, and org context so every inference call resolves to the team and budget that owns it before spend lands.",
+      "Argmin deploys inside your trust boundary with read-only connectors. It connects cloud telemetry and billing with source control, CI/CD, identity, and org hierarchy so each AI request resolves to the team, service, and budget that owns it.",
     primaryCtaLabel: "Talk to Us",
-    secondaryCtaLabel: "See the Mechanism",
     proofPoints: [
       { label: "Deploys", value: "Inside customer trust boundaries" },
-      { label: "Confidence", value: "Visible on every attribution edge" },
-      { label: "Policy", value: "Advisory first, hard stops by opt-in" },
+      { label: "Access", value: "Read-only connectors only" },
+      { label: "Output", value: "Attribution chain from model call to budget" },
     ],
     signalInputs: [
+      "Cloud telemetry",
       "Cloud billing",
-      "Inference telemetry",
       "Source control",
+      "CI/CD",
       "Identity",
       "Org hierarchy",
     ],
-    signalOutputs: ["Team owner", "Budget path", "Model route", "Confidence score"],
+    signalOutputs: ["Team owner", "Service owner", "Budget path", "Confidence score"],
   },
   problem: {
     title: "AI spend arrives as totals, not attribution.",
     body:
-      "Enterprise AI adoption is outrunning the operating model around it. The data to answer attribution questions exists, but it is scattered across billing consoles, identity providers, gateways, CI/CD, and source control. Billing systems can tell you what was spent, but they cannot tell you which service initiated the request, which team owns it, or whether the model choice was justified at decision time.",
+      "Enterprise AI spend is showing up as aggregate totals. Finance can see the invoice. Engineering can see some traces. Security can see identity and access. But no one can reliably answer which team used which model, for what purpose, and whether the spend was justified before it hit the bill.",
     constraints: [
-      "Cloud invoices show totals, not who initiated the model call.",
-      "Budgets and identity data live in separate systems from inference traffic.",
-      "Optimization happens after the bill arrives, when the waste is already booked.",
+      "Cloud invoices show totals, not the application or team that initiated the model call.",
+      "Identity, source control, CI/CD, and org hierarchy live in separate systems from usage telemetry.",
+      "By the time spend is visible, the model choice and routing decision have already been made.",
     ],
   },
   valuePropsIntro:
-    "Argmin is useful only if it can resolve ownership accurately enough to change decisions before waste lands in the bill.",
+    "The wedge is narrow on purpose: application-level AI cost and usage attribution for enterprise AI.",
   valueProps: [
     {
       label: "01",
-      title: "Attribution, not allocation",
+      title: "Connect the attribution chain",
       description:
-        "Cloud bills show totals. Argmin links each model call to the service, code owner, identity, org unit, and budget responsible for it.",
+        "Argmin links cloud telemetry and billing with source control, CI/CD, identity, and org hierarchy so each AI request can be traced through the systems that own it.",
     },
     {
       label: "02",
-      title: "Decision-time intervention",
+      title: "Resolve ownership, not just totals",
       description:
-        "Act while the request is still actionable: route to lower-cost equivalent models, overlay budgets, and flag avoidable spend before it is booked. Advisory by default; hard stops only by explicit opt-in.",
+        "Cloud bills show spend. Argmin resolves which service made the request, which team owns the code path, which identity executed it, and which budget should absorb the cost.",
     },
     {
       label: "03",
-      title: "Zero operational risk",
+      title: "Keep trust boundaries intact",
       description:
-        "Fail-open request handling with a 50ms latency budget. Read-only connectors. Deploys inside your trust boundary. If Argmin is unavailable, your traffic continues.",
+        "Deployment stays inside the customer trust boundary. Connectors are read-only. Raw telemetry and operational data do not need to be broadly exfiltrated for attribution to work.",
     },
     {
       label: "04",
-      title: "Confidence-scored, not assumed",
+      title: "Use attribution before spend drifts",
       description:
-        "Enterprise data is fragmented and incomplete. Argmin resolves attribution through heuristic reconciliation without requiring perfect tags and keeps confidence visible instead of hiding uncertainty.",
+        "The output is useful because it supports action: compare model routes, overlay budgets, and review questionable spend while the decision is still recent. Advisory first, enforcement only by explicit opt-in.",
     },
   ],
-  howItWorksTitle: "Measure. Attribute. Intervene.",
+  howItWorksTitle: "Collect. Resolve. Explain.",
   howItWorksIntro:
-    "Read-only collection, graph-based reconciliation, and pre-execution policy evaluation stay separate so attribution can be audited and intervention can remain fail-open.",
+    "Collection, reconciliation, and decision support stay separate so the attribution chain remains auditable and the deployment posture stays low-risk.",
   steps: [
     {
       number: "01",
-      title: "Measure",
+      title: "Collect",
       description:
-        "Read-only connectors pull from cloud billing, inference gateways, source control, CI/CD, identity providers, and org systems. No agents. No code changes. No write access.",
+        "Read-only connectors pull cloud billing, usage telemetry, source control, CI/CD, identity, and org data inside the customer environment. No agents. No code changes. No write access.",
     },
     {
       number: "02",
-      title: "Attribute",
+      title: "Resolve",
       description:
-        "A graph-based reconciliation engine resolves each inference call through model, service, code owner, identity, org unit, and budget. Confidence-scored and auditable.",
+        "A graph-based attribution engine links each AI request to the service, code owner, identity, org unit, and budget that owns it, with visible confidence at each step.",
     },
     {
       number: "03",
-      title: "Intervene",
+      title: "Explain",
       description:
-        "Policy evaluation happens before waste is booked: route to lower-cost equivalents, overlay team budgets, and simulate cost impact before deploy. Advisory by default; hard stops only by explicit opt-in.",
+        "Teams can see where spend came from, compare model routes, and review questionable usage before it turns into a larger recurring bill.",
     },
   ],
   attributionLayers: [
@@ -125,7 +125,7 @@ export const siteConfig = {
   contact: {
     title: "Talk to Us",
     intro:
-      "We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.",
+      "We are working with a limited number of design partners. If your team is already spending on AI models and cannot tell which teams use which models, at what cost, or whether the spend is justified, we should talk.",
     submitLabel: "Get in Touch",
     unavailableLabel: "Form Unavailable",
     sendingLabel: "Sending...",
@@ -136,7 +136,7 @@ export const siteConfig = {
     details: [
       {
         label: "Scope",
-        value: "Enterprise AI attribution, optimization, and intervention at request time.",
+        value: "Application-level AI cost and usage attribution for enterprise AI.",
       },
       {
         label: "Posture",
@@ -144,7 +144,7 @@ export const siteConfig = {
       },
       {
         label: "Response",
-        value: "We respond directly when there is a real inference attribution problem to solve.",
+        value: "We respond directly when there is a concrete attribution or cost-visibility problem to solve.",
       },
     ],
   },
