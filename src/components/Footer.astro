@@ -1,15 +1,49 @@
 ---
 import { siteConfig } from "../content/site";
+
+const footerLinks = [
+  { label: "Problem", href: "#problem" },
+  { label: "Capabilities", href: "#capabilities" },
+  { label: "How It Works", href: "#how" },
+  { label: "Founders", href: "#founders" },
+  { label: "Contact", href: "#contact" },
+];
 ---
 
-<footer class="border-t border-white/10 bg-argmin-navy px-6 py-8 text-white/60">
-  <div class="section-shell flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-    <div>
-      <p class="font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-white">
-        {siteConfig.footer.wordmark}
-      </p>
-      <p class="mt-1 text-sm text-white/40">{siteConfig.footer.tagline}</p>
+<footer class="border-t border-white/10 bg-[#0a2238] px-6 py-10 md:py-12">
+  <div class="section-shell">
+    <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+      <div>
+        <p class="font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-white">
+          {siteConfig.footer.wordmark}
+        </p>
+        <p class="mt-2 max-w-[38ch] text-sm leading-6 text-white/50">
+          {siteConfig.footer.tagline}
+        </p>
+      </div>
+
+      <nav aria-label="Footer" class="flex flex-col gap-6 md:flex-row md:gap-12">
+        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+          {footerLinks.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-white/56 hover:text-white">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href={`mailto:${siteConfig.contactEmail}`}
+          class="text-sm font-medium text-white/56 hover:text-white"
+        >
+          {siteConfig.contactEmail}
+        </a>
+      </nav>
     </div>
-    <p class="text-sm">&copy; 2026 Argmin</p>
+
+    <div class="mt-8 border-t border-white/8 pt-6">
+      <p class="text-sm text-white/36">&copy; 2026 Argmin</p>
+    </div>
   </div>
 </footer>

@@ -214,8 +214,16 @@ button,
   box-shadow: var(--shadow-sm);
 }
 
+.hero-section .primary-button {
+  box-shadow: 0 0 0 1px rgb(74 159 217 / 0.3), 0 4px 16px rgb(45 106 159 / 0.35);
+}
+
 .primary-button:hover {
   background: var(--color-brand-interactive);
+}
+
+.hero-section .primary-button:hover {
+  box-shadow: 0 0 0 1px rgb(74 159 217 / 0.4), 0 6px 20px rgb(45 106 159 / 0.45);
 }
 
 .inverse-secondary-button {
@@ -643,6 +651,40 @@ button:focus-visible {
   }
 }
 
+.scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  color: rgb(255 255 255 / 0.5);
+  animation: scroll-pulse 2.4s ease-in-out infinite;
+}
+
+.scroll-hint:hover {
+  color: rgb(255 255 255 / 0.8);
+  border-color: rgb(255 255 255 / 0.28);
+}
+
+@keyframes scroll-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(4px);
+  }
+}
+
 @media (max-width: 767px) {
   .hero-grid {
     min-height: auto;
@@ -692,7 +734,11 @@ button:focus-visible {
     transform: translateY(-50%);
   }
 }
-
+@media (min-width: 1024px) {
+  .scroll-hint {
+    bottom: 2rem;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -709,5 +755,10 @@ button:focus-visible {
   .fade-rise,
   .fade-rise-delay-1 {
     animation: none;
+  }
+
+  .scroll-hint {
+    animation: none;
+    opacity: 0.5;
   }
 }
