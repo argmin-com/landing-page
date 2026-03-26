@@ -2,6 +2,24 @@
 
 Static Astro landing page for `argmin.co`, implemented from the March 24, 2026 PRD and engineering specification.
 
+## Design Source Of Truth
+
+Future modifications in this repository should use the Argmin source documents as the governing reference, not ad hoc styling choices.
+
+- Repo reference: `docs/design-source-of-truth.md`
+- External source set:
+  - `/Users/wargniez/Documents/Argmin/argmin_landing_prd_v1_2.pdf`
+  - `/Users/wargniez/Documents/Argmin/argmin_landing_eng_spec_v1_2.pdf`
+  - `/Users/wargniez/Documents/Argmin/argmin_landing_page_deployment_guide.pdf`
+  - `/Users/wargniez/Documents/Argmin/argmin-vision-mission.pdf`
+  - `/Users/wargniez/Documents/Argmin/argmin_design_principles.docx`
+  - `/Users/wargniez/Documents/Argmin/argmin_style_guide.docx`
+  - `/Users/wargniez/Documents/Argmin/argmin_design_tokens.json`
+  - `/Users/wargniez/Documents/Argmin/argmin_ui_kit.html`
+  - `/Users/wargniez/Documents/Argmin/argmin_ui_kit_reference.docx`
+
+When making or reviewing landing-page changes, validate them against those documents and cite the relevant source when a decision depends on brand, layout, copy tone, or implementation constraints.
+
 ## Stack
 
 - Astro 5
