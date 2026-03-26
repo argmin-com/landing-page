@@ -85,6 +85,7 @@ const checks = [
     pass:
       wranglerConfig.includes('"name": "landing-page"') &&
       wranglerConfig.includes('"main": "dist/_worker.js/index.js"') &&
+      wranglerConfig.includes('"command": "npm run build"') &&
       wranglerConfig.includes('"directory": "dist"'),
   },
   {

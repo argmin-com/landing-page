@@ -76,6 +76,7 @@ Without that value, the form fails closed: the submit button is disabled, no liv
 Target host: Cloudflare Workers Builds for the `landing-page` Worker service
 
 - Build command: `npm run build`
+- Wrangler deploy hook: `wrangler.jsonc` runs `npm run build` during `wrangler deploy`
 - Worker entrypoint: `dist/_worker.js/index.js`
 - Static asset directory: `dist`
 - Recommended Node version: `18`
