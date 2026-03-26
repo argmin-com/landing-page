@@ -1,14 +1,26 @@
 ---
 import { siteConfig } from "../content/site";
 
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+}
+
 const { founders } = siteConfig;
+const {
+  eyebrow = "Founders",
+  title = "Built by people who have operated enterprise infrastructure at scale.",
+  intro,
+} = Astro.props;
 ---
 
 <section id="founders" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
   <div class="section-shell">
     <div class="max-w-3xl js-reveal">
-      <p class="section-eyebrow">Founders</p>
-      <h2 class="section-title">Built by people who have operated enterprise infrastructure at scale.</h2>
+      <p class="section-eyebrow">{eyebrow}</p>
+      <h2 class="section-title">{title}</h2>
+      {intro && <p class="section-copy">{intro}</p>}
     </div>
 
     <div class="mt-12 border-y border-argmin-slate-300/80">

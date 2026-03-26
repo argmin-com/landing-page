@@ -7,11 +7,11 @@ export const siteConfig = {
   ogImage: "https://argmin.co/og-image.png",
   contactEmail: "contact@argmin.co",
   nav: [
-    { label: "Problem", href: "#problem" },
-    { label: "Capabilities", href: "#capabilities" },
-    { label: "Mechanism", href: "#how" },
-    { label: "Founders", href: "#founders" },
-    { label: "Contact", href: "#contact" },
+    { label: "Problem", href: "/#problem" },
+    { label: "Capabilities", href: "/#capabilities" },
+    { label: "Mechanism", href: "/#how" },
+    { label: "Founders", href: "/#founders" },
+    { label: "Contact", href: "/#contact" },
   ],
   hero: {
     wordmark: "argmin",
@@ -43,7 +43,7 @@ export const siteConfig = {
   problem: {
     title: "AI spend arrives as totals, not attribution.",
     body:
-      "Enterprise AI adoption is outrunning the operating model around it. Billing systems can tell you what was spent, but they cannot tell you which service initiated the request, which team owns it, or whether the model choice was justified at decision time.",
+      "Enterprise AI adoption is outrunning the operating model around it. The data to answer attribution questions exists, but it is scattered across billing consoles, identity providers, gateways, and source control. Billing systems can tell you what was spent, but they cannot tell you which service initiated the request, which team owns it, or whether the model choice was justified at decision time.",
     constraints: [
       "Cloud invoices show totals, not who initiated the model call.",
       "Budgets and identity data live in separate systems from inference traffic.",

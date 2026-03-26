@@ -3,21 +3,27 @@ import { siteConfig } from "../content/site";
 
 interface Props {
   formspreeUrl?: string;
+  title?: string;
+  intro?: string;
 }
 
-const { formspreeUrl = "" } = Astro.props;
+const { contactEmail, contact } = siteConfig;
+const {
+  formspreeUrl = "",
+  title = contact.title,
+  intro = contact.intro,
+} = Astro.props;
 const endpoint = formspreeUrl.trim();
 const hasEndpoint = endpoint.length > 0;
-const { contactEmail, contact } = siteConfig;
 ---
 
 <section id="contact" class="scroll-mt-24 bg-argmin-ice px-6 py-16 md:py-24">
   <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
     <div class="max-w-xl js-reveal">
       <p class="section-eyebrow">Contact</p>
-      <h2 id="contact-heading" class="section-title">{contact.title}</h2>
+      <h2 id="contact-heading" class="section-title">{title}</h2>
       <p class="section-copy">
-        {contact.intro}{" "}
+        {intro}{" "}
         You can also reach us directly at
         <a
           class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
