@@ -1,89 +1,66 @@
 ---
-interface Props {
-  title?: string;
-  intro?: string;
-  stack?: boolean;
-  imagesOnly?: boolean;
-}
+import { siteConfig } from "../content/site";
 
-const founders = [
-  {
-    name: "Charlotte Wargniez",
-    title: "CTO",
-    alt: "Charlotte Wargniez, CTO",
-    webp: "/charlotte.webp",
-    jpg: "/charlotte.jpg",
-    bio: "University of Oxford DPhil researcher in AI for critical infrastructure (Intelligent Earth CDT). Visiting Researcher at the European Space Agency. Research focus: deep reinforcement learning for adaptive planning and optimization. Rose Sheinin Award: top woman in science across the University of Toronto (21,000 graduates).",
-    linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
-  },
-  {
-    name: "Richard McKinney",
-    title: "CEO",
-    alt: "Richard McKinney, CEO",
-    webp: "/richard.webp",
-    jpg: "/richard.jpg",
-    bio: "Oxford alum. 14 years building enterprise infrastructure at Amazon, Cruise/GM, and Salesforce. Built Amazon's greenhouse gas data platform across 94 countries. Co-founded the AI Energy Score with Hugging Face. Led product for Salesforce Shield Platform Encryption.",
-    linkedin: "https://www.linkedin.com/in/richardcmckinney",
-  },
-];
-
-const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.props;
+const { founders } = siteConfig;
 ---
 
-<section id="founders" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
-  <div class="mx-auto max-w-6xl">
-    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-dark">{title}</h2>
-    {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-argmin-dark">{intro}</p>}
-    <div class:list={["mt-8 grid grid-cols-1 gap-8", stack ? "max-w-4xl mx-auto" : "max-w-3xl mx-auto md:grid-cols-2"]}>
-      {founders.map((founder) => (
-        <article class="p-8 text-center">
+<section id="founders" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
+  <div class="section-shell">
+    <div class="max-w-3xl js-reveal">
+      <p class="section-eyebrow">Founders</p>
+      <h2 class="section-title">Built by people who have operated enterprise infrastructure at scale.</h2>
+    </div>
+
+    <div class="mt-12 border-y border-argmin-slate-300/80">
+      {founders.map((founder, index) => (
+        <article
+          class:list={[
+            "grid gap-6 py-8 md:grid-cols-[170px_minmax(0,1fr)] md:gap-8 js-reveal",
+            index > 0 && "border-t border-argmin-slate-300/70",
+          ]}
+          data-reveal-delay={String(index * 80)}
+        >
           <a
             href={founder.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`View ${founder.name} on LinkedIn`}
-            class="inline-block transition-transform duration-200 hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-argmin-accent"
+            class="block w-fit"
           >
             <picture>
               <source srcset={founder.webp} type="image/webp" />
               <img
                 src={founder.jpg}
                 alt={founder.alt}
-                class="mx-auto mb-4 h-52 w-40 rounded-3xl object-cover shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-64 md:w-48"
-                width="200"
-                height="200"
+                class="h-48 w-36 rounded-xl border border-argmin-slate-300 object-cover shadow-sm md:h-56 md:w-40"
+                width="160"
+                height="224"
                 loading="lazy"
               />
             </picture>
           </a>
-          {imagesOnly && (
-            <>
-              <p class="text-lg font-bold text-argmin-dark">{founder.name}</p>
-              <p class="text-sm font-medium text-argmin-dark">{founder.title}</p>
-            </>
-          )}
-          {!imagesOnly && (
-            <>
-              <div class="flex items-center justify-center gap-2">
-                <h3 class="text-xl font-bold text-argmin-dark">{founder.name}</h3>
-                <a
-                  href={founder.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`View ${founder.name} on LinkedIn`}
-                  class="text-argmin-dark transition-colors duration-200 hover:text-argmin-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
-                >
-                  <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
-                    <path
-                      d="M4.98 3.5A2.49 2.49 0 1 1 5 8.48a2.49 2.49 0 0 1-.02-4.98ZM3 9h4v12H3Zm7 0h3.83v1.64h.05c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.85 0-2.13 1.44-2.13 2.93V21h-4Z"
-                    />
-                  </svg>
-                </a>
-              </div>
-              <p class="mb-3 mt-2 text-sm font-medium text-argmin-dark">{founder.title}</p>
-              <p class="text-left text-base leading-relaxed text-argmin-dark md:text-center">{founder.bio}</p>
-            </>
-          )}
+
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="font-display text-2xl font-semibold tracking-[-0.02em] text-argmin-navy">
+                {founder.name}
+              </h3>
+              <span class="rounded-full bg-argmin-ice px-3 py-1 text-sm font-medium text-argmin-azure">
+                {founder.title}
+              </span>
+            </div>
+
+            <p class="mt-4 max-w-[68ch] text-base leading-7 text-argmin-slate-700">{founder.bio}</p>
+
+            <a
+              href={founder.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+            >
+              View LinkedIn
+            </a>
+          </div>
         </article>
       ))}
     </div>

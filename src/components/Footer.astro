@@ -1,4 +1,26 @@
-<footer class="border-t border-argmin-border px-6 py-6 text-center text-sm text-argmin-dark">
-  <p class="font-semibold tracking-[0.08em] text-argmin-dark">Argmin</p>
-  <p class="mt-2">&copy; 2026 Argmin</p>
+---
+import { siteConfig } from "../content/site";
+---
+
+<footer class="bg-argmin-navy px-6 py-8 text-white">
+  <div class="section-shell flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+    <div>
+      <p class="font-display text-[1.35rem] font-bold tracking-[-0.02em]">argmin</p>
+      <p class="mt-2 text-sm text-white/72">{siteConfig.footer.tagline}</p>
+      <p class="mt-1 text-sm text-white/58">&copy; 2026 Argmin</p>
+    </div>
+
+    <div class="flex flex-col gap-3 text-sm text-white/72 md:items-end">
+      <div class="flex flex-wrap gap-x-5 gap-y-2">
+        {siteConfig.nav.slice(0, -1).map((item) => (
+          <a href={item.href} class="hover:text-white">
+            {item.label}
+          </a>
+        ))}
+      </div>
+      <a href={`mailto:${siteConfig.contactEmail}`} class="hover:text-white">
+        {siteConfig.contactEmail}
+      </a>
+    </div>
+  </div>
 </footer>

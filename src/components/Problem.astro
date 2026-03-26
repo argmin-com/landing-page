@@ -1,12 +1,27 @@
-<section id="problem" class="px-6 py-10 md:py-14">
-  <div class="mx-auto max-w-6xl">
-    <h2 class="sr-only">The problem</h2>
-    <div class="mx-auto mb-12 w-16 border-t-2 border-argmin-accent"></div>
-    <p class="text-xl leading-relaxed text-argmin-dark md:text-2xl">
-      Every enterprise is adopting AI faster than it can track what it is spending, who is spending it, or
-      whether it is money well spent. The data to answer those questions exists, but it is scattered. No one
-      inside the organization can connect a AI use to teams, and the business purpose
-      behind it.
-    </p>
+---
+import { siteConfig } from "../content/site";
+
+const { problem } = siteConfig;
+---
+
+<section id="problem" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16">
+    <div class="js-reveal">
+      <p class="section-eyebrow">The Problem</p>
+      <h2 class="section-title">{problem.title}</h2>
+    </div>
+
+    <div class="js-reveal" data-reveal-delay="80">
+      <p class="section-copy mt-0">{problem.body}</p>
+
+      <div class="mt-10 border-y border-argmin-slate-300/80">
+        {problem.constraints.map((constraint, index) => (
+          <div class:list={["grid gap-3 py-5 md:grid-cols-[92px_1fr] md:gap-6", index > 0 && "border-t border-argmin-slate-300/70"]}>
+            <p class="font-mono text-sm text-argmin-slate-500">Constraint</p>
+            <p class="text-base leading-7 text-argmin-slate-700">{constraint}</p>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 </section>

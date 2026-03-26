@@ -1,179 +1,169 @@
 ---
+import { siteConfig } from "../content/site";
+
 interface Props {
   formspreeUrl?: string;
-  title?: string;
-  intro?: string;
 }
 
-const contactEmail = "contact@argmin.co";
-const {
-  formspreeUrl = "",
-  title = "Talk to Us",
-  intro = "We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.",
-} = Astro.props;
+const { formspreeUrl = "" } = Astro.props;
 const endpoint = formspreeUrl.trim();
 const hasEndpoint = endpoint.length > 0;
+const { contactEmail, contact } = siteConfig;
 ---
 
-<section id="contact" class="scroll-mt-6 px-6 py-10 md:py-14">
-  <div class="mx-auto max-w-2xl">
-    <h2 id="contact-heading" class="text-sm font-semibold uppercase tracking-[0.24em] text-argmin-dark">{title}</h2>
-    <p class="mt-4 text-lg leading-relaxed text-argmin-dark">
-      {intro}{" "}
-      You can also reach us directly at
-      <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
-        {contactEmail}
-      </a>.
-    </p>
+<section id="contact" class="scroll-mt-24 bg-argmin-ice px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+    <div class="max-w-xl js-reveal">
+      <p class="section-eyebrow">Contact</p>
+      <h2 id="contact-heading" class="section-title">{contact.title}</h2>
+      <p class="section-copy">
+        {contact.intro}{" "}
+        You can also reach us directly at
+        <a
+          class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+          href={`mailto:${contactEmail}`}
+        >
+          {contactEmail}
+        </a>.
+      </p>
 
-    <div id="form-container" class="mt-10" aria-live="polite">
-      <div
-        id="contact-form"
-        class="space-y-4 p-6 md:p-8"
-        role="form"
-        aria-labelledby="contact-heading"
-        data-form-configured={String(hasEndpoint)}
-      >
-        <div>
-          <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            placeholder="Your name"
-            class="w-full rounded-lg border border-argmin-border bg-white px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-          />
+      <div class="mt-10 border-y border-argmin-slate-300/80">
+        <div class="grid gap-3 py-5 md:grid-cols-[112px_1fr] md:gap-6">
+          <p class="font-mono text-sm text-argmin-slate-500">Scope</p>
+          <p class="text-base leading-7 text-argmin-slate-700">
+            Enterprise AI attribution, optimization, and intervention at request time.
+          </p>
         </div>
-        <div>
-          <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="work@company.com"
-            class="w-full rounded-lg border border-argmin-border bg-white px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-          />
+        <div class="grid gap-3 border-t border-argmin-slate-300/70 py-5 md:grid-cols-[112px_1fr] md:gap-6">
+          <p class="font-mono text-sm text-argmin-slate-500">Posture</p>
+          <p class="text-base leading-7 text-argmin-slate-700">
+            Deploys inside customer trust boundaries with read-only connectors and fail-open defaults.
+          </p>
         </div>
-        <div>
-          <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            required
-            placeholder="Company name"
-            class="w-full rounded-lg border border-argmin-border bg-white px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-          />
+        <div class="grid gap-3 border-t border-argmin-slate-300/70 py-5 md:grid-cols-[112px_1fr] md:gap-6">
+          <p class="font-mono text-sm text-argmin-slate-500">Response</p>
+          <p class="text-base leading-7 text-argmin-slate-700">
+            We respond directly when there is a real inference attribution problem to solve.
+          </p>
         </div>
-        <div>
-          <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="4"
-            placeholder="Tell us about your AI spend challenge"
-            class="w-full rounded-lg border border-argmin-border bg-white px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-dark focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-          ></textarea>
-        </div>
-        <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
-        <button
-          id="submit-btn"
-          type="button"
-          disabled={!hasEndpoint}
-          aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
-          class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-dark transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {hasEndpoint ? "Get in Touch" : "Form Unavailable"}
-        </button>
-        <p
-          id="form-config-error"
-          class={hasEndpoint ? "hidden text-center text-sm text-argmin-dark" : "text-center text-sm text-argmin-dark"}
-        >
-          Form submissions are currently unavailable. Please email
-          <a class="underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
-        </p>
-        <p id="form-error" class="hidden text-center text-sm text-argmin-dark">
-          Submission failed. Please email us directly at
-          <a class="underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
-        </p>
       </div>
     </div>
 
-    <noscript>
-      <p class="mt-6 text-center text-sm text-argmin-dark">
-        JavaScript is required to submit this form. Please email
-        <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
-          {contactEmail}
-        </a>
-        directly.
-      </p>
-    </noscript>
+    <div class="surface-panel p-6 md:p-8 js-reveal" data-reveal-delay="120">
+      <div data-form-container aria-live="polite">
+        <form
+          id="contact-form"
+          class="space-y-4"
+          aria-labelledby="contact-heading"
+          data-contact-form
+          data-endpoint={endpoint}
+          data-form-configured={String(hasEndpoint)}
+          data-default-label={hasEndpoint ? contact.submitLabel : contact.unavailableLabel}
+          data-sending-label={contact.sendingLabel}
+          data-success-message={contact.successMessage}
+          action={hasEndpoint ? endpoint : undefined}
+          method="post"
+        >
+          <div>
+            <label for="name" class="field-label">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              class="field-input"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="field-label">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="work@company.com"
+              class="field-input"
+            />
+          </div>
+
+          <div>
+            <label for="company" class="field-label">Company</label>
+            <input
+              id="company"
+              name="company"
+              type="text"
+              required
+              placeholder="Company name"
+              class="field-input"
+            />
+          </div>
+
+          <div>
+            <label for="message" class="field-label">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Tell us about your AI spend challenge"
+              class="field-input min-h-[148px] resize-y"
+            ></textarea>
+          </div>
+
+          <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+
+          <button
+            data-submit-button
+            id="submit-btn"
+            type="submit"
+            disabled={!hasEndpoint}
+            aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
+            class="primary-button flex w-full items-center justify-center px-6 py-3.5 text-base disabled:cursor-not-allowed disabled:bg-argmin-slate-100 disabled:text-argmin-slate-500"
+          >
+            {hasEndpoint ? contact.submitLabel : contact.unavailableLabel}
+          </button>
+
+          <p
+            id="form-config-error"
+            hidden={hasEndpoint}
+            class="text-sm leading-6 text-argmin-slate-500"
+          >
+            {contact.unavailableMessage}{" "}
+            <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+              {contactEmail}
+            </a>.
+          </p>
+
+          <p
+            data-form-error
+            hidden
+            role="alert"
+            class="text-sm leading-6 text-argmin-error"
+          >
+            {contact.errorMessage}{" "}
+            <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+              {contactEmail}
+            </a>.
+          </p>
+        </form>
+      </div>
+
+      <noscript>
+        {!hasEndpoint && (
+          <p class="mt-6 text-sm leading-6 text-argmin-slate-500">
+            {contact.unavailableMessage}{" "}
+            <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+              {contactEmail}
+            </a>.
+          </p>
+        )}
+        {hasEndpoint && (
+          <p class="mt-6 text-sm leading-6 text-argmin-slate-500">
+            JavaScript is disabled. The form will still submit, but you will be taken to the hosted confirmation page.
+          </p>
+        )}
+      </noscript>
+    </div>
   </div>
 </section>
-
-<script is:inline define:vars={{ endpoint }}>
-  const button = document.getElementById("submit-btn");
-  const container = document.getElementById("form-container");
-  const error = document.getElementById("form-error");
-  const nameField = document.getElementById("name");
-  const emailField = document.getElementById("email");
-  const companyField = document.getElementById("company");
-  const messageField = document.getElementById("message");
-  const gotchaField = document.getElementById("gotcha");
-
-  if (
-    endpoint &&
-    button instanceof HTMLButtonElement &&
-    container instanceof HTMLElement &&
-    nameField instanceof HTMLInputElement &&
-    emailField instanceof HTMLInputElement &&
-    companyField instanceof HTMLInputElement &&
-    messageField instanceof HTMLTextAreaElement &&
-    gotchaField instanceof HTMLInputElement
-  ) {
-    button.addEventListener("click", async () => {
-      for (const field of [nameField, emailField, companyField]) {
-        if (!field.reportValidity()) {
-          return;
-        }
-      }
-
-      const payload = {
-        name: nameField.value.trim(),
-        email: emailField.value.trim(),
-        company: companyField.value.trim(),
-        message: messageField.value.trim(),
-        _gotcha: gotchaField.value.trim(),
-      };
-
-      button.disabled = true;
-      button.textContent = "Sending...";
-      error?.classList.add("hidden");
-
-      try {
-        const response = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-          throw new Error("Form submission failed");
-        }
-
-        container.innerHTML =
-          '<p class="py-8 text-center text-xl text-argmin-dark">Thank you. We will be in touch shortly.</p>';
-        window.plausible && window.plausible("form_submit");
-      } catch (submissionError) {
-        button.disabled = false;
-        button.textContent = "Get in Touch";
-        error?.classList.remove("hidden");
-      }
-    });
-  }
-</script>

@@ -6,7 +6,7 @@ const html = readFileSync(resolve("dist/index.html"), "utf8");
 const checks = [
   {
     description: "contact form is marked unconfigured when PUBLIC_FORMSPREE_URL is absent",
-    pass: /id="contact-form"[^>]*data-form-configured="false"/.test(html),
+    pass: /data-contact-form[^>]*data-form-configured="false"/.test(html),
   },
   {
     description: "missing-config message is rendered in the built page",
@@ -25,8 +25,16 @@ const checks = [
     pass: /<noscript>[\s\S]*mailto:contact@argmin\.co[\s\S]*<\/noscript>/.test(html),
   },
   {
-    description: "legacy richard@argmin.co fallback is absent from the built page",
-    pass: !html.includes("richard@argmin.co"),
+    description: "contact@argmin.co fallback is visible in the built page",
+    pass: html.includes("contact@argmin.co"),
+  },
+  {
+    description: "the page references the external enhancement script",
+    pass: html.includes('src="/scripts/site.js"'),
+  },
+  {
+    description: "the build no longer ships the old inline analytics bootstrap",
+    pass: !html.includes("window.location.hostname"),
   },
 ];
 
