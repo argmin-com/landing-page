@@ -10,6 +10,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "npm run build && astro preview",
+    "deploy": "wrangler deploy",
+    "cf-typegen": "wrangler types",
     "check": "astro check",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
     "validate:design-system": "node scripts/validate-design-system.mjs",
