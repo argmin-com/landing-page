@@ -9,18 +9,6 @@ const { roles, rolesSection } = siteConfig;
     <div class="max-w-4xl">
       <p class="section-eyebrow">Role Paths</p>
       <h2 class="section-title max-w-none">{rolesSection.title}</h2>
-      <p class="section-copy">{rolesSection.intro}</p>
-    </div>
-
-    <div class="mt-8 flex flex-wrap gap-3">
-      {roles.map((role) => (
-        <a
-          href={`#${role.id}`}
-          class="inline-flex min-h-[44px] items-center rounded-full border border-argmin-slate-300/80 px-4 py-2 text-sm font-medium text-argmin-slate-700 hover:border-argmin-azure/30 hover:text-argmin-azure"
-        >
-          {role.label}
-        </a>
-      ))}
     </div>
 
     <div class="mt-10 border-t border-argmin-slate-300/80">
