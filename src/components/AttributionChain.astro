@@ -2,24 +2,36 @@
 import { siteConfig } from "../content/site";
 import ConfidenceBadge from "./ConfidenceBadge.astro";
 
-const { attributionLayers } = siteConfig;
+const { attributionLayers, decisionRecord, graphStages } = siteConfig;
 ---
 
-<div class="surface-panel p-6 md:p-8">
-  <div class="border-b border-argmin-slate-300/80 pb-4">
-    <p class="section-eyebrow">Attribution Record</p>
+<div class="surface-panel graph-panel p-6 md:p-8">
+  <div class="border-b border-argmin-slate-300/80 pb-5">
+    <p class="section-eyebrow">Attribution Graph</p>
     <h3 class="mt-3 font-display text-[1.45rem] font-semibold tracking-[-0.03em] text-argmin-navy">
-      Confidence stays visible at each hop.
+      Resolve the chain progressively instead of hiding it behind a total.
     </h3>
-    <p class="mt-3 max-w-[46ch] text-sm leading-7 text-argmin-slate-700">
-      The system resolves each request through the operational chain that owns it instead of hiding
-      uncertainty behind a single number.
+    <p class="mt-3 max-w-[50ch] text-sm leading-7 text-argmin-slate-700">
+      Each stage adds evidence. The result is not just attribution. It is an attributable decision
+      record with visible confidence and a next action.
     </p>
   </div>
 
-  <ol class="mt-6 space-y-4">
+  <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    {graphStages.map((stage) => (
+      <article class="graph-stage">
+        <p class="graph-stage-number">{stage.number}</p>
+        <h4 class="mt-3 font-display text-[1.02rem] font-semibold tracking-[-0.02em] text-argmin-navy">
+          {stage.title}
+        </h4>
+        <p class="mt-2 text-sm leading-6 text-argmin-slate-700">{stage.description}</p>
+      </article>
+    ))}
+  </div>
+
+  <ol class="mt-8 space-y-4">
     {attributionLayers.map((layer) => (
-      <li class="grid gap-3 border-b border-argmin-slate-300/70 pb-4 last:border-none last:pb-0 md:grid-cols-[minmax(0,0.28fr)_minmax(0,1fr)_auto] md:items-center">
+      <li class="grid gap-3 border-b border-argmin-slate-300/70 pb-4 last:border-none last:pb-0 md:grid-cols-[minmax(0,0.26fr)_minmax(0,1fr)_auto] md:items-center">
         <div>
           <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
             {layer.label}
@@ -30,4 +42,27 @@ const { attributionLayers } = siteConfig;
       </li>
     ))}
   </ol>
+
+  <div class="mt-8 rounded-[1.5rem] border border-argmin-azure/20 bg-argmin-ice/65 p-5 md:p-6">
+    <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
+      {decisionRecord.title}
+    </p>
+    <h4 class="mt-3 font-display text-[1.18rem] font-semibold tracking-[-0.03em] text-argmin-navy md:text-[1.35rem]">
+      {decisionRecord.heading}
+    </h4>
+    <p class="mt-3 max-w-[58ch] text-sm leading-7 text-argmin-slate-700 md:text-base">
+      {decisionRecord.body}
+    </p>
+
+    <dl class="mt-5 grid gap-4 border-t border-argmin-azure/15 pt-5 md:grid-cols-2">
+      {decisionRecord.fields.map((field) => (
+        <div>
+          <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+            {field.label}
+          </dt>
+          <dd class="mt-2 text-sm leading-7 text-argmin-slate-700 md:text-base">{field.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
 </div>

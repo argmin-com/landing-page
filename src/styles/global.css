@@ -389,6 +389,149 @@ button:focus-visible {
   color: rgb(255 255 255 / 0.78);
 }
 
+.hero-poster {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at top right, rgb(74 159 217 / 0.24), transparent 32%),
+    linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.05));
+  padding: 1.75rem;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+}
+
+.hero-poster-chip {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.08);
+  padding: 0.35rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.7);
+}
+
+.hero-poster-title {
+  margin-top: 1.2rem;
+  max-width: 13ch;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: white;
+}
+
+.hero-poster-copy {
+  margin-top: 1rem;
+  max-width: 50ch;
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: rgb(255 255 255 / 0.76);
+}
+
+.hero-moment-list {
+  margin-top: 1.75rem;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.hero-moment-item {
+  display: grid;
+  gap: 0.55rem;
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+  padding: 1rem 0;
+}
+
+.hero-moment-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.hero-moment-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(134 186 228 / 0.92);
+}
+
+.hero-moment-copy {
+  max-width: 48ch;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.86);
+}
+
+.hero-output-band {
+  margin-top: 1.5rem;
+  border-radius: 22px;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(4 20 38 / 0.3);
+  padding: 1rem 1rem 1.1rem;
+}
+
+.hero-output-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.54);
+}
+
+.hero-output-list {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  list-style: none;
+  padding: 0;
+}
+
+.hero-output-list li {
+  position: relative;
+  padding-left: 1rem;
+  font-size: 0.92rem;
+  color: rgb(255 255 255 / 0.88);
+}
+
+.hero-output-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.55rem;
+  left: 0;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
+  background: rgb(74 159 217 / 0.9);
+}
+
+.graph-panel {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 1), rgb(248 250 252 / 0.98)),
+    white;
+}
+
+.graph-stage {
+  border: 1px solid rgb(209 213 219 / 0.88);
+  border-radius: 18px;
+  background: rgb(248 250 252 / 0.88);
+  padding: 1rem;
+}
+
+.graph-stage-number {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent);
+}
+
 .data-label {
   font-family: var(--font-mono);
   font-size: 0.75rem;
@@ -441,6 +584,45 @@ button:focus-visible {
   color: var(--color-text-secondary);
 }
 
+.contact-template-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: rgb(255 255 255 / 0.04);
+  padding: 0.625rem 1rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: white;
+}
+
+.contact-template-button:hover {
+  border-color: rgb(255 255 255 / 0.24);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.security-flow {
+  display: grid;
+  gap: 1rem;
+}
+
+.security-flow-node {
+  position: relative;
+  border-radius: 22px;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.04);
+  padding: 1rem 1.1rem;
+}
+
+.security-flow-node p {
+  max-width: 26ch;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgb(255 255 255 / 0.82);
+}
+
 .fade-rise {
   animation: fade-rise 780ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -491,6 +673,23 @@ button:focus-visible {
 @media (min-width: 640px) {
   .hero-proof-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .security-flow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .security-flow-node:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 0.5rem);
+    width: 1.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, rgb(74 159 217 / 0.8), rgb(255 255 255 / 0.18));
+    transform: translateY(-50%);
   }
 }
 

@@ -12,6 +12,41 @@ function setupCtaTracking() {
   });
 }
 
+function setupCustomTracking() {
+  document.querySelectorAll("[data-track-event]").forEach((element) => {
+    element.addEventListener("click", () => {
+      const eventName = element.getAttribute("data-track-event")?.trim();
+
+      if (eventName) {
+        trackEvent(eventName);
+      }
+    });
+  });
+}
+
+function setupContactTemplates() {
+  const messageField = document.querySelector("#message");
+
+  if (!(messageField instanceof HTMLTextAreaElement)) {
+    return;
+  }
+
+  document.querySelectorAll("[data-contact-template]").forEach((element) => {
+    element.addEventListener("click", () => {
+      const template = element.getAttribute("data-contact-template")?.trim();
+
+      if (!template) {
+        return;
+      }
+
+      messageField.value = template;
+      messageField.dispatchEvent(new Event("input", { bubbles: true }));
+      messageField.focus();
+      messageField.setSelectionRange(messageField.value.length, messageField.value.length);
+    });
+  });
+}
+
 function toTrimmedObject(formData) {
   return Object.fromEntries(
     Array.from(formData.entries(), ([key, value]) => [
@@ -42,7 +77,7 @@ function setupContactForm() {
     return;
   }
 
-  const defaultLabel = form.dataset.defaultLabel || button.textContent || "Get in Touch";
+  const defaultLabel = form.dataset.defaultLabel || button.textContent || "Send the problem";
   const sendingLabel = form.dataset.sendingLabel || "Sending...";
   const successMessage = form.dataset.successMessage || "Thank you. We will be in touch shortly.";
   let isSubmitting = false;
@@ -113,6 +148,8 @@ function setupContactForm() {
 
 function initialize() {
   setupCtaTracking();
+  setupCustomTracking();
+  setupContactTemplates();
   setupContactForm();
 }
 

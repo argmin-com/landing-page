@@ -6,21 +6,28 @@ const { hero } = siteConfig;
 
 <section class="hero-section overflow-hidden border-b border-white/10 bg-argmin-navy px-6 py-8">
   <div class="hero-backdrop" aria-hidden="true"></div>
-  <div class="section-shell hero-grid lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
+  <div class="section-shell hero-grid lg:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
     <div class="hero-copy-block fade-rise">
       <p class="font-display text-[1.55rem] font-bold tracking-[-0.03em] text-white">{hero.wordmark}</p>
       <p class="mt-6 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-sky">
         {hero.eyebrow}
       </p>
-      <h1 class="hero-title mt-4">{hero.headline}</h1>
+      <h1 class="hero-title mt-4 max-w-[11ch]">{hero.headline}</h1>
       <p class="hero-copy">{hero.subheadline}</p>
 
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-        <a href="#contact" class="primary-button" data-cta-button>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        <a href="#how" class="primary-button" data-track-event="hero_graph_view">
           {hero.primaryCtaLabel}
         </a>
-        <a href="#how" class="inverse-secondary-button">
-          See the attribution chain
+        <a href="#sample-output" class="inverse-secondary-button" data-track-event="hero_sample_view">
+          {hero.secondaryCtaLabel}
+        </a>
+        <a
+          href="#contact"
+          class="inline-flex items-center text-sm font-medium text-white underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+          data-cta-button
+        >
+          {hero.contactCtaLabel}
         </a>
       </div>
 
@@ -34,30 +41,28 @@ const { hero } = siteConfig;
       </dl>
     </div>
 
-    <div class="hidden fade-rise fade-rise-delay-1 lg:block" aria-hidden="true">
-      <div class="hero-logic">
-        <div class="hero-logic-column">
-          <p class="hero-logic-label">Signals in</p>
-          <ul class="hero-logic-list">
-            {hero.signalInputs.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
+    <div class="fade-rise fade-rise-delay-1 lg:pl-8">
+      <div class="hero-poster">
+        <div class="hero-poster-chip">Not another telemetry dashboard</div>
+        <h2 class="hero-poster-title">From model call to budget owner, with a decision attached.</h2>
+        <p class="hero-poster-copy">
+          Argmin connects the systems where the cost signal starts to the workflows where a team
+          can still do something about it.
+        </p>
+
+        <div class="hero-moment-list" aria-label="Key decision moments">
+          {hero.decisionMoments.map((moment) => (
+            <article class="hero-moment-item">
+              <p class="hero-moment-label">{moment.label}</p>
+              <p class="hero-moment-copy">{moment.detail}</p>
+            </article>
+          ))}
         </div>
 
-        <div class="hero-logic-core">
-          <p class="hero-logic-label">Argmin</p>
-          <p class="hero-logic-title">Attribution graph</p>
-          <p class="hero-logic-copy">
-            Resolve each inference through service, code owner, identity, org unit, and budget
-            with explicit confidence.
-          </p>
-        </div>
-
-        <div class="hero-logic-column hero-logic-column--right">
-          <p class="hero-logic-label">Decisions out</p>
-          <ul class="hero-logic-list">
-            {hero.signalOutputs.map((item) => (
+        <div class="hero-output-band">
+          <p class="hero-output-label">Decision surfaces</p>
+          <ul class="hero-output-list">
+            {hero.decisionOutputs.map((item) => (
               <li>{item}</li>
             ))}
           </ul>

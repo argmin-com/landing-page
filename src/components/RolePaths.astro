@@ -1,0 +1,58 @@
+---
+import { siteConfig } from "../content/site";
+
+const { roles, rolesSection } = siteConfig;
+---
+
+<section id="roles" class="border-b border-argmin-slate-300/70 bg-argmin-ice/40 px-6 py-16 md:py-24">
+  <div class="section-shell">
+    <div class="max-w-4xl">
+      <p class="section-eyebrow">Role Paths</p>
+      <h2 class="section-title max-w-none">{rolesSection.title}</h2>
+      <p class="section-copy">{rolesSection.intro}</p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {roles.map((role) => (
+        <a
+          href={`#${role.id}`}
+          class="inline-flex min-h-[44px] items-center rounded-full border border-argmin-slate-300/80 px-4 py-2 text-sm font-medium text-argmin-slate-700 hover:border-argmin-azure/30 hover:text-argmin-azure"
+        >
+          {role.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-10 border-t border-argmin-slate-300/80">
+      {roles.map((role) => (
+        <article
+          id={role.id}
+          class="grid gap-5 border-b border-argmin-slate-300/80 py-8 md:py-10 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] lg:gap-8"
+        >
+          <div>
+            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
+              {role.label}
+            </p>
+            <p class="mt-3 font-display text-[1.45rem] font-semibold tracking-[-0.03em] text-argmin-navy md:text-[1.7rem]">
+              {role.problem}
+            </p>
+          </div>
+
+          <div>
+            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+              Integration concerns
+            </p>
+            <p class="mt-3 text-base leading-7 text-argmin-slate-700">{role.integrations}</p>
+          </div>
+
+          <div>
+            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+              Outcome
+            </p>
+            <p class="mt-3 text-base leading-7 text-argmin-slate-700">{role.outcome}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

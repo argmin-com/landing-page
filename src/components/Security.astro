@@ -1,0 +1,60 @@
+---
+import { siteConfig } from "../content/site";
+
+const { security } = siteConfig;
+---
+
+<section id="security" class="border-b border-white/10 bg-argmin-navy px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
+    <div class="max-w-xl">
+      <p class="section-eyebrow section-eyebrow-inverse">Security</p>
+      <h2 class="section-title max-w-none text-white">{security.title}</h2>
+      <p class="section-copy section-copy-inverse">{security.intro}</p>
+    </div>
+
+    <div class="space-y-6">
+      <div class="rounded-[1.75rem] border border-white/12 bg-white/[0.06] p-6 shadow-[0_28px_60px_rgba(4,20,38,0.35)] backdrop-blur-sm md:p-8">
+        <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/50">
+          Trust boundary flow
+        </p>
+        <div class="security-flow mt-6">
+          {security.flow.map((item) => (
+            <div class="security-flow-node">
+              <p>{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-[1.5rem] border border-white/12 bg-white/[0.05] p-6">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-sky">
+            Inside your environment
+          </p>
+          <ul class="mt-5 space-y-4">
+            {security.insideBoundary.map((item) => (
+              <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-3">
+                <span class="mt-2 h-2.5 w-2.5 rounded-full bg-argmin-sky"></span>
+                <p class="text-sm leading-7 text-white/[0.78]">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+
+        <article class="rounded-[1.5rem] border border-white/12 bg-white/[0.05] p-6">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/[0.54]">
+            Not required
+          </p>
+          <ul class="mt-5 space-y-4">
+            {security.notRequired.map((item) => (
+              <li class="grid grid-cols-[18px_minmax(0,1fr)] gap-3">
+                <span class="mt-2 h-2.5 w-2.5 rounded-full bg-white/28"></span>
+                <p class="text-sm leading-7 text-white/[0.78]">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

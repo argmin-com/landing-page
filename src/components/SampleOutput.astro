@@ -1,0 +1,76 @@
+---
+import { siteConfig } from "../content/site";
+
+const { sampleOutput } = siteConfig;
+---
+
+<section id="sample-output" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
+    <div class="max-w-xl">
+      <p class="section-eyebrow">Sample Output</p>
+      <h2 class="section-title max-w-none">{sampleOutput.headline}</h2>
+      <p class="section-copy">{sampleOutput.intro}</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <a
+          href="#contact"
+          class="primary-button"
+          data-cta-button
+          data-contact-template={sampleOutput.contactTemplate}
+          data-track-event="sample_output_contact"
+        >
+          {sampleOutput.primaryCtaLabel}
+        </a>
+        <a href="#deployment" class="inline-flex items-center text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky">
+          {sampleOutput.secondaryCtaLabel}
+        </a>
+      </div>
+    </div>
+
+    <div class="surface-panel overflow-hidden">
+      <div class="border-b border-argmin-slate-300/80 bg-argmin-ice/40 px-6 py-5 md:px-8">
+        <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
+          {sampleOutput.title}
+        </p>
+        <p class="mt-3 max-w-[60ch] text-base leading-7 text-argmin-slate-700">
+          {sampleOutput.scenario}
+        </p>
+      </div>
+
+      <div class="px-6 py-6 md:px-8 md:py-8">
+        <div class="grid gap-4 md:grid-cols-2">
+          {sampleOutput.metrics.map((item) => (
+            <div class="border-b border-argmin-slate-300/70 pb-4">
+              <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+                {item.label}
+              </p>
+              <p class="mt-2 text-base leading-7 text-argmin-slate-700">{item.value}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-8 rounded-[1.5rem] border border-argmin-navy/8 bg-argmin-navy px-5 py-5 md:px-6">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-sky">
+            Recommended next step
+          </p>
+          <p class="mt-3 max-w-[62ch] text-base leading-7 text-white/[0.82]">
+            {sampleOutput.recommendation}
+          </p>
+        </div>
+
+        <div class="mt-8 border-t border-argmin-slate-300/80 pt-6">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+            Why this matters
+          </p>
+          <ul class="mt-4 grid gap-4 md:grid-cols-3">
+            {sampleOutput.supportPoints.map((item) => (
+              <li class="rounded-[1.25rem] border border-argmin-slate-300/80 bg-argmin-slate-100/55 px-4 py-4 text-sm leading-6 text-argmin-slate-700">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

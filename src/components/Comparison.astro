@@ -1,0 +1,36 @@
+---
+import { siteConfig } from "../content/site";
+
+const { comparison } = siteConfig;
+---
+
+<section id="comparison" class="border-b border-white/10 bg-argmin-navy px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
+    <div class="max-w-xl">
+      <p class="section-eyebrow section-eyebrow-inverse">Comparison</p>
+      <h2 class="section-title max-w-none text-white">{comparison.title}</h2>
+      <p class="section-copy section-copy-inverse">{comparison.intro}</p>
+      <blockquote class="mt-8 border-l-2 border-argmin-sky pl-5 font-display text-[1.35rem] leading-8 tracking-[-0.03em] text-white md:text-[1.65rem] md:leading-9">
+        {comparison.quote}
+      </blockquote>
+    </div>
+
+    <div class="rounded-[1.75rem] border border-white/12 bg-white/[0.06] p-6 shadow-[0_28px_60px_rgba(4,20,38,0.35)] backdrop-blur-sm md:p-8">
+      <div class="grid grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] gap-4 border-b border-white/12 pb-4 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/[0.48]">
+        <p>Dimension</p>
+        <p>Telemetry / Cost Views</p>
+        <p>Argmin</p>
+      </div>
+
+      <div class="mt-2">
+        {comparison.rows.map((row) => (
+          <div class="grid grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] gap-4 border-b border-white/10 py-5 last:border-none">
+            <p class="text-sm font-medium leading-6 text-white">{row.label}</p>
+            <p class="text-sm leading-7 text-white/[0.64]">{row.incumbent}</p>
+            <p class="text-sm leading-7 text-white/[0.82]">{row.argmin}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
