@@ -22,7 +22,7 @@ export const siteConfig = {
       { label: "Spend", value: "Enterprise AI programs are already running past $85K per month before ownership is clear." },
       { label: "Gap", value: "Most teams still cannot attribute spend to the team, budget, or outcome that created it." },
     ],
-    posterChip: "Decision control, not another dashboard",
+    posterChip: "",
     posterTitle: "Know which team, model, and decision is driving spend before costs compound.",
     posterCopy:
       "Finance sees the bill. Engineering sees the code change. Argmin connects both before the next deploy makes the problem bigger.",

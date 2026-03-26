@@ -45,7 +45,7 @@ const { hero } = siteConfig;
 
     <div class="fade-rise fade-rise-delay-1 lg:pl-8">
       <div class="hero-poster">
-        <div class="hero-poster-chip">{hero.posterChip}</div>
+        {hero.posterChip && <div class="hero-poster-chip">{hero.posterChip}</div>}
         <h2 class="hero-poster-title">{hero.posterTitle}</h2>
         <p class="hero-poster-copy">{hero.posterCopy}</p>
 
