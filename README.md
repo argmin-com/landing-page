@@ -79,6 +79,7 @@ Target host: Cloudflare Workers Builds for the `landing-page` Worker service
 - Wrangler deploy hook: `wrangler.jsonc` runs `npm run build` during `wrangler deploy`
 - Worker entrypoint: `dist/_worker.js/index.js`
 - Static asset directory: `dist`
+- Session driver: in-memory (`astro.config.mjs`) so the landing page does not require a Cloudflare KV namespace
 - Recommended Node version: `18`
 - Required environment variable: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`

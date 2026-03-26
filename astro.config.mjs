@@ -6,6 +6,9 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   site: "https://argmin.co",
   output: "static",
+  session: {
+    driver: "memory",
+  },
 
   integrations: [
     tailwind({
