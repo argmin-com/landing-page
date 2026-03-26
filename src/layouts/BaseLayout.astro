@@ -1,5 +1,4 @@
 ---
-import Navbar from "../components/Navbar.astro";
 import { siteConfig } from "../content/site";
 import "../styles/global.css";
 
@@ -17,12 +16,14 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" class="motion-safe:scroll-smooth">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="theme-color" content="#0F2B46" />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
 
@@ -39,10 +40,11 @@ const {
     <meta name="twitter:image" content={siteConfig.ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
   </head>
   <body class="bg-argmin-white font-body text-argmin-slate-700 antialiased">
-    <Navbar />
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <slot />
-    <script is:inline type="module" src="/scripts/site.js"></script>
+    <script type="module" src="/scripts/site.js"></script>
   </body>
 </html>

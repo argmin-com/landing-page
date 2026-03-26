@@ -1,69 +1,15 @@
-const ARGMIN_HOST = "argmin.co";
-
-function loadPlausible() {
-  const { hostname } = window.location;
-  if (!(hostname === ARGMIN_HOST || hostname.endsWith(`.${ARGMIN_HOST}`))) {
-    return;
+function trackEvent(name) {
+  if (typeof window.plausible === "function") {
+    window.plausible(name);
   }
-
-  if (document.querySelector(`script[data-domain="${ARGMIN_HOST}"]`)) {
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.defer = true;
-  script.dataset.domain = ARGMIN_HOST;
-  script.src = "https://plausible.io/js/script.js";
-  document.head.appendChild(script);
 }
 
-function setupPlausibleEvents() {
-  document.querySelectorAll("[data-plausible-event]").forEach((element) => {
-    element.addEventListener("click", () => {
-      const eventName = element.getAttribute("data-plausible-event");
-      if (eventName) {
-        window.plausible?.(eventName);
-      }
+function setupCtaTracking() {
+  document.querySelectorAll("[data-cta-button]").forEach((cta) => {
+    cta.addEventListener("click", () => {
+      trackEvent("cta_click");
     });
   });
-}
-
-function setupRevealAnimations() {
-  const revealNodes = Array.from(document.querySelectorAll(".js-reveal"));
-  if (revealNodes.length === 0) {
-    return;
-  }
-
-  if (
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-    !("IntersectionObserver" in window)
-  ) {
-    revealNodes.forEach((node) => node.classList.add("is-visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    (entries, currentObserver) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const delay = Number(entry.target.getAttribute("data-reveal-delay") || "0");
-        window.setTimeout(() => {
-          entry.target.classList.add("is-visible");
-        }, delay);
-
-        currentObserver.unobserve(entry.target);
-      });
-    },
-    {
-      rootMargin: "0px 0px -12% 0px",
-      threshold: 0.15,
-    },
-  );
-
-  revealNodes.forEach((node) => observer.observe(node));
 }
 
 function toTrimmedObject(formData) {
@@ -77,6 +23,7 @@ function toTrimmedObject(formData) {
 
 function setupContactForm() {
   const form = document.querySelector("[data-contact-form]");
+
   if (!(form instanceof HTMLFormElement)) {
     return;
   }
@@ -98,16 +45,17 @@ function setupContactForm() {
   const defaultLabel = form.dataset.defaultLabel || button.textContent || "Get in Touch";
   const sendingLabel = form.dataset.sendingLabel || "Sending...";
   const successMessage = form.dataset.successMessage || "Thank you. We will be in touch shortly.";
+  let isSubmitting = false;
 
-  form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    if (!form.reportValidity()) {
+  async function submitForm() {
+    if (isSubmitting || !form.reportValidity()) {
       return;
     }
 
+    isSubmitting = true;
     button.disabled = true;
     button.textContent = sendingLabel;
+    button.setAttribute("aria-busy", "true");
     error.hidden = true;
 
     try {
@@ -129,20 +77,42 @@ function setupContactForm() {
       success.setAttribute("role", "status");
       success.textContent = successMessage;
       container.replaceChildren(success);
-      window.plausible?.("form_submit");
+      trackEvent("form_submit");
     } catch {
+      isSubmitting = false;
       button.disabled = false;
       button.textContent = defaultLabel;
+      button.removeAttribute("aria-busy");
       error.hidden = false;
     }
+  }
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    void submitForm();
+  });
+
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    void submitForm();
+  });
+
+  form.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" || event.shiftKey || event.isComposing) {
+      return;
+    }
+
+    if (!(event.target instanceof HTMLInputElement)) {
+      return;
+    }
+
+    event.preventDefault();
+    void submitForm();
   });
 }
 
 function initialize() {
-  document.documentElement.classList.add("js-ready");
-  loadPlausible();
-  setupPlausibleEvents();
-  setupRevealAnimations();
+  setupCtaTracking();
   setupContactForm();
 }
 

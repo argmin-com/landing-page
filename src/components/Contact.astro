@@ -3,27 +3,21 @@ import { siteConfig } from "../content/site";
 
 interface Props {
   formspreeUrl?: string;
-  title?: string;
-  intro?: string;
 }
 
 const { contactEmail, contact } = siteConfig;
-const {
-  formspreeUrl = "",
-  title = contact.title,
-  intro = contact.intro,
-} = Astro.props;
+const { formspreeUrl = "" } = Astro.props;
 const endpoint = formspreeUrl.trim();
 const hasEndpoint = endpoint.length > 0;
 ---
 
-<section id="contact" class="scroll-mt-24 bg-argmin-ice px-6 py-16 md:py-24">
+<section id="contact" class="scroll-mt-8 bg-argmin-ice px-6 py-16 md:py-24">
   <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-    <div class="max-w-xl js-reveal">
+    <div class="max-w-xl">
       <p class="section-eyebrow">Contact</p>
-      <h2 id="contact-heading" class="section-title">{title}</h2>
+      <h2 id="contact-heading" class="section-title max-w-none">{contact.title}</h2>
       <p class="section-copy">
-        {intro}{" "}
+        {contact.intro}{" "}
         You can also reach us directly at
         <a
           class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
@@ -33,29 +27,24 @@ const hasEndpoint = endpoint.length > 0;
         </a>.
       </p>
 
-      <div class="mt-10 border-y border-argmin-slate-300/80">
-        <div class="grid gap-3 py-5 md:grid-cols-[112px_1fr] md:gap-6">
-          <p class="font-mono text-sm text-argmin-slate-700">Scope</p>
-          <p class="text-base leading-7 text-argmin-slate-700">
-            Enterprise AI attribution, optimization, and intervention at request time.
-          </p>
-        </div>
-        <div class="grid gap-3 border-t border-argmin-slate-300/70 py-5 md:grid-cols-[112px_1fr] md:gap-6">
-          <p class="font-mono text-sm text-argmin-slate-700">Posture</p>
-          <p class="text-base leading-7 text-argmin-slate-700">
-            Deploys inside customer trust boundaries with read-only connectors and fail-open defaults.
-          </p>
-        </div>
-        <div class="grid gap-3 border-t border-argmin-slate-300/70 py-5 md:grid-cols-[112px_1fr] md:gap-6">
-          <p class="font-mono text-sm text-argmin-slate-700">Response</p>
-          <p class="text-base leading-7 text-argmin-slate-700">
-            We respond directly when there is a real inference attribution problem to solve.
-          </p>
-        </div>
-      </div>
+      <dl class="mt-10 border-y border-argmin-slate-300/80">
+        {contact.details.map((detail, index) => (
+          <div
+            class:list={[
+              "grid gap-3 py-5 md:grid-cols-[116px_1fr] md:gap-6",
+              index > 0 && "border-t border-argmin-slate-300/70",
+            ]}
+          >
+            <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+              {detail.label}
+            </dt>
+            <dd class="text-base leading-7 text-argmin-slate-700">{detail.value}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
 
-    <div class="surface-panel p-6 md:p-8 js-reveal" data-reveal-delay="120">
+    <div class="surface-panel p-6 md:p-8">
       <div data-form-container aria-live="polite">
         <form
           id="contact-form"
@@ -67,8 +56,6 @@ const hasEndpoint = endpoint.length > 0;
           data-default-label={hasEndpoint ? contact.submitLabel : contact.unavailableLabel}
           data-sending-label={contact.sendingLabel}
           data-success-message={contact.successMessage}
-          action={hasEndpoint ? endpoint : undefined}
-          method="post"
         >
           <div>
             <label for="name" class="field-label">Name</label>
@@ -77,6 +64,7 @@ const hasEndpoint = endpoint.length > 0;
               name="name"
               type="text"
               required
+              autocomplete="name"
               placeholder="Your name"
               class="field-input"
             />
@@ -89,6 +77,7 @@ const hasEndpoint = endpoint.length > 0;
               name="email"
               type="email"
               required
+              autocomplete="email"
               placeholder="work@company.com"
               class="field-input"
             />
@@ -101,6 +90,7 @@ const hasEndpoint = endpoint.length > 0;
               name="company"
               type="text"
               required
+              autocomplete="organization"
               placeholder="Company name"
               class="field-input"
             />
@@ -117,12 +107,12 @@ const hasEndpoint = endpoint.length > 0;
             ></textarea>
           </div>
 
-          <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+          <input type="text" id="gotcha" name="_gotcha" class="sr-only" tabindex="-1" autocomplete="off" />
 
           <button
             data-submit-button
             id="submit-btn"
-            type="submit"
+            type="button"
             disabled={!hasEndpoint}
             aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
             class="primary-button flex w-full items-center justify-center px-6 py-3.5 text-base disabled:cursor-not-allowed disabled:bg-argmin-slate-100 disabled:text-argmin-slate-500"
@@ -130,23 +120,14 @@ const hasEndpoint = endpoint.length > 0;
             {hasEndpoint ? contact.submitLabel : contact.unavailableLabel}
           </button>
 
-          <p
-            id="form-config-error"
-            hidden={hasEndpoint}
-            class="text-sm leading-6 text-argmin-slate-500"
-          >
+          <p id="form-config-error" hidden={hasEndpoint} class="text-sm leading-6 text-argmin-slate-500">
             {contact.unavailableMessage}{" "}
             <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
               {contactEmail}
             </a>.
           </p>
 
-          <p
-            data-form-error
-            hidden
-            role="alert"
-            class="text-sm leading-6 text-argmin-error"
-          >
+          <p data-form-error hidden role="alert" class="text-sm leading-6 text-argmin-error">
             {contact.errorMessage}{" "}
             <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
               {contactEmail}
@@ -156,19 +137,12 @@ const hasEndpoint = endpoint.length > 0;
       </div>
 
       <noscript>
-        {!hasEndpoint && (
-          <p class="mt-6 text-sm leading-6 text-argmin-slate-500">
-            {contact.unavailableMessage}{" "}
-            <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
-              {contactEmail}
-            </a>.
-          </p>
-        )}
-        {hasEndpoint && (
-          <p class="mt-6 text-sm leading-6 text-argmin-slate-500">
-            JavaScript is disabled. The form will still submit, but you will be taken to the hosted confirmation page.
-          </p>
-        )}
+        <p class="mt-6 text-sm leading-6 text-argmin-slate-500">
+          JavaScript is required for the hosted form flow. Please email{" "}
+          <a class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>
+            {contactEmail}
+          </a>.
+        </p>
       </noscript>
     </div>
   </div>

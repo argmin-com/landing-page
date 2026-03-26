@@ -3,72 +3,60 @@
 Authoritative sources:
 - `argmin_landing_prd_v1_2.pdf`
 - `argmin_landing_eng_spec_v1_2.pdf`
+- `argmin_landing_page_deployment_guide.pdf`
 
 Repository evidence:
-- The repo only contained `README.md` and Git metadata at project start.
-- There was no prior application structure, CI pipeline, or deployment config to preserve.
-- No Formspree or related deployment environment variables were present locally.
-- No founder headshots were stored in the repository.
+- The production artifact is a static Astro site deployed to Cloudflare Pages.
+- The repo intentionally keeps a single application route: `/`.
+- Legacy `/contact`, `/demo`, and `/team` links are handled by `public/_redirects` rather than extra page implementations.
+- Contact submission depends on `PUBLIC_FORMSPREE_URL`; when absent, the build must fail closed and show the visible email fallback.
 
 Frontend direction:
-- Visual thesis: a technical memo rendered as a premium landing page, with precise typography, generous whitespace, and one restrained accent color.
+- Visual thesis: a technical memo rendered as a restrained, credible landing page with one dominant idea per section.
 - Content plan: hero, problem statement, value proposition grid, how-it-works sequence, founder credibility, design-partner CTA, minimal footer.
-- Interaction thesis: smooth-scroll hero CTA, restrained hover/focus states, and inline contact form state transitions only.
+- Interaction thesis: hero CTA scroll, visible focus states, and inline contact-form state transitions only.
 
 ## Execution Plan
 
-1. Bootstrap the Astro + Tailwind project structure defined in the engineering spec.
-2. Implement the seven required sections with approved copy and responsive behavior.
-3. Add metadata, analytics hooks, Formspree integration, and fail-safe handling.
-4. Generate the required static assets that can be produced locally and wire deployment-facing config.
-5. Validate build, behavior, accessibility, and performance proxies, then commit and push validated increments.
+1. Keep the app surface to the approved single-page structure.
+2. Enforce attribution-first copy and trust-boundary accuracy.
+3. Preserve static deployability for Cloudflare Pages, including headers and redirects.
+4. Validate the no-env fallback, metadata, analytics wiring, and responsive behavior.
 
 ## Requirement Matrix
 
 | ID | Source | Requirement | Subsystems | Status | Validation | Risk | Dependencies |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| FR-101 | PRD 3.1 | Full-viewport hero with headline, subheadline, CTA, optional attribution diagram | `Hero.astro`, `index.astro` | Complete | Build, desktop/mobile browser review | Medium | Final approved copy |
-| FR-102 | PRD 3.1 | Problem narrative section with analytical register | `Problem.astro` | Complete | Build, content review | Low | None |
-| FR-103 | PRD 3.1 | Four-item value proposition grid | `ValueProps.astro` | Complete | Build, responsive review | Low | None |
-| FR-104 | PRD 3.1 | Three-step Measure / Attribute / Intervene section | `HowItWorks.astro` | Complete | Build, responsive review | Low | None |
-| FR-105 | PRD 3.1 | Founder section with headshots, bios, LinkedIn links | `Founders.astro`, `public/*` | Complete | Build, browser review, asset inspection | High | Local source images |
-| FR-106 | PRD 3.1 | Contact CTA text plus four-field form with inline success/error states | `Contact.astro` | Complete | Build, Playwright failure/success validation | High | Live Formspree endpoint for production |
-| FR-107 | PRD 3.1 | Minimal footer with wordmark/logo and copyright | `Footer.astro` | Complete | Build, browser review | Low | Optional logo asset |
-| FR-108 | PRD 3.2 | CTA smooth-scroll to contact | `Hero.astro`, `global.css` | Complete | Playwright hash/scroll validation | Low | None |
-| FR-109 | PRD 3.2 | JS-based JSON form submission with loading state and inline replacement | `Contact.astro` | Complete | Playwright failure path + mocked success path | High | Live Formspree endpoint for production |
-| FR-110 | PRD 3.2 | Native HTML5 validation on required inputs | `Contact.astro` | Complete | Browser validation UI inspection | Medium | None |
-| FR-111 | PRD 3.2 | No extra interactions or complex UI chrome | All page components | Complete | Code review, production build review | Low | None |
-| NFR-01 | PRD 4 | Sub-1s load target and tight asset budget | Config, assets, page structure | Complete | Build artifact review, Lighthouse | High | Optimized images |
-| NFR-02 | PRD 4 | Responsive design across mobile, tablet, desktop | All page components | Complete | Responsive browser review, layout inspection | Medium | None |
-| NFR-03 | PRD 4 | WCAG 2.1 AA basics for semantics, contrast, keyboard access | Layout, components, form | Complete | Lighthouse accessibility, semantic review | Medium | None |
-| NFR-04 | PRD 4, Eng Spec 5 | Plausible pageview and custom event tracking, no cookies | `BaseLayout.astro`, `Hero.astro`, `Contact.astro` | Complete | Source review, localhost console review | Medium | Plausible site setup for live verification |
-| NFR-05 | PRD 4, Eng Spec 3.1 | SEO baseline metadata, canonical URL, OG/Twitter tags | `BaseLayout.astro`, `public/og-image.png` | Complete | Source inspection, Lighthouse SEO | Medium | Live social preview check |
-| NFR-06 | PRD 4, Eng Spec 6 | HTTPS on Cloudflare Pages and redirect expectations | Docs/config | Blocked (external) | Deployment checklist | Medium | Cloudflare configuration |
-| NFR-07 | PRD 4 | Same-day deploy constraint and minimal design discipline | Entire project | Complete | Scope review, build review | Low | None |
-| ENG-STRUCTURE | Eng Spec 2 | Astro project structure, single page, base layout, section components | Repo structure | Complete | File review, build | Low | None |
-| ENG-FORM | Eng Spec 4, 10 | Formspree contract, honeypot, fail-safe behavior, visible fallback email | `Contact.astro`, `.env.example` | Complete | Playwright failure/success validation | High | Live Formspree endpoint |
-| ENG-ANALYTICS | Eng Spec 5 | Plausible script and event wiring | `BaseLayout.astro`, `Hero.astro`, `Contact.astro` | Complete | Source review, localhost behavior review | Medium | Plausible site setup |
-| ENG-DEPLOY | Eng Spec 6 | Cloudflare Pages build settings and deploy contract | `package.json`, docs | Blocked (external) | Build review, deploy notes | Medium | Cloudflare project |
-| ENG-STYLE | Eng Spec 8 | Tailwind config, palette, system font stack, smooth scroll CSS | `tailwind.config.mjs`, `global.css` | Complete | File review, build | Low | None |
-| ENG-IMAGES | Eng Spec 9 | Founder image sizing and OG image/fallback asset requirements | `public/*` | Complete | Asset inspection, build review | High | Local source images |
-| ENG-FAILSAFE | Eng Spec 10 | Graceful behavior for Formspree failure, JS disabled, blocked analytics | `Contact.astro`, copy | Complete | Playwright failure validation, semantic review | High | Live Formspree endpoint for production submission |
+| FR-101 | PRD 3.1 | Full-viewport hero with headline, subheadline, CTA, optional attribution diagram | `src/components/Hero.astro`, `src/content/site.ts` | Complete | Build, browser review | Medium | Final founder copy approval |
+| FR-102 | PRD 3.1 | Problem narrative section with analytical register and no generic market fluff | `src/components/Problem.astro`, `src/content/site.ts` | Complete | Source review, build | Low | None |
+| FR-103 | PRD 3.1 | Exactly four value proposition blocks | `src/components/ValueProps.astro`, `src/content/site.ts` | Complete | Responsive review, build | Low | None |
+| FR-104 | PRD 3.1 | Measure / Attribute / Intervene sequence | `src/components/HowItWorks.astro`, `src/content/site.ts` | Complete | Responsive review, build | Low | None |
+| FR-105 | PRD 3.1 | Two founder profiles with circular headshots, bios, and LinkedIn links | `src/components/Founders.astro`, `public/*` | Complete | Browser review, asset inspection | Medium | Final headshot approval |
+| FR-106 | PRD 3.1 | Contact intro plus four-field form with inline states and visible email fallback | `src/components/Contact.astro`, `src/content/site.ts` | Complete | Build, Playwright review, fallback validator | High | Live Formspree endpoint for production submission |
+| FR-107 | PRD 3.1 | Minimal footer with wordmark and copyright only | `src/components/Footer.astro` | Complete | Build, source review | Low | None |
+| FR-108 | PRD 3.2 | Hero CTA smooth-scrolls to contact section | `src/components/Hero.astro`, `src/styles/global.css` | Complete | Browser review | Low | None |
+| FR-109 | PRD 3.2 | JSON form submission with loading state and inline success/failure handling | `src/components/Contact.astro`, `public/scripts/site.js` | Complete | Playwright review | High | Live Formspree endpoint for production verification |
+| FR-110 | PRD 3.2 | Native HTML5 validation on required fields | `src/components/Contact.astro`, `public/scripts/site.js` | Complete | Browser review | Medium | None |
+| FR-111 | PRD 3.2 | No extra interactions or UI chrome beyond CTA and contact form | `src/pages/index.astro`, `src/components/*`, `public/scripts/site.js` | Complete | Source review, build | Low | None |
+| NFR-01 | PRD 4 | Tight performance budget and static output | `package.json`, `astro.config.mjs`, `src/styles/global.css`, `public/*` | Complete | Build artifact review | Medium | Asset sizes |
+| NFR-02 | PRD 4 | Responsive readability across desktop, tablet, and mobile | All user-facing components | Complete | Playwright mobile/desktop review | Medium | None |
+| NFR-03 | PRD 4 | WCAG 2.1 AA basics for semantics, contrast, and keyboard access | Layout, components, form | Complete | Source review, browser review | Medium | None |
+| NFR-04 | PRD 4 / Eng Spec 5 | Plausible pageview plus `cta_click` and `form_submit` events | `src/layouts/BaseLayout.astro`, `public/scripts/site.js` | Complete | Source review, browser flow review | Medium | Plausible account for live verification |
+| NFR-05 | PRD 4 / Eng Spec 3.1 | Title, description, canonical, OG/Twitter tags, robots meta | `src/layouts/BaseLayout.astro`, `src/content/site.ts`, `public/robots.txt` | Complete | Source review | Low | Live social-preview verification |
+| NFR-06 | PRD 4 / Eng Spec 6 | HTTPS and redirect behavior on Cloudflare Pages | `public/_redirects`, docs | Blocked (external) | Deployment checklist | Medium | Cloudflare Pages and DNS access |
+| NFR-07 | PRD 4 | Same-day deploy discipline with minimal chrome | Entire repo | Complete | Scope review | Low | None |
+| ENG-STRUCTURE | Eng Spec 2 | Single-page Astro structure with base layout and section components | `src/pages/index.astro`, `src/layouts/BaseLayout.astro`, `src/components/*` | Complete | File review, build | Low | None |
+| ENG-FORM | Eng Spec 4 / 10 | Formspree endpoint via env var, honeypot, fail-closed fallback behavior | `src/lib/formspree.ts`, `src/components/Contact.astro`, `public/scripts/site.js`, `.env.example` | Complete | Build, fallback validator | High | Live Formspree endpoint |
+| ENG-ANALYTICS | Eng Spec 5 | Deferred Plausible script and custom event wiring | `src/layouts/BaseLayout.astro`, `public/scripts/site.js` | Complete | Source review | Medium | Plausible account |
+| ENG-DEPLOY | Eng Spec 6 | Static Cloudflare Pages build contract with no Cloudflare adapter | `astro.config.mjs`, `package.json`, docs, `public/_headers`, `public/_redirects` | Complete | File review, build | Medium | Cloudflare project settings |
+| ENG-STYLE | Eng Spec 8 | Tailwind palette and system-font preference | `tailwind.config.mjs`, `src/styles/global.css` | Complete | File review, build | Low | None |
+| ENG-IMAGES | Eng Spec 9 | Founder image and OG/fav asset requirements | `public/*` | Complete | Asset inspection | Medium | Final asset review |
+| ENG-FAILSAFE | Eng Spec 10 | Graceful handling when Formspree is unavailable or JavaScript is disabled | `src/components/Contact.astro`, `public/scripts/site.js`, validators | Complete | Build, fallback validator, browser review | High | Live production verification |
+| ENG-DRIFT | Repo control | Guard against design and security regression drift | `scripts/validate-design-system.mjs`, `scripts/validate-security-headers.mjs`, `package.json` | Complete | `npm run audit:site` | Medium | CI or disciplined local validation |
 
 ## Known External Dependencies
 
-- A real `PUBLIC_FORMSPREE_URL` is required for production form submissions.
-- Plausible must have `argmin.co` configured for live analytics validation.
+- A real `PUBLIC_FORMSPREE_URL` is required for production submissions.
+- Plausible must have `argmin.co` configured to verify live `cta_click` and `form_submit` events.
 - Cloudflare Pages and DNS must be configured outside the repo.
-- A final live social preview check should be done after deployment to verify the production OG image and canonical domain behavior.
-
-## Validation Evidence
-
-- `npm run check`: passed on March 24, 2026 with 0 errors, 0 warnings, 0 hints
-- `npm run build`: passed on March 24, 2026
-- Dist size review: `dist/` totals about 36 KB on disk; Lighthouse reported about 47.8 KB transfer weight
-- Lighthouse against the static build: 100 performance / 100 accessibility / 100 best practices / 100 SEO
-- Playwright CLI browser validation:
-  - desktop hero renders correctly with the optional attribution diagram
-  - mobile viewport `390x844` has no horizontal overflow and all multi-column sections collapse to one column
-  - CTA scroll updates the hash to `#contact` and positions the contact section near the top of the viewport
-  - placeholder endpoint path renders the required fallback submission message
-  - mocked 200 response replaces the form with `Thank you. We will be in touch shortly.`
+- Social preview verification still requires a live production URL.

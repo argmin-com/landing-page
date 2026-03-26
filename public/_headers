@@ -1,6 +1,6 @@
 /*
-  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://formspree.io; object-src 'none'; script-src 'self' https://plausible.io; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://plausible.io https://formspree.io; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests
-  Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=(), usb=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://formspree.io; object-src 'none'; script-src 'self' https://plausible.io; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://formspree.io https://plausible.io; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests
   Referrer-Policy: strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
+  Permissions-Policy: camera=(), geolocation=(), microphone=(), payment=(), usb=()

@@ -1,60 +1,32 @@
 ---
 import { siteConfig } from "../content/site";
+import AttributionChain from "./AttributionChain.astro";
 
-const { steps, attributionLayers } = siteConfig;
-
-const toneClasses = {
-  high: "border-argmin-success/20 bg-argmin-success-light text-argmin-success",
-  medium: "border-argmin-warning/20 bg-argmin-warning-light text-argmin-warning",
-  low: "border-dashed border-argmin-error/40 bg-argmin-error-light text-argmin-error",
-} as const;
+const { howItWorksTitle, howItWorksIntro, steps } = siteConfig;
 ---
 
 <section id="how" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
-  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16">
-    <div class="js-reveal">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
+    <div>
       <p class="section-eyebrow">Mechanism</p>
-      <h2 class="section-title">Measure first. Attribute second. Intervene before waste ships.</h2>
+      <h2 class="section-title max-w-none">{howItWorksTitle}</h2>
+      <p class="section-copy max-w-3xl">{howItWorksIntro}</p>
 
-      <div class="mt-10 border-t border-argmin-slate-300/80">
-        {steps.map((step, index) => (
-          <article class:list={["grid gap-4 py-6 md:grid-cols-[70px_1fr]", index > 0 && "border-t border-argmin-slate-300/70"]}>
-            <p class="font-mono text-sm text-argmin-slate-500">{step.number}</p>
-            <div>
-              <h3 class="font-display text-2xl font-semibold tracking-[-0.02em] text-argmin-navy">{step.title}</h3>
-              <p class="mt-3 text-base leading-7 text-argmin-slate-700">{step.description}</p>
-            </div>
+      <div class="mt-10 space-y-6">
+        {steps.map((step) => (
+          <article class="border-t border-argmin-slate-300/80 pt-5">
+            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
+              {step.number}
+            </p>
+            <h3 class="mt-3 font-display text-[1.3rem] font-semibold tracking-[-0.02em] text-argmin-navy">
+              {step.title}
+            </h3>
+            <p class="mt-3 text-base leading-7 text-argmin-slate-700">{step.description}</p>
           </article>
         ))}
       </div>
     </div>
 
-    <div class="js-reveal" data-reveal-delay="120">
-      <div class="surface-panel overflow-hidden">
-        <div class="border-b border-argmin-slate-300/80 px-6 py-5 md:px-8">
-          <p class="section-eyebrow text-argmin-slate-500">Resolved attribution record</p>
-          <p class="mt-2 max-w-[34ch] font-display text-[1.35rem] font-semibold leading-tight tracking-[-0.02em] text-argmin-navy">
-            One request, six layers, explicit confidence.
-          </p>
-        </div>
-
-        <div class="px-6 py-4 md:px-8">
-          {attributionLayers.map((layer, index) => (
-            <div class:list={["grid gap-3 py-4 md:grid-cols-[112px_minmax(0,1fr)_auto] md:items-center", index > 0 && "border-t border-argmin-slate-300/70"]}>
-              <p class="font-mono text-sm text-argmin-slate-500">{layer.label}</p>
-              <p class="text-sm leading-7 text-argmin-slate-700 md:text-base">{layer.value}</p>
-              <span
-                class:list={[
-                  "inline-flex w-fit items-center rounded-full border px-3 py-1 text-[0.75rem] font-medium tracking-[0.01em]",
-                  toneClasses[layer.tone],
-                ]}
-              >
-                {layer.confidence}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <AttributionChain />
   </div>
 </section>

@@ -5,23 +5,23 @@ const { problem } = siteConfig;
 ---
 
 <section id="problem" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
-  <div class="section-shell grid gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-16">
-    <div class="js-reveal">
+  <div class="section-shell grid gap-10 lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)] lg:gap-16">
+    <div class="max-w-3xl">
+      <div class="section-rule" aria-hidden="true"></div>
       <p class="section-eyebrow">The Problem</p>
-      <h2 class="section-title">{problem.title}</h2>
+      <h2 id="problem-heading" class="section-title max-w-none">{problem.title}</h2>
+      <p class="section-copy">{problem.body}</p>
     </div>
 
-    <div class="js-reveal" data-reveal-delay="80">
-      <p class="section-copy mt-0">{problem.body}</p>
-
-      <div class="mt-10 border-y border-argmin-slate-300/80">
-        {problem.constraints.map((constraint, index) => (
-          <div class:list={["grid gap-3 py-5 md:grid-cols-[92px_1fr] md:gap-6", index > 0 && "border-t border-argmin-slate-300/70"]}>
-            <p class="font-mono text-sm text-argmin-slate-500">Constraint</p>
-            <p class="text-base leading-7 text-argmin-slate-700">{constraint}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    <ul class="space-y-5 lg:pt-12">
+      {problem.constraints.map((constraint, index) => (
+        <li class="border-t border-argmin-slate-300/80 pt-5">
+          <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
+            Constraint {String(index + 1).padStart(2, "0")}
+          </p>
+          <p class="mt-3 text-base leading-7 text-argmin-slate-700">{constraint}</p>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>

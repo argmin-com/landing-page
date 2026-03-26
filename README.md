@@ -1,24 +1,25 @@
 # Argmin Landing Page
 
-Static Astro landing page for `argmin.co`, implemented from the March 24, 2026 PRD and engineering specification.
+Static Astro landing page for `argmin.co`, aligned to the March 24, 2026 PRD, engineering specification, and deployment guide.
 
 ## Design Source Of Truth
 
-Future modifications in this repository should use the Argmin source documents as the governing reference, not ad hoc styling choices.
+Future modifications in this repository should use the source documents as the governing reference, not the current implementation.
 
 - Repo reference: `docs/design-source-of-truth.md`
-- External source set:
-  - `/Users/wargniez/Documents/Argmin/argmin_landing_prd_v1_2.pdf`
-  - `/Users/wargniez/Documents/Argmin/argmin_landing_eng_spec_v1_2.pdf`
-  - `/Users/wargniez/Documents/Argmin/argmin_landing_page_deployment_guide.pdf`
-  - `/Users/wargniez/Documents/Argmin/argmin-vision-mission.pdf`
-  - `/Users/wargniez/Documents/Argmin/argmin_design_principles.docx`
-  - `/Users/wargniez/Documents/Argmin/argmin_style_guide.docx`
-  - `/Users/wargniez/Documents/Argmin/argmin_design_tokens.json`
-  - `/Users/wargniez/Documents/Argmin/argmin_ui_kit.html`
-  - `/Users/wargniez/Documents/Argmin/argmin_ui_kit_reference.docx`
+- External product sources:
+  - `argmin_landing_prd_v1_2.pdf`
+  - `argmin_landing_eng_spec_v1_2.pdf`
+  - `argmin_landing_page_deployment_guide.pdf`
+- Supplementary brand sources, when available:
+  - `argmin-vision-mission.pdf`
+  - `argmin_design_principles.docx`
+  - `argmin_style_guide.docx`
+  - `argmin_design_tokens.json`
+  - `argmin_ui_kit.html`
+  - `argmin_ui_kit_reference.docx`
 
-When making or reviewing landing-page changes, validate them against those documents and cite the relevant source when a decision depends on brand, layout, copy tone, or implementation constraints.
+When the supplementary brand files are absent in a clone, the three product PDFs above plus the repo docs are the minimum required reference set.
 
 ## Stack
 
@@ -31,11 +32,14 @@ When making or reviewing landing-page changes, validate them against those docum
 ## Project Structure
 
 - `src/layouts/BaseLayout.astro`: metadata, canonical tags, OG/Twitter tags, Plausible script
-- `src/components/`: hero, problem, value proposition grid, how-it-works, founders, contact, footer
-- `src/pages/index.astro`: single-page composition in the required order
-- `src/styles/global.css`: Tailwind directives plus smooth-scroll behavior
-- `public/`: favicon, founder images, OG image
-- `docs/requirements-matrix.md`: requirement traceability, repo evidence, validation map
+- `src/components/`: hero, problem, value grid, how-it-works, founders, contact, footer
+- `src/pages/index.astro`: single-page composition in the approved order
+- `src/content/site.ts`: approved copy and metadata content model
+- `public/_headers`: Cloudflare Pages response headers
+- `public/_redirects`: legacy path redirects to homepage anchors
+- `scripts/validate-contact-fallbacks.mjs`: build-time check for the missing-env contact fallback
+- `scripts/validate-design-system.mjs`: repo-level check for the single-page design contract
+- `scripts/validate-security-headers.mjs`: repo-level check for headers and script posture
 
 ## Local Development
 
@@ -50,6 +54,9 @@ Validation commands:
 npm run check
 npm run build
 npm run validate:contact-fallbacks
+npm run validate:design-system
+npm run validate:security-headers
+npm run audit:site
 ```
 
 ## Environment
@@ -60,8 +67,7 @@ Create `.env` from `.env.example` and provide a real Formspree endpoint:
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/<form_id>
 ```
 
-Without that value, the form fails closed: the submit button is disabled and the page renders an inline
-contact-email fallback instead of shipping a live Formspree endpoint.
+Without that value, the form fails closed: the submit button is disabled, no live Formspree endpoint is shipped, and the page renders the visible `richard@argmin.co` fallback.
 
 ## Deployment Contract
 
@@ -69,27 +75,23 @@ Target host: Cloudflare Pages
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Recommended Node version: `18` in Cloudflare Pages to match the engineering spec
+- Recommended Node version: `18`
 - Required environment variable: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`
+- Legacy redirects: `_redirects` handles `/contact`, `/demo`, and `/team`
+- Security headers: `_headers` defines the CSP, referrer policy, and related browser protections
 - DNS/TLS: configured in Cloudflare outside this repository
 
-## Validation Evidence
+## Source Constraints
 
-Local validation completed on March 24, 2026:
+- Single-page only. No navbar, no hamburger menu, no sticky header, no route-based marketing pages.
+- Hero CTA scrolls to `#contact`.
+- Contact form submits via JSON fetch, never via hosted Formspree redirect.
+- Raw telemetry and operational data must not be described as leaving the customer environment.
+- Integrations are read-only unless a source document explicitly says otherwise.
+- No sitemap requirement for this site.
 
-- `npm run check`: passed with 0 errors, 0 warnings, 0 hints
-- `npm run build`: passed
-- `npm run validate:contact-fallbacks`: passes against the no-env build and verifies the inline config-missing fallback plus the no-JavaScript contact path
-- Dist artifact size: `dist/` totals about 36 KB on disk; Lighthouse measured about 47.8 KB transfer weight
-- Lighthouse against the built static output: 100 performance / 100 accessibility / 100 best practices / 100 SEO
-- Browser validation via Playwright CLI:
-  - hero CTA updates the URL hash to `#contact` and scrolls the contact section near the top of the viewport
-  - failure path shows `Submission failed. Please email us directly at contact@argmin.co.`
-  - mocked success path replaces the form with `Thank you. We will be in touch shortly.`
-  - mobile pass at `390x844` showed no horizontal overflow and single-column layout for the multi-column sections
-
-## Remaining External Steps
+## Remaining External Configuration
 
 - Configure a live Formspree form and set `PUBLIC_FORMSPREE_URL`
 - Verify live Plausible data for `cta_click` and `form_submit` on the production domain

@@ -1,78 +1,53 @@
 ---
 import { siteConfig } from "../content/site";
 
-interface Props {
-  eyebrow?: string;
-  title?: string;
-  intro?: string;
-}
-
-const { founders } = siteConfig;
-const {
-  eyebrow = "Founders",
-  title = "Built by people who have operated enterprise infrastructure at scale.",
-  intro,
-} = Astro.props;
+const { founders, foundersSection } = siteConfig;
 ---
 
-<section id="founders" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
+<section id="founders" class="border-b border-argmin-slate-300/70 bg-argmin-ice/20 px-6 py-16 md:py-24">
   <div class="section-shell">
-    <div class="max-w-3xl js-reveal">
-      <p class="section-eyebrow">{eyebrow}</p>
-      <h2 class="section-title">{title}</h2>
-      {intro && <p class="section-copy">{intro}</p>}
-    </div>
+    <p class="section-eyebrow">Founders</p>
+    <h2 class="section-title max-w-none">{foundersSection.title}</h2>
+    <p class="section-copy max-w-3xl">{foundersSection.copy}</p>
 
-    <div class="mt-12 border-y border-argmin-slate-300/80">
-      {founders.map((founder, index) => (
-        <article
-          class:list={[
-            "grid gap-6 py-8 md:grid-cols-[170px_minmax(0,1fr)] md:gap-8 js-reveal",
-            index > 0 && "border-t border-argmin-slate-300/70",
-          ]}
-          data-reveal-delay={String(index * 80)}
-        >
-          <a
-            href={founder.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`View ${founder.name} on LinkedIn`}
-            class="block w-fit"
-          >
-            <picture>
+    <div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
+      {founders.map((founder) => (
+        <article class="border-t border-argmin-slate-300/80 pt-6">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
+            <picture class="shrink-0">
               <source srcset={founder.webp} type="image/webp" />
               <img
                 src={founder.jpg}
                 alt={founder.alt}
-                class="h-48 w-36 rounded-xl border border-argmin-slate-300 object-cover shadow-sm md:h-56 md:w-40"
-                width="160"
-                height="224"
+                class="h-28 w-28 rounded-full object-cover md:h-32 md:w-32"
+                width="128"
+                height="128"
                 loading="lazy"
               />
             </picture>
-          </a>
 
-          <div class="min-w-0">
-            <div class="flex flex-wrap items-center gap-3">
-              <h3 class="font-display text-2xl font-semibold tracking-[-0.02em] text-argmin-navy">
-                {founder.name}
-              </h3>
-              <span class="rounded-full bg-argmin-ice px-3 py-1 text-sm font-medium text-argmin-azure">
-                {founder.title}
-              </span>
+            <div class="min-w-0">
+              <div class="flex flex-wrap items-center gap-3">
+                <h3 class="font-display text-[1.55rem] font-semibold tracking-[-0.03em] text-argmin-navy">
+                  {founder.name}
+                </h3>
+                <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+                  {founder.title}
+                </p>
+              </div>
+              <a
+                href={founder.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${founder.name} on LinkedIn`}
+                class="mt-3 inline-flex text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+              >
+                LinkedIn
+              </a>
             </div>
-
-            <p class="mt-4 max-w-[68ch] text-base leading-7 text-argmin-slate-700">{founder.bio}</p>
-
-            <a
-              href={founder.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
-            >
-              View LinkedIn
-            </a>
           </div>
+
+          <p class="mt-5 text-base leading-7 text-argmin-slate-700">{founder.bio}</p>
         </article>
       ))}
     </div>
