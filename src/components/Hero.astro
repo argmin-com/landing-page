@@ -8,28 +8,25 @@ const revealClass = revealContent ? "" : "initial-hidden";
 ---
 
 <section class="flex min-h-screen items-center">
-  <div class="mx-auto flex w-full max-w-6xl -translate-y-6 flex-col items-center justify-center px-6 py-16 text-center md:-translate-y-8 md:py-20">
+  <div class="mx-auto flex w-full max-w-6xl -translate-y-6 flex-col items-start justify-center px-6 py-16 text-left md:-translate-y-8 md:py-20">
     <h1
       class="hero-headline max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-argmin-dark md:text-6xl lg:text-7xl xl:text-[5.5rem]"
     >
-      <span class="hero-headline-ghost block">
-        <span class="hero-headline-dark">Your AI </span><span class="hero-headline-muted-metallic">spend is invisible.</span>
-      </span>
-      <span class="hero-headline-focus mt-3 block md:mt-4">
-        <span class="hero-headline-dark">We make it </span><span class="hero-headline-accent hero-headline-metallic">attributable.</span>
-      </span>
+      <span class="hero-headline-dark block">Argmin</span>
     </h1>
-    <p class:list={["mt-6 max-w-2xl text-lg leading-relaxed text-argmin-dark md:text-xl", revealClass]}>
-      Deploys inside your environment. Builds a graph linking every inference call to the team and budget that
-      owns it. Intervenes at decision time.
+    <p
+      class:list={[
+        "hero-headline mt-6 max-w-4xl text-3xl font-semibold leading-[1.02] tracking-[-0.05em] text-argmin-dark md:text-5xl lg:text-6xl",
+        revealClass,
+      ]}
+    >
+      Know which teams use which AI models, at what cost, and why.
     </p>
   </div>
 </section>
 
 <style>
   .hero-headline {
-    perspective: 1200px;
-    transform-style: preserve-3d;
     font-family:
       "SF Pro Display",
       "Inter",
@@ -43,47 +40,7 @@ const revealClass = revealContent ? "" : "initial-hidden";
     text-wrap: balance;
   }
 
-  .hero-headline-ghost,
-  .hero-headline-focus {
-    transform-style: preserve-3d;
-    text-shadow:
-      0 1px 0 rgb(255 255 255 / 0.85),
-      0 2px 0 rgb(15 23 42 / 0.05),
-      0 12px 26px rgb(15 23 42 / 0.08);
-  }
-
   .hero-headline-dark {
-    color: rgb(17 17 17);
-  }
-
-  .hero-headline-accent {
-    display: inline-block;
-    text-shadow:
-      0 1px 0 rgb(255 255 255 / 0.55),
-      0 2px 0 rgb(15 23 42 / 0.08),
-      0 10px 20px rgb(2 6 23 / 0.12);
-    transform: translateZ(0);
-  }
-
-  .hero-headline-muted-metallic {
-    color: rgb(17 17 17);
-    -webkit-text-stroke: 1.1px rgb(17 17 17);
-    text-shadow:
-      0 1px 0 rgb(255 255 255 / 0.4),
-      0 0 1px rgb(17 17 17 / 0.08),
-      0 8px 18px rgb(2 6 23 / 0.06);
-  }
-
-  .hero-headline-ghost {
-    transform: translateZ(0) rotateX(0);
-  }
-
-  .hero-headline-focus {
-    position: relative;
-    transform: translateZ(0) rotateX(0);
-  }
-
-  .hero-headline-metallic {
     color: rgb(17 17 17);
   }
 </style>

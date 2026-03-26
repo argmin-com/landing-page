@@ -1,12 +1,12 @@
 ---
 import AttributionFlowDiagram from "../components/AttributionFlowDiagram.astro";
 import Contact from "../components/Contact.astro";
-import DecisionRule from "../components/DecisionRule.astro";
 import Footer from "../components/Footer.astro";
 import Founders from "../components/Founders.astro";
 import Hero from "../components/Hero.astro";
 import HowItWorks from "../components/HowItWorks.astro";
 import Problem from "../components/Problem.astro";
+import SubHeroBreak from "../components/SubHeroBreak.astro";
 import ValueProps from "../components/ValueProps.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -18,8 +18,8 @@ const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
     <Hero revealContent={false} />
     <div class="initial-hidden">
       <Problem />
-      <DecisionRule />
       <ValueProps />
+      <SubHeroBreak />
       <HowItWorks />
       <section class="px-6 py-10 md:py-14">
         <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center text-center">
