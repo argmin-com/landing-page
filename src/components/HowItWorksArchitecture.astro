@@ -37,18 +37,14 @@ const teamCosts = [
 
 <div class="architecture-shell">
   <div class="mx-auto w-full max-w-6xl">
-    <div class="max-w-3xl">
-      <p class="text-sm font-semibold uppercase tracking-[0.2em] text-argmin-dark">System Architecture</p>
-      <h3 class="mt-4 text-3xl font-semibold tracking-[-0.04em] text-argmin-dark md:text-4xl">
-        Raw enterprise signals become a confidence-scored attribution graph.
+    <div class="architecture-heading">
+      <h3 class="architecture-hero-title">
+        <span class="architecture-hero-line">Your AI Spend is Invisible.</span>
+        <span class="architecture-hero-line">We Make it Attributable.</span>
       </h3>
-      <p class="mt-4 max-w-2xl text-base leading-relaxed text-argmin-dark md:text-lg">
-        Fragmented systems are resolved into an ownership graph that can forecast cost, explain spend,
-        and drive intervention.
-      </p>
     </div>
 
-    <div class="architecture-grid mt-10 grid grid-cols-1 gap-5 lg:grid-cols-6">
+    <div class="architecture-grid mt-8 grid grid-cols-1 gap-5 lg:grid-cols-6">
       <section class="layer-card layer-card--interactive lg:col-span-1">
         <div class="layer-initial">
           <div class="initial-symbol initial-symbol--collect">
@@ -314,6 +310,25 @@ const teamCosts = [
     position: relative;
     overflow: hidden;
     padding: 0;
+  }
+
+  .architecture-heading {
+    max-width: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .architecture-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5.6vw, 5rem);
+    line-height: 0.93;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: rgb(255 255 255);
+  }
+
+  .architecture-hero-line {
+    display: block;
+    white-space: nowrap;
   }
 
   .architecture-shell::before {
