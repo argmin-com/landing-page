@@ -39,7 +39,7 @@ export const siteConfig = {
     ],
   },
   valuePropsIntro:
-    "The wedge is narrow on purpose: application-level AI cost and usage attribution for enterprise AI.",
+    "Argmin is narrow on purpose. It makes each model call attributable before AI spend turns into another blind recurring line item.",
   valueProps: [
     {
       label: "01",
@@ -66,9 +66,9 @@ export const siteConfig = {
         "The output is useful because it supports action: compare model routes, overlay budgets, and review questionable spend while the decision is still recent. Advisory first, enforcement only by explicit opt-in.",
     },
   ],
-  howItWorksTitle: "Collect. Resolve. Explain.",
+  howItWorksTitle: "Collect evidence. Resolve ownership. Show confidence.",
   howItWorksIntro:
-    "Collection, reconciliation, and decision support stay separate so the attribution chain remains auditable and the deployment posture stays low-risk.",
+    "The workflow is deliberate: gather the operational evidence, reconcile it into an ownership graph, then surface the confidence so finance, engineering, and security can make decisions without guessing.",
   steps: [
     {
       number: "01",
@@ -100,7 +100,7 @@ export const siteConfig = {
   foundersSection: {
     title: "Built by operators who have had to make infrastructure accountable.",
     copy:
-      "The founding team has built enterprise data and platform systems at Amazon, Cruise, Salesforce, Oxford, and the European Space Agency. The point of view comes from operating inside real cost, reliability, and governance constraints.",
+      "The team has built enterprise data, platform, and governance systems at Amazon, Cruise, Salesforce, Oxford, and the European Space Agency. The product point of view comes from working inside real cost, reliability, and trust-boundary constraints.",
   },
   founders: [
     {
@@ -123,9 +123,9 @@ export const siteConfig = {
     },
   ],
   contact: {
-    title: "Talk to Us",
+    title: "Bring us the spend you cannot explain.",
     intro:
-      "We are working with a limited number of design partners. If your team is already spending on AI models and cannot tell which teams use which models, at what cost, or whether the spend is justified, we should talk.",
+      "We are working with a limited number of design partners. If your team is already spending on AI models and cannot tell which service, team, or budget owns that spend, we should talk.",
     submitLabel: "Get in Touch",
     unavailableLabel: "Form Unavailable",
     sendingLabel: "Sending...",

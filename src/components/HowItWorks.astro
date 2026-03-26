@@ -5,28 +5,36 @@ import AttributionChain from "./AttributionChain.astro";
 const { howItWorksTitle, howItWorksIntro, steps } = siteConfig;
 ---
 
-<section id="how" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
-  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-    <div>
-      <p class="section-eyebrow">How It Works</p>
-      <h2 class="section-title max-w-none">{howItWorksTitle}</h2>
-      <p class="section-copy max-w-3xl">{howItWorksIntro}</p>
-
-      <div class="mt-10 space-y-6">
-        {steps.map((step) => (
-          <article class="border-t border-argmin-slate-300/80 pt-5">
-            <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-azure">
-              {step.number}
-            </p>
-            <h3 class="mt-3 font-display text-[1.3rem] font-semibold tracking-[-0.02em] text-argmin-navy">
-              {step.title}
-            </h3>
-            <p class="mt-3 text-base leading-7 text-argmin-slate-700">{step.description}</p>
-          </article>
-        ))}
-      </div>
+<section id="how" class="border-b border-white/10 bg-argmin-navy px-6 py-16 md:py-24">
+  <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-16">
+    <div class="max-w-xl lg:pt-6">
+      <p class="section-eyebrow section-eyebrow-inverse">How It Works</p>
+      <h2 class="section-title max-w-none text-white">{howItWorksTitle}</h2>
+      <p class="section-copy section-copy-inverse">{howItWorksIntro}</p>
     </div>
 
-    <AttributionChain />
+    <div class="space-y-6">
+      <div class="rounded-[1.75rem] border border-white/12 bg-white/[0.07] p-6 shadow-[0_28px_60px_rgba(4,20,38,0.35)] backdrop-blur-sm md:p-8">
+        <div class="space-y-6">
+          {steps.map((step) => (
+            <article class="grid gap-3 border-t border-white/10 pt-6 first:border-t-0 first:pt-0 md:grid-cols-[72px_minmax(0,1fr)] md:gap-6">
+              <p class="data-label text-argmin-sky">{step.number}</p>
+              <div>
+                <h3 class="font-display text-[1.3rem] font-semibold tracking-[-0.03em] text-white md:text-[1.55rem]">
+                  {step.title}
+                </h3>
+                <p class="mt-3 max-w-[46ch] text-base leading-7 text-white/80">
+                  {step.description}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      <div class="lg:ml-12">
+        <AttributionChain />
+      </div>
+    </div>
   </div>
 </section>

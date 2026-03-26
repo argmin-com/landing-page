@@ -2,11 +2,14 @@
 import { siteConfig } from "../content/site";
 ---
 
-<footer class="border-t border-argmin-slate-300/70 bg-white px-6 py-8 text-argmin-slate-500">
-  <div class="section-shell flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-    <p class="font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-argmin-navy">
-      {siteConfig.footer.wordmark}
-    </p>
+<footer class="border-t border-white/10 bg-argmin-navy px-6 py-8 text-white/60">
+  <div class="section-shell flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-white">
+        {siteConfig.footer.wordmark}
+      </p>
+      <p class="mt-1 text-sm text-white/40">Application-level AI cost attribution for enterprise AI.</p>
+    </div>
     <p class="text-sm">&copy; 2026 Argmin</p>
   </div>
 </footer>

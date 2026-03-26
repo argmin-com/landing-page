@@ -11,44 +11,51 @@ const endpoint = formspreeUrl.trim();
 const hasEndpoint = endpoint.length > 0;
 ---
 
-<section id="contact" class="scroll-mt-8 bg-argmin-ice px-6 py-16 md:py-24">
+<section id="contact" class="scroll-mt-8 border-t border-white/10 bg-argmin-navy px-6 py-16 md:py-24">
   <div class="section-shell grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
     <div class="max-w-xl">
-      <p class="section-eyebrow">Contact</p>
-      <h2 id="contact-heading" class="section-title max-w-none">{contact.title}</h2>
-      <p class="section-copy">
+      <p class="section-eyebrow section-eyebrow-inverse">Contact</p>
+      <h2 id="contact-heading" class="section-title max-w-none text-white">{contact.title}</h2>
+      <p class="section-copy section-copy-inverse">
         {contact.intro}{" "}
         You can also reach us directly at
         <a
-          class="font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+          class="font-medium text-white underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
           href={`mailto:${contactEmail}`}
         >
           {contactEmail}
         </a>.
       </p>
 
-      <dl class="mt-10 border-y border-argmin-slate-300/80">
+      <dl class="mt-10 border-y border-white/12">
         {contact.details.map((detail, index) => (
           <div
             class:list={[
               "grid gap-3 py-5 md:grid-cols-[116px_1fr] md:gap-6",
-              index > 0 && "border-t border-argmin-slate-300/70",
+              index > 0 && "border-t border-white/10",
             ]}
           >
-            <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+            <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/50">
               {detail.label}
             </dt>
-            <dd class="text-base leading-7 text-argmin-slate-700">{detail.value}</dd>
+            <dd class="text-base leading-7 text-white/80">{detail.value}</dd>
           </div>
         ))}
       </dl>
     </div>
 
-    <div class="surface-panel p-6 md:p-8">
+    <div class="surface-panel p-6 md:p-8 lg:p-10">
+      <div class="border-b border-argmin-slate-300/80 pb-5">
+        <p class="section-eyebrow">Start with the problem</p>
+        <p class="mt-3 max-w-[42ch] text-sm leading-7 text-argmin-slate-700">
+          A short note is enough. We respond directly when there is a real attribution, budget, or governance issue to untangle.
+        </p>
+      </div>
+
       <div data-form-container aria-live="polite">
         <form
           id="contact-form"
-          class="space-y-4"
+          class="space-y-4 pt-6"
           aria-labelledby="contact-heading"
           data-contact-form
           data-endpoint={endpoint}
@@ -115,7 +122,7 @@ const hasEndpoint = endpoint.length > 0;
             type="button"
             disabled={!hasEndpoint}
             aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
-            class="primary-button flex w-full items-center justify-center px-6 py-3.5 text-base disabled:cursor-not-allowed disabled:bg-argmin-slate-100 disabled:text-argmin-slate-500"
+            class="primary-button flex w-full items-center justify-center px-6 py-3.5 text-base disabled:cursor-not-allowed disabled:bg-argmin-slate-100 disabled:text-argmin-slate-500 sm:w-auto"
           >
             {hasEndpoint ? contact.submitLabel : contact.unavailableLabel}
           </button>

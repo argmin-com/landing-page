@@ -9,25 +9,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "npm run build && wrangler dev",
+    "preview": "npm run build && astro preview",
     "check": "astro check",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
     "validate:design-system": "node scripts/validate-design-system.mjs",
     "validate:security-headers": "node scripts/validate-security-headers.mjs",
-    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:design-system && npm run validate:security-headers",
-    "deploy": "npm run build && wrangler deploy",
-    "cf-typegen": "wrangler types"
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:design-system && npm run validate:security-headers"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "12",
     "@astrojs/tailwind": "^6.0.2",
     "astro": "^5.18.1",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
-    "typescript": "^5.9.3",
-    "wrangler": "^4.77.0"
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "undici": "7.24.6",

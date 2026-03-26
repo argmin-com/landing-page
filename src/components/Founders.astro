@@ -4,50 +4,48 @@ import { siteConfig } from "../content/site";
 const { founders, foundersSection } = siteConfig;
 ---
 
-<section id="founders" class="border-b border-argmin-slate-300/70 bg-argmin-ice/20 px-6 py-16 md:py-24">
+<section id="founders" class="border-b border-argmin-slate-300/70 bg-white px-6 py-16 md:py-24">
   <div class="section-shell">
     <p class="section-eyebrow">Founders</p>
     <h2 class="section-title max-w-none">{foundersSection.title}</h2>
     <p class="section-copy max-w-3xl">{foundersSection.copy}</p>
 
-    <div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
+    <div class="mt-12 border-t border-argmin-slate-300/80">
       {founders.map((founder) => (
-        <article class="border-t border-argmin-slate-300/80 pt-6">
-          <div class="flex flex-col gap-5 sm:flex-row sm:items-start">
-            <picture class="shrink-0">
+        <article class="grid gap-6 border-b border-argmin-slate-300/80 py-8 lg:grid-cols-[160px_minmax(0,0.36fr)_minmax(0,1fr)] lg:gap-10 lg:py-10">
+          <picture class="shrink-0">
               <source srcset={founder.webp} type="image/webp" />
               <img
                 src={founder.jpg}
                 alt={founder.alt}
-                class="h-28 w-28 rounded-full object-cover md:h-32 md:w-32"
-                width="128"
-                height="128"
+                class="h-32 w-32 rounded-[1.5rem] object-cover md:h-36 md:w-36"
+                width="144"
+                height="144"
                 loading="lazy"
               />
-            </picture>
+          </picture>
 
-            <div class="min-w-0">
-              <div class="flex flex-wrap items-center gap-3">
-                <h3 class="font-display text-[1.55rem] font-semibold tracking-[-0.03em] text-argmin-navy">
-                  {founder.name}
-                </h3>
-                <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
-                  {founder.title}
-                </p>
-              </div>
-              <a
-                href={founder.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`View ${founder.name} on LinkedIn`}
-                class="mt-3 inline-flex text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
-              >
-                LinkedIn
-              </a>
-            </div>
+          <div class="min-w-0">
+            <h3 class="font-display text-[1.7rem] font-semibold tracking-[-0.04em] text-argmin-navy">
+              {founder.name}
+            </h3>
+            <p class="mt-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-slate-500">
+              {founder.title}
+            </p>
+            <a
+              href={founder.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${founder.name} on LinkedIn`}
+              class="mt-4 inline-flex text-sm font-medium text-argmin-azure underline decoration-from-font underline-offset-4 hover:text-argmin-sky"
+            >
+              LinkedIn
+            </a>
           </div>
 
-          <p class="mt-5 text-base leading-7 text-argmin-slate-700">{founder.bio}</p>
+          <p class="max-w-[54ch] text-base leading-7 text-argmin-slate-700 md:text-[1.02rem]">
+            {founder.bio}
+          </p>
         </article>
       ))}
     </div>

@@ -2,8 +2,6 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 
-import cloudflare from "@astrojs/cloudflare";
-
 export default defineConfig({
   site: "https://argmin.co",
   output: "static",
@@ -13,6 +11,4 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-
-  adapter: cloudflare()
 });
