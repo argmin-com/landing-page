@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from "../content/site";
 import AttributionChain from "./AttributionChain.astro";
+import HowItWorksArchitecture from "./HowItWorksArchitecture.astro";
 
 const { howItWorksTitle, howItWorksIntro, steps } = siteConfig;
 ---
@@ -32,5 +33,9 @@ const { howItWorksTitle, howItWorksIntro, steps } = siteConfig;
     <div class="lg:pt-3">
       <AttributionChain />
     </div>
+  </div>
+
+  <div class="mt-12 md:mt-14">
+    <HowItWorksArchitecture />
   </div>
 </section>
