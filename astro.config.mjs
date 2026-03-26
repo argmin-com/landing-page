@@ -14,5 +14,11 @@ export default defineConfig({
     }),
   ],
 
-  adapter: cloudflare()
+  adapter: cloudflare(),
+
+  vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
+  },
 });
