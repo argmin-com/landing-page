@@ -7,6 +7,9 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   site: "https://argmin.co",
   output: "static",
+  session: {
+    driver: "memory",
+  },
 
   integrations: [
     tailwind({

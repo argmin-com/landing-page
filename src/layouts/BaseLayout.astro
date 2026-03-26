@@ -17,6 +17,7 @@ const {
   showNavbarImmediately = true,
 } = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
+const themeColor = "#f9f7f4";
 ---
 
 <!doctype html>
@@ -26,6 +27,8 @@ const ogImage = "https://argmin.co/og-image.png";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="theme-color" content={themeColor} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
 
@@ -34,6 +37,7 @@ const ogImage = "https://argmin.co/og-image.png";
     <meta property="og:image" content={ogImage} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Argmin" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -44,6 +48,9 @@ const ogImage = "https://argmin.co/og-image.png";
     <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
   </head>
   <body class="font-sans text-argmin-dark antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-argmin-dark focus:shadow-lg">
+      Skip to content
+    </a>
     <Navbar hiddenUntilReveal={!showNavbarImmediately} />
     <slot />
   </body>

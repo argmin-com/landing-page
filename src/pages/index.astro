@@ -9,12 +9,13 @@ import Problem from "../components/Problem.astro";
 import SubHeroBreak from "../components/SubHeroBreak.astro";
 import ValueProps from "../components/ValueProps.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { sanitizeFormspreeUrl } from "../lib/formspree";
 
-const formspreeUrl = import.meta.env.PUBLIC_FORMSPREE_URL?.trim() ?? "";
+const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
 <BaseLayout showNavbarImmediately={false}>
-  <main>
+  <main id="main-content">
     <Hero revealContent={false} />
     <div class="initial-hidden">
       <Problem />

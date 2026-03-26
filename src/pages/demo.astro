@@ -2,15 +2,15 @@
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { sanitizeFormspreeUrl } from "../lib/formspree";
 
-const formspreeUrl =
-  import.meta.env.PUBLIC_FORMSPREE_URL ?? "https://formspree.io/f/mlgornql";
+const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 const intro =
   "We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.";
 ---
 
 <BaseLayout title="Request a Demo | Argmin" canonicalUrl="https://argmin.co/demo">
-  <main>
+  <main id="main-content">
     <Contact title="Request a Demo" intro={intro} formspreeUrl={formspreeUrl} />
     <Footer />
   </main>
