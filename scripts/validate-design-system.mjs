@@ -9,6 +9,7 @@ function read(pathname) {
 
 const packageJson = read("package.json");
 const astroConfig = read("astro.config.mjs");
+const wranglerConfig = read("wrangler.jsonc");
 const baseLayout = read("src/layouts/BaseLayout.astro");
 const indexPage = read("src/pages/index.astro");
 const globalCss = read("src/styles/global.css");
@@ -18,6 +19,7 @@ const valueProps = read("src/components/ValueProps.astro");
 const howItWorks = read("src/components/HowItWorks.astro");
 const founders = read("src/components/Founders.astro");
 const contact = read("src/components/Contact.astro");
+const assetsIgnore = read("public/.assetsignore");
 const redirects = read("public/_redirects");
 const siteContent = read("src/content/site.ts");
 
@@ -28,9 +30,7 @@ const prohibitedPaths = [
   "src/pages/contact.astro",
   "src/pages/demo.astro",
   "src/pages/team.astro",
-  "public/.assetsignore",
   "public/sitemap.xml",
-  "wrangler.jsonc",
 ];
 
 const checks = [
@@ -71,8 +71,27 @@ const checks = [
       !founders.includes("font-mono"),
   },
   {
-    description: "legacy Cloudflare adapter config is not present in astro.config.mjs",
-    pass: !astroConfig.includes("@astrojs/cloudflare") && !astroConfig.includes("adapter:"),
+    description: "the Astro Cloudflare adapter is configured for Workers builds",
+    pass: astroConfig.includes("@astrojs/cloudflare") && astroConfig.includes("adapter: cloudflare()"),
+  },
+  {
+    description: "the repository pins the Cloudflare runtime tooling used by Workers Builds",
+    pass:
+      packageJson.includes('"@astrojs/cloudflare": "12"') &&
+      packageJson.includes('"wrangler": "^4.77.0"'),
+  },
+  {
+    description: "wrangler.jsonc targets the generated Astro worker and dist assets",
+    pass:
+      wranglerConfig.includes('"name": "landing-page"') &&
+      wranglerConfig.includes('"main": "dist/_worker.js/index.js"') &&
+      wranglerConfig.includes('"directory": "dist"'),
+  },
+  {
+    description: ".assetsignore excludes generated worker internals from static asset upload",
+    pass:
+      assetsIgnore.includes("_worker.js") &&
+      assetsIgnore.includes("_routes.json"),
   },
   {
     description: "redirects map legacy routes to homepage anchors",

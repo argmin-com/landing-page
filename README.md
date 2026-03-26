@@ -25,7 +25,7 @@ When the supplementary brand files are absent in a clone, the three product PDFs
 
 - Astro 5
 - Tailwind CSS 3
-- Static output for Cloudflare Pages
+- Astro Cloudflare adapter targeting Cloudflare Workers Builds
 - Formspree for contact submissions
 - Plausible Analytics for page view and event tracking
 
@@ -35,10 +35,12 @@ When the supplementary brand files are absent in a clone, the three product PDFs
 - `src/components/`: hero, problem, value grid, how-it-works, founders, contact, footer
 - `src/pages/index.astro`: single-page composition in the approved order
 - `src/content/site.ts`: approved copy and metadata content model
-- `public/_headers`: Cloudflare Pages response headers
+- `public/_headers`: response headers served by the Cloudflare asset layer
+- `public/.assetsignore`: prevents Astro's generated worker internals from being treated as static assets
 - `public/_redirects`: legacy path redirects to homepage anchors
+- `wrangler.jsonc`: Cloudflare Worker service configuration for production deploys
 - `scripts/validate-contact-fallbacks.mjs`: build-time check for the missing-env contact fallback
-- `scripts/validate-design-system.mjs`: repo-level check for the single-page design contract
+- `scripts/validate-design-system.mjs`: repo-level check for the single-page design and Worker deployment contract
 - `scripts/validate-security-headers.mjs`: repo-level check for headers and script posture
 
 ## Local Development
@@ -71,16 +73,18 @@ Without that value, the form fails closed: the submit button is disabled, no liv
 
 ## Deployment Contract
 
-Target host: Cloudflare Pages
+Target host: Cloudflare Workers Builds for the `landing-page` Worker service
 
 - Build command: `npm run build`
-- Output directory: `dist`
+- Worker entrypoint: `dist/_worker.js/index.js`
+- Static asset directory: `dist`
 - Recommended Node version: `18`
 - Required environment variable: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`
 - Legacy redirects: `_redirects` handles `/contact`, `/demo`, and `/team`
 - Security headers: `_headers` defines the CSP, referrer policy, and related browser protections
-- DNS/TLS: configured in Cloudflare outside this repository
+- Worker config: `wrangler.jsonc`
+- DNS/TLS/build triggers: configured in Cloudflare outside this repository
 
 ## Source Constraints
 
@@ -95,4 +99,4 @@ Target host: Cloudflare Pages
 
 - Configure a live Formspree form and set `PUBLIC_FORMSPREE_URL`
 - Verify live Plausible data for `cta_click` and `form_submit` on the production domain
-- Configure Cloudflare Pages project settings, DNS, and HTTPS redirects
+- Configure Cloudflare Worker service settings, DNS, and HTTPS redirects
