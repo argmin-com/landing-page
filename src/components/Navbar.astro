@@ -2,7 +2,7 @@
 import { siteConfig } from "../content/site";
 ---
 
-<header class="sticky top-0 z-50 border-b border-argmin-slate-300/80 bg-white/92 backdrop-blur supports-[backdrop-filter]:bg-white/84">
+<header class="sticky top-0 z-50 border-b border-argmin-slate-300/80 bg-white/92 backdrop-blur supports-[backdrop-filter]:bg-white/84" data-mobile-nav>
   <div class="section-shell flex h-[73px] items-center justify-between px-6">
     <a
       href="/"
@@ -27,8 +27,79 @@ import { siteConfig } from "../content/site";
       </ul>
     </nav>
 
-    <a href="/#contact" class="primary-button px-4 py-2.5 text-sm" data-plausible-event="cta_click">
-      {siteConfig.hero.primaryCtaLabel}
-    </a>
+    <div class="flex items-center gap-3">
+      <a href="/#contact" class="primary-button px-4 py-2.5 text-sm" data-plausible-event="cta_click">
+        {siteConfig.hero.primaryCtaLabel}
+      </a>
+
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-argmin-slate-300 bg-white text-argmin-slate-500 hover:border-argmin-azure hover:text-argmin-azure md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav-panel"
+        aria-label="Toggle navigation menu"
+        data-mobile-nav-toggle
+      >
+        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75Zm0 5A.75.75 0 0 1 2.75 9h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 9.75Zm0 5a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
   </div>
+
+  <nav
+    id="mobile-nav-panel"
+    aria-label="Mobile"
+    class="hidden border-t border-argmin-slate-300/60 bg-white md:hidden"
+    data-mobile-nav-panel
+  >
+    <ul class="section-shell flex flex-col gap-1 px-6 py-3">
+      {siteConfig.nav.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="block rounded-lg px-3 py-2.5 text-sm font-medium text-argmin-slate-700 hover:bg-argmin-ice hover:text-argmin-azure"
+            data-mobile-nav-close
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
 </header>
+
+<script is:inline>
+  {
+    const navRoot = document.querySelector("[data-mobile-nav]");
+    const toggle = navRoot?.querySelector("[data-mobile-nav-toggle]");
+    const panel = navRoot?.querySelector("[data-mobile-nav-panel]");
+
+    if (navRoot instanceof HTMLElement && toggle instanceof HTMLButtonElement && panel instanceof HTMLElement) {
+      const setOpen = (open) => {
+        toggle.setAttribute("aria-expanded", String(open));
+        panel.classList.toggle("hidden", !open);
+      };
+
+      toggle.addEventListener("click", () => {
+        setOpen(toggle.getAttribute("aria-expanded") !== "true");
+      });
+
+      panel.querySelectorAll("[data-mobile-nav-close]").forEach((link) => {
+        link.addEventListener("click", () => setOpen(false));
+      });
+
+      document.addEventListener("click", (e) => {
+        const t = e.target;
+        if (!(t instanceof Node) || !navRoot.contains(t)) setOpen(false);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+          setOpen(false);
+          toggle.focus();
+        }
+      });
+    }
+  }
+</script>
