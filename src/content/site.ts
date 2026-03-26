@@ -11,12 +11,12 @@ export const siteConfig = {
     eyebrow: "Application-level AI cost attribution",
     headline: "Know which teams use which AI models, at what cost, and why.",
     subheadline:
-      "Argmin deploys inside your trust boundary with read-only connectors. It connects cloud telemetry and billing with source control, CI/CD, identity, and org hierarchy so each AI request resolves to the team, service, and budget that owns it.",
+      "Argmin deploys inside your trust boundary with read-only connectors. It joins cloud telemetry and billing with source control, CI/CD, identity, and org hierarchy so each AI request resolves to the team, service, and budget that owns it.",
     primaryCtaLabel: "Talk to Us",
     proofPoints: [
       { label: "Deploys", value: "Inside customer trust boundaries" },
       { label: "Access", value: "Read-only connectors only" },
-      { label: "Output", value: "Attribution chain from model call to budget" },
+      { label: "Output", value: "Model-to-budget attribution chain" },
     ],
     signalInputs: [
       "Cloud telemetry",

@@ -5,28 +5,30 @@ const { hero } = siteConfig;
 ---
 
 <section class="hero-section overflow-hidden border-b border-white/10 bg-argmin-navy px-6 py-8">
-  <div class="section-shell grid min-h-[100svh] items-center gap-12 py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-10">
-    <div class="max-w-[45rem]">
+  <div class="hero-backdrop" aria-hidden="true"></div>
+  <div class="section-shell hero-grid lg:grid-cols-[minmax(0,1.02fr)_minmax(0,0.98fr)]">
+    <div class="hero-copy-block">
       <p class="font-display text-[1.55rem] font-bold tracking-[-0.03em] text-white">{hero.wordmark}</p>
       <p class="mt-6 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-sky">
         {hero.eyebrow}
       </p>
-      <h1 class="hero-title mt-4 text-white">{hero.headline}</h1>
-      <p class="hero-copy max-w-[62ch] text-white/84">{hero.subheadline}</p>
+      <h1 class="hero-title mt-4">{hero.headline}</h1>
+      <p class="hero-copy">{hero.subheadline}</p>
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row">
         <a href="#contact" class="primary-button" data-cta-button>
           {hero.primaryCtaLabel}
         </a>
+        <a href="#how" class="hero-secondary-link">
+          See the attribution chain
+        </a>
       </div>
 
-      <dl class="mt-10 grid gap-5 border-t border-white/12 pt-5 sm:grid-cols-3">
+      <dl class="hero-proof-list">
         {hero.proofPoints.map((item) => (
-          <div class="border-l border-white/12 pl-4 first:border-l-0 first:pl-0 sm:first:border-l sm:first:pl-4">
-            <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/60">
-              {item.label}
-            </dt>
-            <dd class="mt-2 text-sm leading-6 text-white/86">{item.value}</dd>
+          <div class="hero-proof-item">
+            <dt class="hero-proof-label">{item.label}</dt>
+            <dd class="hero-proof-value">{item.value}</dd>
           </div>
         ))}
       </dl>
