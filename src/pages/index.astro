@@ -1,5 +1,6 @@
 ---
 import AttributionFlowDiagram from "../components/AttributionFlowDiagram.astro";
+import AttributionFlowSummary from "../components/AttributionFlowSummary.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
 import Founders from "../components/Founders.astro";
@@ -25,6 +26,7 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
       <section class="px-6 py-10 md:py-14">
         <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center text-center">
           <AttributionFlowDiagram />
+          <AttributionFlowSummary />
           <a
             href="/demo"
             onclick="window.plausible && window.plausible('cta_click')"

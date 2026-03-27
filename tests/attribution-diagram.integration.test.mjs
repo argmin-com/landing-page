@@ -8,7 +8,7 @@ import { initAttributionDiagrams } from "../src/lib/attribution-diagram.mjs";
 
 const distIndexPath = new URL("../dist/client/index.html", import.meta.url);
 
-test("built homepage includes the restored detail panel and live diagram state changes", async () => {
+test("built homepage includes the lean attribution summary and live diagram state changes", async () => {
   const html = await readFile(distIndexPath, "utf8");
   const dom = new JSDOM(html, { pretendToBeVisual: true });
   const { document } = dom.window;
@@ -18,12 +18,13 @@ test("built homepage includes the restored detail panel and live diagram state c
   const diagram = document.querySelector("[data-diagram]");
   const buttons = [...document.querySelectorAll("[data-keyword]")];
   const attributionButton = buttons.find((button) => button.textContent?.trim() === "Attribution");
+  const detailPanel = document.querySelector("[data-detail-panel]");
 
   assert.ok(diagram, "expected homepage diagram to render");
-  assert.ok(document.querySelector("[data-detail-panel]"), "expected restored detail panel to exist");
-  assert.equal(document.querySelectorAll("[data-dr-chip]").length, 6, "expected six input pills");
-  assert.equal(document.querySelectorAll("[data-dr-row]").length, 6, "expected six attribution rows");
-  assert.ok(document.querySelector("[data-dr-decision]"), "expected intervention card to exist");
+  assert.ok(detailPanel, "expected attribution summary panel to exist");
+  assert.equal(document.querySelectorAll("[data-summary-chip]").length, 4, "expected four summary chips");
+  assert.equal(document.querySelectorAll("[data-summary-row]").length, 3, "expected three summary rows");
+  assert.ok(document.querySelector("[data-summary-action]"), "expected action guidance to exist");
 
   attributionButton.dispatchEvent(new dom.window.Event("focus", { bubbles: true }));
 

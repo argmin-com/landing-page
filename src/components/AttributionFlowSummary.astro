@@ -1,0 +1,61 @@
+---
+const evidenceChips = ["Billing", "Identity", "CI/CD", "Model usage"];
+
+const summaryRows = [
+  { label: "Model call", value: "gpt-4.1, 58k tokens, tier-1 triage", tone: "high" },
+  { label: "Owning service", value: "support-router-prod, release 2026.03.18", tone: "high" },
+  { label: "Budget path", value: "FY26 Assistants, Support Automation", tone: "medium" },
+];
+---
+
+<div class="mt-8 grid w-full gap-4 text-left lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]" data-detail-panel>
+  <div class="rounded-[1.5rem] border border-argmin-border bg-argmin-surface px-5 py-6 shadow-[var(--page-shadow-soft)] md:px-6">
+    <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">Attribution record</p>
+    <h3 class="mt-4 max-w-[18ch] text-[1.55rem] font-semibold leading-tight tracking-[-0.04em] text-argmin-dark md:text-[1.75rem]">
+      Restore the owner chain without turning the homepage into a report.
+    </h3>
+    <p class="mt-4 max-w-2xl text-base leading-7 text-argmin-mid">
+      The diagram now resolves spend into a named service, budget path, and intervention point while staying light enough for the landing page.
+    </p>
+
+    <ul class="mt-5 flex flex-wrap gap-2">
+      {evidenceChips.map((chip) => (
+        <li
+          class="rounded-full border border-argmin-border bg-argmin-surface-alt px-3 py-2 text-sm font-medium text-argmin-dark"
+          data-summary-chip
+        >
+          {chip}
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="rounded-[1.5rem] border border-argmin-border bg-argmin-surface-alt/70 px-5 py-6 shadow-[var(--page-shadow-soft)] md:px-6">
+    <p class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">Example resolution</p>
+
+    <dl class="mt-4 space-y-4">
+      {summaryRows.map((row) => (
+        <div class="border-t border-argmin-border/75 pt-4 first:border-t-0 first:pt-0" data-summary-row>
+          <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">{row.label}</dt>
+          <dd class="mt-2 text-base leading-7 text-argmin-dark">
+            {row.value}
+            <span
+              class:list={[
+                "ml-2 inline-flex rounded-full border px-2 py-0.5 text-[0.72rem] font-semibold uppercase tracking-[0.06em]",
+                row.tone === "high"
+                  ? "border-emerald-600/20 bg-emerald-600/10 text-emerald-700"
+                  : "border-amber-500/20 bg-amber-500/10 text-amber-700",
+              ]}
+            >
+              {row.tone === "high" ? "high confidence" : "medium confidence"}
+            </span>
+          </dd>
+        </div>
+      ))}
+    </dl>
+
+    <p class="mt-5 border-t border-argmin-border pt-4 text-base leading-7 text-argmin-mid" data-summary-action>
+      Recommended action: pause the broad rollout, default tier-1 intents to the lower-cost route, and review the budget exception before wider deployment.
+    </p>
+  </div>
+</div>
