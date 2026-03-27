@@ -30,19 +30,44 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: package-lock.json
 
+      - name: Check Cloudflare deployment credentials
+        id: cloudflare
+        run: |
+          if [ -n "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" ] && [ -n "${{ secrets.CLOUDFLARE_API_TOKEN }}" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "### Deploy"
+              echo
+              echo "- Cloudflare Pages credentials detected."
+              echo "- This workflow will build and deploy the current main branch."
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            {
+              echo "### Deploy"
+              echo
+              echo "- Cloudflare Pages credentials are not configured for GitHub Actions."
+              echo "- Skipping the explicit deploy workflow so main does not fail closed."
+              echo "- The existing Cloudflare Pages Git integration remains the active deployment path."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Install dependencies
+        if: steps.cloudflare.outputs.enabled == 'true'
         run: npm ci --legacy-peer-deps
 
       - name: Build static site
+        if: steps.cloudflare.outputs.enabled == 'true'
         run: npm run build
         env:
           PUBLIC_FORMSPREE_URL: ${{ vars.PUBLIC_FORMSPREE_URL }}
 
       - name: Deploy to Cloudflare Pages
+        if: steps.cloudflare.outputs.enabled == 'true'
         run: npx wrangler pages deploy dist/client --project-name=landing-page --branch=main --commit-dirty=true
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
