@@ -10,7 +10,15 @@ const { hiddenUntilReveal = false } = Astro.props;
 const navClass = hiddenUntilReveal ? "initial-hidden" : "";
 const pathname = Astro.url.pathname;
 
-const isActive = (href: string) => pathname === href;
+const normalizePath = (value: string) => {
+  if (value === "/") return "/";
+
+  const normalized = value.replace(/\/+$/, "");
+  return normalized.length > 0 ? normalized : "/";
+};
+
+const currentPath = normalizePath(pathname);
+const isActive = (href: string) => currentPath === normalizePath(href);
 ---
 
 <header class:list={["px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
@@ -30,6 +38,7 @@ const isActive = (href: string) => pathname === href;
               <li>
                 <a
                   href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
                   class:list={[
                     "text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark",
                     isActive(item.href) && "nav-link-active",
@@ -74,6 +83,7 @@ const isActive = (href: string) => pathname === href;
             <li>
               <a
                 href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 class:list={[
                   "block rounded-2xl border border-transparent bg-argmin-surface-alt/50 px-4 py-3 text-base font-semibold text-argmin-dark transition-colors duration-200 hover:border-argmin-border",
                   isActive(item.href) && "border-argmin-border bg-argmin-surface",

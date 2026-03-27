@@ -18,6 +18,18 @@ const {
 } = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
 const themeColor = "#f9f7f4";
+const normalizeCanonicalUrl = (value: string) => {
+  try {
+    const url = new URL(value);
+    if (url.pathname !== "/" && !url.pathname.endsWith("/")) {
+      url.pathname = `${url.pathname}/`;
+    }
+    return url.toString();
+  } catch {
+    return value;
+  }
+};
+const normalizedCanonicalUrl = normalizeCanonicalUrl(canonicalUrl);
 const themeBootScript = String.raw`
   (() => {
     const storageKey = "argmin-theme-preference";
@@ -97,13 +109,13 @@ const themeBootScript = String.raw`
     <meta name="description" content={description} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content={themeColor} />
-    <link rel="canonical" href={canonicalUrl} />
+    <link rel="canonical" href={normalizedCanonicalUrl} />
     <meta name="robots" content="index, follow" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:url" content={normalizedCanonicalUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Argmin" />
 

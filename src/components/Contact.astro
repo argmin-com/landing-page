@@ -81,7 +81,7 @@ const hasEndpoint = endpoint.length > 0;
         <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
         <button
           id="submit-btn"
-          type="button"
+          type="submit"
           disabled={!hasEndpoint}
           aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
           class="w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-dark transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50"
@@ -115,6 +115,7 @@ const hasEndpoint = endpoint.length > 0;
 </section>
 
 <script is:inline define:vars={{ endpoint }}>
+  const form = document.getElementById("contact-form");
   const button = document.getElementById("submit-btn");
   const container = document.getElementById("form-container");
   const error = document.getElementById("form-error");
@@ -126,6 +127,7 @@ const hasEndpoint = endpoint.length > 0;
 
   if (
     endpoint &&
+    form instanceof HTMLFormElement &&
     button instanceof HTMLButtonElement &&
     container instanceof HTMLElement &&
     nameField instanceof HTMLInputElement &&
@@ -134,11 +136,11 @@ const hasEndpoint = endpoint.length > 0;
     messageField instanceof HTMLTextAreaElement &&
     gotchaField instanceof HTMLInputElement
   ) {
-    button.addEventListener("click", async () => {
-      for (const field of [nameField, emailField, companyField]) {
-        if (!field.reportValidity()) {
-          return;
-        }
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
       }
 
       const payload = {

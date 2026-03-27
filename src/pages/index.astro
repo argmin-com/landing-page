@@ -14,10 +14,10 @@ import { sanitizeFormspreeUrl } from "../lib/formspree";
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
-<BaseLayout showNavbarImmediately={false}>
+<BaseLayout>
   <main id="main-content">
-    <Hero revealContent={false} />
-    <div class="initial-hidden">
+    <Hero />
+    <div>
       <Problem />
       <ValueProps />
       <SubHeroBreak />
@@ -40,18 +40,3 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
     <Footer />
   </main>
 </BaseLayout>
-
-<script is:inline>
-  if (!document.body.classList.contains("revealed")) {
-    const reveal = () => document.body.classList.add("revealed");
-
-    if (window.location.hash) {
-      reveal();
-    }
-
-    window.addEventListener("scroll", reveal, { passive: true, once: true });
-    window.addEventListener("touchstart", reveal, { passive: true, once: true });
-    window.addEventListener("keydown", reveal, { once: true });
-    window.addEventListener("hashchange", reveal, { once: true });
-  }
-</script>

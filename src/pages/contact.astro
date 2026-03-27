@@ -7,7 +7,11 @@ import { sanitizeFormspreeUrl } from "../lib/formspree";
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
-<BaseLayout title="Contact Us | Argmin" canonicalUrl="https://argmin.co/contact">
+<BaseLayout
+  title="Contact Us | Argmin"
+  description="Contact Argmin about enterprise AI spend attribution, governance, and optimization."
+  canonicalUrl="https://argmin.co/contact"
+>
   <main id="main-content">
     <ContactSection title="Contact Us" formspreeUrl={formspreeUrl} />
     <Footer />
