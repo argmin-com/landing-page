@@ -51,7 +51,7 @@ Target host: Cloudflare Pages
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Recommended Node version: `20` in Cloudflare Pages (see `.nvmrc` and `engines` in `package.json`)
+- Recommended Node version: `22` in Cloudflare Pages (Astro 6 requires `>=22.12.0`; see `.nvmrc` and `engines` in `package.json`)
 - Required environment variable: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`
 - DNS/TLS: configured in Cloudflare outside this repository
