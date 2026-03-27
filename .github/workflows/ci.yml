@@ -17,6 +17,7 @@ on:
       - src/**
       - tailwind.config.mjs
       - tsconfig.json
+      - wrangler.jsonc
   pull_request:
     branches:
       - main
@@ -33,6 +34,7 @@ on:
       - src/**
       - tailwind.config.mjs
       - tsconfig.json
+      - wrangler.jsonc
   workflow_dispatch:
 
 permissions:
