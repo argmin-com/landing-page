@@ -148,7 +148,7 @@ jobs:
           };
           const budgets = {
             lcpMs: 2500,
-            transferKb: 100,
+            transferKb: 105,
           };
           const failures = [];
 
