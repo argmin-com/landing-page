@@ -37,9 +37,6 @@ export const footerGroups = [
   {
     title: "Connect",
     links: [
-      { label: "GitHub", href: "https://github.com/argmin-com/landing-page" },
-      { label: "Charlotte on LinkedIn", href: "https://www.linkedin.com/in/charlotte-wargniez" },
-      { label: "Richard on LinkedIn", href: "https://www.linkedin.com/in/richardcmckinney" },
       { label: "contact@argmin.co", href: "mailto:contact@argmin.co" },
     ],
   },
@@ -47,7 +44,6 @@ export const footerGroups = [
 
 export const siteSummary = {
   brand: "Argmin",
-  tagline: "Know which teams use which AI models, at what cost, and why.",
   description:
     "Decision control for enterprise AI spend, with attribution that reaches from model call to budget owner before costs compound.",
 } as const;
