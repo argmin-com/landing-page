@@ -108,6 +108,20 @@ body {
   text-wrap: balance;
 }
 
+.site-wordmark {
+  font-family:
+    "SF Pro Display",
+    "Inter Tight",
+    "Helvetica Neue",
+    "Segoe UI",
+    sans-serif;
+  font-size: clamp(1.8rem, 3.7vw, 4.1rem);
+  font-weight: 650;
+  line-height: 0.9;
+  letter-spacing: -0.07em;
+  text-wrap: nowrap;
+}
+
 .page-lede {
   font-size: clamp(1.05rem, 2vw, 1.35rem);
   line-height: 1.75;
