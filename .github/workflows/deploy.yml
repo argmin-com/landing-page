@@ -1,9 +1,6 @@
 name: Deploy
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -15,25 +12,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: Deploy to Cloudflare Pages
+  preflight:
+    name: Check deploy configuration
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment:
-      name: production
-      url: https://argmin.co
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v6
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: package-lock.json
-
       - name: Check Cloudflare deployment credentials
         id: cloudflare
         run: |
@@ -51,24 +34,44 @@ jobs:
               echo "### Deploy"
               echo
               echo "- Cloudflare Pages credentials are not configured for GitHub Actions."
-              echo "- Skipping the explicit deploy workflow so main does not fail closed."
-              echo "- The existing Cloudflare Pages Git integration remains the active deployment path."
+              echo "- Skipping the manual deploy workflow."
+              echo "- Cloudflare Pages Git integration remains the active deployment path."
             } >> "$GITHUB_STEP_SUMMARY"
           fi
+    outputs:
+      enabled: ${{ steps.cloudflare.outputs.enabled }}
+
+  deploy:
+    name: Deploy to Cloudflare Pages
+    needs: preflight
+    if: needs.preflight.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: https://argmin.co
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        if: steps.cloudflare.outputs.enabled == 'true'
         run: npm ci --legacy-peer-deps
 
       - name: Build static site
-        if: steps.cloudflare.outputs.enabled == 'true'
         run: npm run build
         env:
           PUBLIC_FORMSPREE_URL: ${{ vars.PUBLIC_FORMSPREE_URL }}
 
       - name: Deploy to Cloudflare Pages
-        if: steps.cloudflare.outputs.enabled == 'true'
-        run: npx wrangler pages deploy dist/client --project-name=landing-page --branch=main --commit-dirty=true
+        run: npx wrangler pages deploy dist/client --project-name=landing-page --branch="${GITHUB_REF_NAME}" --commit-dirty=true
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
