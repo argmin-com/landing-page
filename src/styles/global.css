@@ -5,6 +5,7 @@
   --color-argmin-mid: rgb(var(--color-argmin-mid));
   --color-argmin-light: rgb(var(--color-argmin-light));
   --color-argmin-accent: rgb(var(--color-argmin-accent));
+  --color-argmin-accent-ink: rgb(var(--color-argmin-accent-ink));
   --color-argmin-accent-hover: rgb(var(--color-argmin-accent-hover));
   --color-argmin-bg: rgb(var(--color-argmin-bg));
   --color-argmin-surface: rgb(var(--color-argmin-surface));
@@ -19,6 +20,7 @@
   --color-argmin-mid: 75 85 99;
   --color-argmin-light: 95 107 122;
   --color-argmin-accent: 93 168 255;
+  --color-argmin-accent-ink: 8 11 18;
   --color-argmin-accent-hover: 61 141 234;
   --color-argmin-bg: 248 248 246;
   --color-argmin-surface: 255 255 255;
@@ -37,6 +39,7 @@ html[data-theme="dark"] {
   --color-argmin-mid: 186 197 212;
   --color-argmin-light: 145 160 180;
   --color-argmin-accent: 126 182 255;
+  --color-argmin-accent-ink: 8 11 18;
   --color-argmin-accent-hover: 157 200 255;
   --color-argmin-bg: 8 11 18;
   --color-argmin-surface: 14 19 30;
