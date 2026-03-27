@@ -1,13 +1,20 @@
 ---
 interface Props {
   revealContent?: boolean;
+  fillViewport?: boolean;
 }
 
-const { revealContent = true } = Astro.props;
+const { revealContent = true, fillViewport = false } = Astro.props;
 const revealClass = revealContent ? "" : "initial-hidden";
 ---
 
-<section data-home-hero class="flex min-h-[calc(100svh-6.75rem)] items-center md:min-h-[calc(100svh-8.5rem)]">
+<section
+  data-home-hero
+  class:list={[
+    "flex items-center",
+    fillViewport ? "min-h-[100svh]" : "min-h-[calc(100svh-6.75rem)] md:min-h-[calc(100svh-8.5rem)]",
+  ]}
+>
   <div class="mx-auto flex w-full max-w-6xl flex-col items-start justify-center px-6 py-10 text-left md:py-14">
     <h1
       class="hero-headline max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-argmin-dark md:text-6xl lg:text-7xl xl:text-[5.5rem]"

@@ -16,7 +16,7 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 
 <BaseLayout showNavbarImmediately={false}>
   <main id="main-content">
-    <Hero />
+    <Hero fillViewport={true} />
     <div>
       <Problem />
       <ValueProps />
