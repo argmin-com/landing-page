@@ -1,0 +1,118 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+
+const trustBoundary = [
+  "Signals stay inside your cloud.",
+  "Argmin resolves attribution inside the customer trust boundary.",
+  "Scoped decision records enter approvals and budget workflows.",
+];
+
+const insideBoundary = [
+  "Graph resolution and attribution baseline run inside the customer environment.",
+  "Connectors stay read-only unless a customer explicitly opts into an enforcement path.",
+  "Teams can review evidence and confidence without forwarding raw telemetry broadly outside the trust boundary.",
+];
+
+const notRequired = [
+  "No write access to source systems by default.",
+  "No fleet-wide agent rollout to start attributing spend.",
+  "No requirement to forward raw logs broadly outside the trust boundary.",
+  "No automatic blocking or enforcement unless the customer chooses it.",
+];
+---
+
+<BaseLayout title="Security | Argmin" canonicalUrl="https://argmin.co/security">
+  <main id="main-content">
+    <PageHero
+      eyebrow="Security"
+      title="Your data never leaves your environment."
+      lede="Argmin runs inside your cloud with read-only access. The product does not depend on broad telemetry exfiltration, write paths, or agents to resolve AI cost ownership."
+      notes={[
+        { label: "Trust boundary", value: "Signals stay inside the customer environment." },
+        { label: "Operating mode", value: "Advisory first, enforcement only by explicit opt-in." },
+        { label: "Availability", value: "Fail-open architecture with a 50ms latency budget." },
+      ]}
+      actions={[
+        { href: "/platform#deployment-path", label: "See deployment path" },
+        { href: "/contact", label: "Talk through your environment", variant: "secondary" },
+      ]}
+    />
+
+    <section id="trust-boundary" class="px-6 py-8 md:py-12">
+      <div class="site-shell section-divider pt-10">
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.62fr)_minmax(0,1.38fr)] lg:gap-16">
+          <div class="rise-in">
+            <p class="section-kicker">Trust Boundary</p>
+            <h2 class="display-title mt-5 max-w-3xl text-[2.4rem] md:text-[3.4rem]">
+              Keep raw signals where they already belong.
+            </h2>
+            <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
+              The point is not to forward more raw data than you already trust. The point is to resolve the
+              accountable decision record without broadening the blast radius.
+            </p>
+          </div>
+
+          <div class="grid gap-4 rise-in rise-in-delay-1 md:grid-cols-3">
+            {trustBoundary.map((item, index) => (
+              <article class="surface-panel px-5 py-6">
+                <p class="section-kicker text-argmin-accent">0{index + 1}</p>
+                <p class="mt-4 text-lg leading-8 text-argmin-dark">{item}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 py-8 md:py-12">
+      <div class="site-shell section-divider pt-10">
+        <div class="grid gap-10 lg:grid-cols-2 lg:gap-10">
+          <article class="surface-panel px-6 py-6 rise-in md:px-8">
+            <p class="section-kicker">Inside your environment</p>
+            <ul class="mt-6 space-y-4">
+              {insideBoundary.map((item) => (
+                <li class="border-t border-argmin-border pt-4 text-base leading-8 text-argmin-mid first:border-none first:pt-0">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article class="surface-panel px-6 py-6 rise-in rise-in-delay-1 md:px-8">
+            <p class="section-kicker">Not required</p>
+            <ul class="mt-6 space-y-4">
+              {notRequired.map((item) => (
+                <li class="border-t border-argmin-border pt-4 text-base leading-8 text-argmin-mid first:border-none first:pt-0">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-10 pt-8 md:pb-14">
+      <div class="site-shell section-divider pt-10">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
+          <div>
+            <p class="section-kicker">Operating Posture</p>
+            <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">Read-only by default. Advisory first.</h2>
+            <p class="mt-5 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
+              Argmin is designed to surface the accountable record first. Hard stops and enforcement paths are
+              available only when a customer explicitly chooses them.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <a href="/demo" class="button-primary">Request a Demo</a>
+            <a href="/platform" class="button-secondary">See platform details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</BaseLayout>

@@ -18,10 +18,78 @@ const {
 } = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
 const themeColor = "#f9f7f4";
+const themeBootScript = String.raw`
+  (() => {
+    const storageKey = "argmin-theme-preference";
+    const root = document.documentElement;
+    const themeMeta = document.querySelector('meta[name="theme-color"]');
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const getStoredPreference = () => {
+      try {
+        const value = window.localStorage.getItem(storageKey);
+        return value === "light" || value === "dark" || value === "system" ? value : "system";
+      } catch {
+        return "system";
+      }
+    };
+
+    const resolvePreference = (preference) =>
+      preference === "system" ? (media.matches ? "dark" : "light") : preference;
+
+    const dispatch = (preference) => {
+      const resolved = resolvePreference(preference);
+      window.dispatchEvent(
+        new CustomEvent("argmin-theme-change", {
+          detail: { preference, resolved },
+        }),
+      );
+    };
+
+    const applyPreference = (preference) => {
+      const resolved = resolvePreference(preference);
+      root.dataset.themePreference = preference;
+      root.dataset.theme = resolved;
+      if (themeMeta) {
+        themeMeta.setAttribute("content", resolved === "dark" ? "#080b12" : "#f9f7f4");
+      }
+      return resolved;
+    };
+
+    const setPreference = (preference) => {
+      try {
+        window.localStorage.setItem(storageKey, preference);
+      } catch {}
+      applyPreference(preference);
+      dispatch(preference);
+    };
+
+    window.__argminTheme = {
+      getPreference: getStoredPreference,
+      getResolved: () => root.dataset.theme || resolvePreference(getStoredPreference()),
+      setPreference,
+    };
+
+    applyPreference(getStoredPreference());
+
+    const syncSystemTheme = () => {
+      if (getStoredPreference() === "system") {
+        applyPreference("system");
+        dispatch("system");
+      }
+    };
+
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", syncSystemTheme);
+    } else if (typeof media.addListener === "function") {
+      media.addListener(syncSystemTheme);
+    }
+  })();
+`;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth" data-theme="light" data-theme-preference="system">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,10 +113,11 @@ const themeColor = "#f9f7f4";
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline set:html={themeBootScript}></script>
     <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
   </head>
   <body class="font-sans text-argmin-dark antialiased">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-argmin-dark focus:shadow-lg">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-argmin-surface focus:px-4 focus:py-2 focus:text-argmin-dark focus:shadow-lg">
       Skip to content
     </a>
     <Navbar hiddenUntilReveal={!showNavbarImmediately} />

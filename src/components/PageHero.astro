@@ -1,0 +1,60 @@
+---
+interface Note {
+  label: string;
+  value: string;
+}
+
+interface Action {
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary";
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede: string;
+  notes?: Note[];
+  actions?: Action[];
+}
+
+const { eyebrow, title, lede, notes = [], actions = [] } = Astro.props;
+---
+
+<section class="px-6 pb-10 pt-6 md:pb-14 md:pt-10">
+  <div class="site-shell grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.55fr)] lg:gap-16">
+    <div class="rise-in">
+      <p class="section-kicker">{eyebrow}</p>
+      <h1 class="page-title mt-5 max-w-5xl">{title}</h1>
+      <p class="page-lede mt-6 max-w-3xl">{lede}</p>
+
+      {actions.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-3">
+          {actions.map((action) => (
+            <a
+              href={action.href}
+              class:list={[
+                action.variant === "secondary" ? "button-secondary" : "button-primary",
+              ]}
+            >
+              {action.label}
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {notes.length > 0 && (
+      <div class="rise-in rise-in-delay-1">
+        <dl class="page-note-grid">
+          {notes.map((note) => (
+            <div class="page-note">
+              <dt class="page-note-label">{note.label}</dt>
+              <dd class="page-note-value">{note.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    )}
+  </div>
+</section>

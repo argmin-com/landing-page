@@ -190,24 +190,23 @@ const inputNodes = [
 
 <style>
   .attribution-diagram {
-    --diagram-border: #cfd8e3;
-    --diagram-muted: #111111;
-    --diagram-text: #111111;
-    --diagram-accent: #5da8ff;
-    --diagram-soft: rgba(93, 168, 255, 0.12);
+    --diagram-border: rgb(var(--color-argmin-border));
+    --diagram-muted: rgb(var(--color-argmin-mid));
+    --diagram-text: rgb(var(--color-argmin-dark));
+    --diagram-accent: rgb(var(--color-argmin-accent));
     --diagram-dim-opacity: 0.26;
   }
 
   .pipe-shell {
     fill: none;
-    stroke: rgba(207, 216, 227, 0.95);
+    stroke: rgb(var(--color-argmin-border) / 0.95);
     stroke-linecap: round;
     stroke-width: 18;
   }
 
   .pipe-line {
     fill: none;
-    stroke: rgba(93, 168, 255, 0.24);
+    stroke: rgb(var(--color-argmin-accent) / 0.24);
     stroke-linecap: round;
     stroke-width: 6;
     transition: opacity 160ms ease, stroke 160ms ease;
@@ -220,7 +219,7 @@ const inputNodes = [
   .node-shell,
   .output-shell,
   .dashboard-shell {
-    fill: #ffffff;
+    fill: rgb(var(--color-argmin-surface));
     stroke: var(--diagram-border);
     stroke-width: 2;
   }
@@ -228,20 +227,20 @@ const inputNodes = [
   .node-core,
   .output-core,
   .dashboard-screen {
-    fill: rgba(93, 168, 255, 0.08);
-    stroke: rgba(93, 168, 255, 0.32);
+    fill: rgb(var(--color-argmin-accent) / 0.08);
+    stroke: rgb(var(--color-argmin-accent) / 0.32);
     stroke-width: 1.5;
   }
 
   .engine-shell {
-    fill: #ffffff;
-    stroke: rgba(93, 168, 255, 0.46);
+    fill: rgb(var(--color-argmin-surface));
+    stroke: rgb(var(--color-argmin-accent) / 0.46);
     stroke-width: 3;
   }
 
   .engine-core {
-    fill: rgba(93, 168, 255, 0.1);
-    stroke: rgba(93, 168, 255, 0.4);
+    fill: rgb(var(--color-argmin-accent) / 0.1);
+    stroke: rgb(var(--color-argmin-accent) / 0.4);
     stroke-width: 2;
   }
 
@@ -266,7 +265,7 @@ const inputNodes = [
   }
 
   .icon-fill {
-    fill: rgba(93, 168, 255, 0.1);
+    fill: rgb(var(--color-argmin-accent) / 0.1);
     stroke: var(--diagram-accent);
     stroke-width: 1.5;
   }
@@ -299,7 +298,7 @@ const inputNodes = [
   .diagram-keyword {
     border: 1px solid var(--diagram-border);
     border-radius: 999px;
-    background: #ffffff;
+    background: rgb(var(--color-argmin-surface));
     color: var(--diagram-muted);
     font-size: 0.95rem;
     font-weight: 500;

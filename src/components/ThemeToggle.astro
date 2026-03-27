@@ -1,0 +1,91 @@
+<div class="theme-toggle" data-theme-toggle>
+  <button
+    type="button"
+    class="theme-toggle-button"
+    data-theme-value="system"
+    aria-label="Use system theme"
+    aria-pressed="false"
+  >
+    <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+      <rect x="4.5" y="5" width="15" height="11.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7" />
+      <path d="M9 19h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="theme-toggle-button"
+    data-theme-value="light"
+    aria-label="Use light theme"
+    aria-pressed="false"
+  >
+    <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+      <circle cx="12" cy="12" r="3.9" fill="none" stroke="currentColor" stroke-width="1.7" />
+      <path
+        d="M12 3.5v2.4M12 18.1v2.4M20.5 12h-2.4M5.9 12H3.5M18.01 5.99l-1.7 1.7M7.69 16.31l-1.7 1.7M18.01 18.01l-1.7-1.7M7.69 7.69l-1.7-1.7"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+      />
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="theme-toggle-button"
+    data-theme-value="dark"
+    aria-label="Use dark theme"
+    aria-pressed="false"
+  >
+    <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true">
+      <path
+        d="M14.9 3.5a8.6 8.6 0 1 0 5.6 15.2A7.7 7.7 0 0 1 14.9 3.5Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  if (!window.__argminThemeToggleBound) {
+    window.__argminThemeToggleBound = true;
+
+    const getThemeApi = () => window.__argminTheme;
+
+    const syncThemeToggle = () => {
+      const api = getThemeApi();
+      if (!api) return;
+
+      const preference = api.getPreference();
+      const resolved = api.getResolved();
+
+      document.querySelectorAll("[data-theme-toggle]").forEach((toggle) => {
+        toggle.setAttribute("data-theme-resolved", resolved);
+        toggle.querySelectorAll("[data-theme-value]").forEach((button) => {
+          const value = button.getAttribute("data-theme-value");
+          const active = value === preference;
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+          button.toggleAttribute("data-active", active);
+        });
+      });
+    };
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const button = target.closest("[data-theme-value]");
+      if (!(button instanceof HTMLElement)) return;
+
+      const api = getThemeApi();
+      const value = button.getAttribute("data-theme-value");
+      if (!api || !value) return;
+      api.setPreference(value);
+    });
+
+    syncThemeToggle();
+    window.addEventListener("argmin-theme-change", syncThemeToggle);
+  }
+</script>

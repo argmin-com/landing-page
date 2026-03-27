@@ -1,0 +1,126 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+
+const roles = [
+  {
+    label: "Engineering",
+    question: "Which service or release changed the bill, and can we catch that before production?",
+    inputs: "Cloud telemetry, source control, CI/CD metadata, service identity, deployment history.",
+    intervention:
+      "Argmin shows projected monthly impact when a model route, fallback chain, or retry policy changes before the release goes wide.",
+    outcome:
+      "Pre-deploy visibility into model-route regressions and faster owner resolution when spend spikes.",
+    moment: "A model-route change shows projected monthly delta before the PR is approved.",
+  },
+  {
+    label: "Finance / FinOps",
+    question: "Who owns this spend and which budget actually absorbs it?",
+    inputs: "Billing exports, budget hierarchy, org mapping, cost-center ownership, service attribution.",
+    intervention:
+      "Argmin resolves spend to accountable owners with confidence instead of leaving finance with invoice totals and detective work.",
+    outcome:
+      "Move from invoice totals to accountable budget decisions with visible confidence scores attached.",
+    moment: "Approvers see owner, budget, and lower-cost alternatives before rollout.",
+  },
+  {
+    label: "Security",
+    question: "Which identities and workflows can create ungoverned model spend inside our environment?",
+    inputs: "SSO or IAM, service accounts, approval flows, runtime identity, org controls.",
+    intervention:
+      "Argmin ties access and deploy identities to real cost exposure without broad telemetry exfiltration or mandatory write paths.",
+    outcome:
+      "Tie approval decisions to real cost exposure and show which identity or workflow should be reviewed first.",
+    moment: "A spend spike resolves to the exact service, team, and deploy that caused it.",
+  },
+];
+
+const bestFit = [
+  "AI programs with multiple services, multiple budgets, and no reliable owner when spend moves.",
+  "Teams that already have telemetry but still cannot answer who changed the unit economics.",
+  "Organizations that need to keep decision evidence inside the customer trust boundary.",
+];
+---
+
+<BaseLayout title="Use Cases | Argmin" canonicalUrl="https://argmin.co/use-cases">
+  <main id="main-content">
+    <PageHero
+      eyebrow="Use Cases"
+      title="Three buyers. One decision layer."
+      lede="Argmin should let each stakeholder enter through their own problem instead of forcing everyone through the same neutral narrative. The questions differ. The underlying attribution layer does not."
+      notes={[
+        { label: "Engineering", value: "Catch model-route regressions before they land in production." },
+        { label: "Finance / FinOps", value: "Move from invoice totals to accountable budget decisions." },
+        { label: "Security", value: "Tie runtime identities and approval flows to real cost exposure." },
+      ]}
+      actions={[
+        { href: "/platform", label: "See the platform" },
+        { href: "/demo", label: "Bring a spend spike", variant: "secondary" },
+      ]}
+    />
+
+    <section class="px-6 py-8 md:py-12">
+      <div class="site-shell section-divider pt-10">
+        {roles.map((role, index) => (
+          <article class:list={["grid gap-6 border-b border-argmin-border py-9 last:border-none", index === 0 && "pt-2", "lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] lg:gap-10"]}>
+            <div class="rise-in">
+              <p class="section-kicker text-argmin-accent">{role.label}</p>
+              <h2 class="mt-5 text-3xl font-semibold tracking-[-0.05em] text-argmin-dark md:text-4xl">{role.question}</h2>
+              <p class="mt-5 text-base leading-8 text-argmin-mid">{role.moment}</p>
+            </div>
+            <div class="rise-in rise-in-delay-1">
+              <p class="section-kicker">Signals</p>
+              <p class="mt-4 text-base leading-8 text-argmin-dark">{role.inputs}</p>
+            </div>
+            <div class="rise-in rise-in-delay-2">
+              <p class="section-kicker">What Changes</p>
+              <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
+              <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="px-6 py-8 md:py-12">
+      <div class="site-shell section-divider pt-10">
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
+          <div class="rise-in">
+            <p class="section-kicker">Best Fit</p>
+            <h2 class="display-title mt-5 max-w-3xl text-[2.4rem] md:text-[3.4rem]">Where the decision layer matters most.</h2>
+          </div>
+
+          <div class="rise-in rise-in-delay-1">
+            <ul class="grid gap-4 md:grid-cols-3">
+              {bestFit.map((item) => (
+                <li class="surface-panel px-5 py-5 text-base leading-8 text-argmin-mid">{item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-10 pt-8 md:pb-14">
+      <div class="site-shell section-divider pt-10">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
+          <div>
+            <p class="section-kicker">Next Step</p>
+            <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">Start with the stakeholder already feeling the pain.</h2>
+            <p class="mt-5 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
+              Usually that means an engineering owner plus finance or FinOps, and sometimes security when
+              approval or access controls are part of the problem.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <a href="/contact" class="button-primary">Contact Us</a>
+            <a href="/security" class="button-secondary">Review trust boundary</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</BaseLayout>
