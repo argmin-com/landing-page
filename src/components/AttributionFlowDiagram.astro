@@ -13,9 +13,68 @@ const inputNodes = [
   { key: "model", label: "Model Usage", cx: 136, cy: 408, group: "model" },
   { key: "telemetry", label: "Cloud Telemetry", cx: 166, cy: 486, group: "inputs" },
 ];
+
+const detailInputs = inputNodes.map(({ label, group }) => ({ label, group }));
+
+const attributionLayers = [
+  { label: "Model call", value: "gpt-4.1 / 58k tokens / tier-1 triage", confidence: "0.97", tone: "high", group: "model" },
+  {
+    label: "Service",
+    value: "support-router-prod / release 2026.03.18",
+    confidence: "0.95",
+    tone: "high",
+    group: "attribution",
+  },
+  {
+    label: "Code owner",
+    value: "Customer Ops Platform / cost center 4421",
+    confidence: "0.91",
+    tone: "high",
+    group: "attribution",
+  },
+  {
+    label: "Identity",
+    value: "svc-support-router@prod / GitHub Actions deploy",
+    confidence: "0.88",
+    tone: "medium",
+    group: "attribution",
+  },
+  {
+    label: "Org unit",
+    value: "Customer Operations / Support Automation",
+    confidence: "0.84",
+    tone: "medium",
+    group: "attribution",
+  },
+  {
+    label: "Budget",
+    value: "FY26 Assistants / projected run-rate +$28.6k",
+    confidence: "0.80",
+    tone: "low",
+    group: "attribution",
+  },
+];
+
+const decisionRecord = {
+  title: "Intervention point",
+  heading: "Block broad rollout of the support-router model change until route economics are fixed.",
+  body:
+    "A release pushed low-value triage traffic to GPT-4.1. Argmin tied the change to the service, deploy identity, and budget before the higher run rate spread.",
+  fields: [
+    { label: "Current run rate", value: "$91.4k / month if rollout continues" },
+    {
+      label: "Suggested action",
+      value: "Default tier-1 intents to GPT-4.1 mini, cap fallback escalation, and require owner approval before wider rollout",
+    },
+  ],
+};
 ---
 
-<figure class:list={["attribution-diagram mx-auto w-full max-w-6xl", className]} data-diagram data-active="none">
+<figure
+  class:list={["attribution-diagram diagram-v2-restore-r964 mx-auto w-full max-w-6xl", className]}
+  data-diagram
+  data-active="none"
+>
   <svg
     viewBox="0 0 1280 620"
     class="h-auto w-full"
@@ -154,31 +213,95 @@ const inputNodes = [
   </figcaption>
 
   <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-    <button type="button" class="diagram-keyword" data-keyword data-target="inputs">
+    <button type="button" class="diagram-keyword" data-keyword data-target="inputs" aria-pressed="false">
       Data Inputs
     </button>
-    <button type="button" class="diagram-keyword" data-keyword data-target="model">
+    <button type="button" class="diagram-keyword" data-keyword data-target="model" aria-pressed="false">
       Model
     </button>
-    <button type="button" class="diagram-keyword" data-keyword data-target="attribution">
+    <button type="button" class="diagram-keyword" data-keyword data-target="attribution" aria-pressed="false">
       Attribution
     </button>
+  </div>
+
+  <div class="dr-panel" data-detail-panel>
+    <div class="dr-header">
+      <p class="dr-eyebrow">Attribution Graph</p>
+      <h3 class="dr-title">
+        Resolve the chain progressively instead of hiding it behind a total.
+      </h3>
+      <p class="dr-copy">Each stage adds evidence until the request becomes an attributable decision with visible confidence and a next action.</p>
+    </div>
+
+    <div class="dr-inputs" data-dr-group="inputs">
+      <p class="dr-label">Read-only inputs</p>
+      <ul class="dr-chips">
+        {detailInputs.map((item) => (
+          <li class="dr-chip" data-dr-chip={item.group}>
+            {item.label}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="dr-record">
+      <div class="dr-record-head">
+        <p class="dr-label">Resolved attribution record</p>
+        <p class="dr-record-copy">One request, six layers, visible confidence.</p>
+      </div>
+
+      <ol class="dr-list">
+        {attributionLayers.map((layer) => (
+          <li class="dr-row" data-dr-row data-dr-row-group={layer.group}>
+            <div>
+              <p class="dr-row-label">{layer.label}</p>
+            </div>
+            <p class="dr-row-value">{layer.value}</p>
+            <span class:list={["dr-badge", `is-${layer.tone}`]}>
+              Confidence {layer.confidence}
+            </span>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="dr-decision" data-dr-group="attribution" data-dr-decision>
+      <p class="dr-label">{decisionRecord.title}</p>
+      <h4 class="dr-decision-title">{decisionRecord.heading}</h4>
+      <p class="dr-decision-copy">{decisionRecord.body}</p>
+
+      <dl class="dr-decision-grid">
+        {decisionRecord.fields.map((field) => (
+          <div class="dr-field">
+            <dt class="dr-row-label">{field.label}</dt>
+            <dd class="dr-field-value">{field.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   </div>
 </figure>
 
 <script is:inline>
   const diagrams = document.querySelectorAll("[data-diagram]");
 
+  const setDiagramState = (diagram, value) => {
+    diagram.setAttribute("data-active", value);
+
+    for (const keyword of diagram.querySelectorAll("[data-keyword]")) {
+      const isActive = keyword.getAttribute("data-target") === value;
+      keyword.setAttribute("aria-pressed", String(isActive));
+    }
+  };
+
   for (const diagram of diagrams) {
     const keywords = diagram.querySelectorAll("[data-keyword]");
-    const setActive = (value) => {
-      diagram.setAttribute("data-active", value);
-    };
+    setDiagramState(diagram, "none");
 
     for (const keyword of keywords) {
       const target = keyword.getAttribute("data-target") || "none";
-      const activate = () => setActive(target);
-      const reset = () => setActive("none");
+      const activate = () => setDiagramState(diagram, target);
+      const reset = () => setDiagramState(diagram, "none");
 
       keyword.addEventListener("mouseenter", activate);
       keyword.addEventListener("focus", activate);
@@ -304,14 +427,223 @@ const inputNodes = [
     font-weight: 500;
     line-height: 1;
     padding: 0.75rem 1rem;
-    transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+    transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease, transform 150ms ease;
   }
 
   .diagram-keyword:hover,
-  .diagram-keyword:focus-visible {
+  .diagram-keyword:focus-visible,
+  .diagram-keyword[aria-pressed="true"] {
     border-color: var(--diagram-accent);
     color: var(--diagram-text);
     outline: none;
+    transform: translateY(-1px);
+  }
+
+  .diagram-v2-restore-r964 .dr-panel {
+    margin-top: 2rem;
+    display: grid;
+    gap: 1.2rem;
+    border: 1px solid rgb(var(--color-argmin-border));
+    border-radius: 1.75rem;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-argmin-surface) / 0.94),
+      rgb(var(--color-argmin-surface-alt) / 0.9)
+    );
+    box-shadow: var(--page-shadow-soft);
+    padding: 1.45rem;
+    text-align: left;
+  }
+
+  .diagram-v2-restore-r964 .dr-header {
+    border-bottom: 1px solid rgb(var(--color-argmin-border) / 0.75);
+    padding-bottom: 1rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-eyebrow,
+  .diagram-v2-restore-r964 .dr-label,
+  .diagram-v2-restore-r964 .dr-row-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .diagram-v2-restore-r964 .dr-eyebrow,
+  .diagram-v2-restore-r964 .dr-label {
+    color: rgb(var(--color-argmin-light));
+  }
+
+  .diagram-v2-restore-r964 .dr-title,
+  .diagram-v2-restore-r964 .dr-decision-title {
+    color: rgb(var(--color-argmin-dark));
+    font-family:
+      "SF Pro Display",
+      "Inter Tight",
+      "Helvetica Neue",
+      "Segoe UI",
+      sans-serif;
+    font-weight: 650;
+    letter-spacing: -0.03em;
+  }
+
+  .diagram-v2-restore-r964 .dr-title {
+    margin-top: 0.7rem;
+    max-width: 20ch;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.08;
+  }
+
+  .diagram-v2-restore-r964 .dr-copy,
+  .diagram-v2-restore-r964 .dr-record-copy,
+  .diagram-v2-restore-r964 .dr-row-value,
+  .diagram-v2-restore-r964 .dr-decision-copy,
+  .diagram-v2-restore-r964 .dr-field-value {
+    color: rgb(var(--color-argmin-mid));
+  }
+
+  .diagram-v2-restore-r964 .dr-copy,
+  .diagram-v2-restore-r964 .dr-decision-copy,
+  .diagram-v2-restore-r964 .dr-field-value {
+    line-height: 1.7;
+  }
+
+  .diagram-v2-restore-r964 .dr-copy {
+    margin-top: 0.8rem;
+    max-width: 62ch;
+    font-size: 0.98rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-inputs,
+  .diagram-v2-restore-r964 .dr-record,
+  .diagram-v2-restore-r964 .dr-decision,
+  .diagram-v2-restore-r964 .dr-chip,
+  .diagram-v2-restore-r964 .dr-row {
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .diagram-v2-restore-r964 .dr-chips {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .diagram-v2-restore-r964 .dr-chip {
+    border: 1px solid rgb(var(--color-argmin-border));
+    border-radius: 999px;
+    background: rgb(var(--color-argmin-surface));
+    color: rgb(var(--color-argmin-dark));
+    padding: 0.72rem 0.95rem;
+    font-size: 0.92rem;
+    line-height: 1;
+  }
+
+  .diagram-v2-restore-r964 .dr-record-head {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-record-copy {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .diagram-v2-restore-r964 .dr-list {
+    margin-top: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .diagram-v2-restore-r964 .dr-row {
+    display: grid;
+    gap: 0.75rem;
+    border-top: 1px solid rgb(var(--color-argmin-border) / 0.72);
+    padding: 0.95rem 0;
+  }
+
+  .diagram-v2-restore-r964 .dr-row-label {
+    color: rgb(var(--color-argmin-light));
+  }
+
+  .diagram-v2-restore-r964 .dr-row-value {
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .diagram-v2-restore-r964 .dr-badge {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0.38rem 0.72rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .diagram-v2-restore-r964 .dr-badge.is-high {
+    border-color: rgb(34 197 94 / 0.2);
+    background: rgb(34 197 94 / 0.12);
+    color: rgb(21 128 61);
+  }
+
+  .diagram-v2-restore-r964 .dr-badge.is-medium {
+    border-color: rgb(245 158 11 / 0.22);
+    background: rgb(245 158 11 / 0.12);
+    color: rgb(180 83 9);
+  }
+
+  .diagram-v2-restore-r964 .dr-badge.is-low {
+    border-color: rgb(239 68 68 / 0.2);
+    background: rgb(239 68 68 / 0.1);
+    color: rgb(185 28 28);
+  }
+
+  .diagram-v2-restore-r964 .dr-decision {
+    border: 1px solid rgb(var(--color-argmin-accent) / 0.18);
+    border-radius: 1.4rem;
+    background: rgb(var(--color-argmin-accent) / 0.05);
+    padding: 1rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-decision-title {
+    margin-top: 0.7rem;
+    max-width: 42ch;
+    font-size: clamp(1.05rem, 1.7vw, 1.24rem);
+    line-height: 1.25;
+  }
+
+  .diagram-v2-restore-r964 .dr-decision-copy {
+    margin-top: 0.75rem;
+    font-size: 0.98rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-decision-grid {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.9rem;
+    border-top: 1px solid rgb(var(--color-argmin-accent) / 0.16);
+    padding-top: 1rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .diagram-v2-restore-r964 .dr-field-value {
+    margin: 0;
+    font-size: 0.95rem;
   }
 
   .attribution-diagram[data-active="inputs"] [data-group="model"],
@@ -332,6 +664,65 @@ const inputNodes = [
     opacity: 1;
   }
 
+  .attribution-diagram[data-active="inputs"] .dr-record,
+  .attribution-diagram[data-active="inputs"] .dr-decision {
+    opacity: 0.42;
+  }
+
+  .attribution-diagram[data-active="inputs"] [data-dr-group="inputs"] {
+    transform: translateY(-2px);
+  }
+
+  .attribution-diagram[data-active="model"] [data-dr-group="inputs"],
+  .attribution-diagram[data-active="model"] [data-dr-group="attribution"],
+  .attribution-diagram[data-active="model"] [data-dr-row-group="attribution"] {
+    opacity: 0.42;
+  }
+
+  .attribution-diagram[data-active="model"] [data-dr-chip="model"],
+  .attribution-diagram[data-active="model"] [data-dr-row-group="model"] {
+    opacity: 1;
+    transform: translateY(-2px);
+    border-color: rgb(var(--color-argmin-accent) / 0.38);
+    background: rgb(var(--color-argmin-accent) / 0.08);
+    box-shadow: 0 10px 24px rgb(15 23 42 / 0.08);
+  }
+
+  .attribution-diagram[data-active="attribution"] [data-dr-group="inputs"],
+  .attribution-diagram[data-active="attribution"] [data-dr-chip="inputs"],
+  .attribution-diagram[data-active="attribution"] [data-dr-chip="model"],
+  .attribution-diagram[data-active="attribution"] [data-dr-row-group="model"] {
+    opacity: 0.42;
+  }
+
+  .attribution-diagram[data-active="attribution"] [data-dr-group="attribution"],
+  .attribution-diagram[data-active="attribution"] [data-dr-row-group="attribution"] {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .attribution-diagram[data-active="attribution"] [data-dr-row-group="attribution"] {
+    border-color: rgb(var(--color-argmin-accent) / 0.28);
+    background: rgb(var(--color-argmin-accent) / 0.04);
+    box-shadow: inset 0 0 0 1px rgb(var(--color-argmin-accent) / 0.08);
+  }
+
+  @media (min-width: 768px) {
+    .diagram-v2-restore-r964 .dr-panel {
+      gap: 1.35rem;
+      padding: 1.75rem;
+    }
+
+    .diagram-v2-restore-r964 .dr-row {
+      grid-template-columns: minmax(0, 0.24fr) minmax(0, 1fr) auto;
+      align-items: center;
+    }
+
+    .diagram-v2-restore-r964 .dr-decision-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 767px) {
     .attribution-diagram {
       max-width: 100%;
@@ -340,6 +731,10 @@ const inputNodes = [
     .diagram-keyword {
       font-size: 0.9rem;
       padding: 0.7rem 0.95rem;
+    }
+
+    .diagram-v2-restore-r964 .dr-panel {
+      padding: 1.2rem;
     }
   }
 </style>
