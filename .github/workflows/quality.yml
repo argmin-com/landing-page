@@ -61,8 +61,14 @@ jobs:
       - name: Run Astro diagnostics
         run: npm run check
 
+      - name: Run diagram unit tests
+        run: npm run test:diagram:unit
+
       - name: Build static site
         run: npm run build
+
+      - name: Run diagram integration tests
+        run: npm run test:diagram:integration
 
       - name: Validate contact fallbacks
         run: npm run validate:contact-fallbacks

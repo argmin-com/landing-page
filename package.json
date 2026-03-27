@@ -11,6 +11,9 @@
     "build": "astro build",
     "preview": "npm run build && wrangler dev",
     "check": "astro check",
+    "test:diagram:unit": "node --test tests/attribution-diagram.unit.test.mjs",
+    "test:diagram:integration": "node --test tests/attribution-diagram.integration.test.mjs",
+    "test:diagram": "npm run test:diagram:unit && npm run build && npm run test:diagram:integration",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
     "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks",
     "deploy": "npm run build && wrangler deploy",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "jsdom": "^27.4.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.77.0"
   }
