@@ -8,6 +8,9 @@ tmp
 .playwright-cli
 output
 
+# claude code worktrees
+.claude/
+
 # wrangler files
 .wrangler
 .dev.vars*

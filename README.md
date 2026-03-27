@@ -4,8 +4,8 @@ Static Astro landing page for `argmin.co`, implemented from the March 24, 2026 P
 
 ## Stack
 
-- Astro 5
-- Tailwind CSS 3
+- Astro 6
+- Tailwind CSS 4
 - Static output for Cloudflare Pages
 - Formspree for contact submissions
 - Plausible Analytics for page view and event tracking

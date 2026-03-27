@@ -4,15 +4,15 @@ import { resolve } from "node:path";
 const pages = [
   {
     label: "home",
-    html: readFileSync(resolve("dist/index.html"), "utf8"),
+    html: readFileSync(resolve("dist/client/index.html"), "utf8"),
   },
   {
     label: "contact",
-    html: readFileSync(resolve("dist/contact/index.html"), "utf8"),
+    html: readFileSync(resolve("dist/client/contact/index.html"), "utf8"),
   },
   {
     label: "demo",
-    html: readFileSync(resolve("dist/demo/index.html"), "utf8"),
+    html: readFileSync(resolve("dist/client/demo/index.html"), "utf8"),
   },
 ];
 
