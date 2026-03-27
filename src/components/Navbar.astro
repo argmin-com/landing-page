@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { hiddenUntilReveal = false } = Astro.props;
-const navClass = hiddenUntilReveal ? "initial-hidden" : "";
+const navClass = hiddenUntilReveal ? "home-nav-hidden" : "";
 const pathname = Astro.url.pathname;
 
 const normalizePath = (value: string) => {

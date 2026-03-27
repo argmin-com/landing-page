@@ -14,7 +14,7 @@ import { sanitizeFormspreeUrl } from "../lib/formspree";
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
-<BaseLayout>
+<BaseLayout showNavbarImmediately={false}>
   <main id="main-content">
     <Hero />
     <div>

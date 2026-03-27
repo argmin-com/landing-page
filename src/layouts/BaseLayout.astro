@@ -30,6 +30,45 @@ const normalizeCanonicalUrl = (value: string) => {
   }
 };
 const normalizedCanonicalUrl = normalizeCanonicalUrl(canonicalUrl);
+const navbarRevealScript = !showNavbarImmediately
+  ? String.raw`
+  (() => {
+    const readyClass = "nav-reveal-ready";
+    const revealClass = "nav-revealed";
+    let ticking = false;
+
+    const getRevealOffset = () => {
+      const hero = document.querySelector("[data-home-hero]");
+
+      if (hero instanceof HTMLElement) {
+        return Math.max(hero.offsetHeight * 0.55, 240);
+      }
+
+      return 240;
+    };
+
+    const syncNavbarState = () => {
+      document.body.classList.add(readyClass);
+      document.body.classList.toggle(revealClass, window.scrollY > getRevealOffset());
+      ticking = false;
+    };
+
+    const requestSync = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(syncNavbarState);
+    };
+
+    syncNavbarState();
+    window.addEventListener("scroll", requestSync, { passive: true });
+    window.addEventListener("pageshow", requestSync);
+    window.addEventListener("hashchange", requestSync);
+  })();
+`
+  : "";
 const themeBootScript = String.raw`
   (() => {
     const storageKey = "argmin-theme-preference";
@@ -134,5 +173,6 @@ const themeBootScript = String.raw`
     </a>
     <Navbar hiddenUntilReveal={!showNavbarImmediately} />
     <slot />
+    {navbarRevealScript && <script is:inline set:html={navbarRevealScript}></script>}
   </body>
 </html>
