@@ -1,0 +1,213 @@
+name: Quality
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/**
+      - .nvmrc
+      - astro.config.mjs
+      - package.json
+      - package-lock.json
+      - public/**
+      - scripts/**
+      - src/**
+      - tsconfig.json
+      - wrangler.jsonc
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/**
+      - .nvmrc
+      - astro.config.mjs
+      - package.json
+      - package-lock.json
+      - public/**
+      - scripts/**
+      - src/**
+      - tsconfig.json
+      - wrangler.jsonc
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  site-audit:
+    name: Site audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run Astro diagnostics
+        run: npm run check
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Validate contact fallbacks
+        run: npm run validate:contact-fallbacks
+
+      - name: Summarize build output
+        run: |
+          {
+            echo "### Build output"
+            echo
+            echo '```text'
+            du -ah dist/client | sort -h | tail -n 20
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Serve dist/client
+        run: |
+          python3 -m http.server 4173 -d dist/client >/tmp/landing-page-http.log 2>&1 &
+          echo $! >/tmp/landing-page-http.pid
+
+          server_ready=0
+          for attempt in {1..30}; do
+            if curl -fsS http://127.0.0.1:4173/ >/dev/null; then
+              server_ready=1
+              break
+            fi
+            sleep 1
+          done
+
+          if [ "$server_ready" -ne 1 ]; then
+            echo "Static server did not start in time" >&2
+            cat /tmp/landing-page-http.log >&2 || true
+            exit 1
+          fi
+
+      - name: Run Lighthouse
+        run: |
+          mkdir -p lighthouse
+
+          for run in 1 2 3; do
+            echo "Running Lighthouse audit ${run} of 3"
+            npx --yes lighthouse@13.0.3 \
+              http://127.0.0.1:4173/ \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --chrome-flags="--headless=new --no-sandbox" \
+              --quiet \
+              --output=json \
+              --output-path="./lighthouse/report-${run}.json"
+          done
+
+      - name: Enforce Lighthouse thresholds
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readdirSync, readFileSync } from "node:fs";
+
+          const median = (values) => {
+            const sorted = [...values].sort((a, b) => a - b);
+            return sorted[Math.floor(sorted.length / 2)];
+          };
+
+          const reports = readdirSync("lighthouse")
+            .filter((entry) => /^report-\d+\.json$/.test(entry))
+            .sort()
+            .map((entry) => JSON.parse(readFileSync(`lighthouse/${entry}`, "utf8")));
+
+          const thresholds = {
+            performance: 0.9,
+            accessibility: 1,
+            "best-practices": 1,
+            seo: 1,
+          };
+          const budgets = {
+            lcpMs: 2500,
+            transferKb: 100,
+          };
+          const failures = [];
+
+          const categoryLines = Object.entries(thresholds).map(([category, minScore]) => {
+            const scores = reports.map((report) => report.categories[category].score);
+            const medianScore = median(scores);
+            if (medianScore < minScore) {
+              failures.push(`${category} median score ${medianScore.toFixed(2)} is below ${minScore.toFixed(2)}`);
+            }
+
+            return `- ${category}: ${scores.map((score) => Math.round(score * 100)).join(", ")} (median ${Math.round(
+              medianScore * 100,
+            )}, min ${Math.round(minScore * 100)})`;
+          });
+
+          const lcpValues = reports.map((report) =>
+            Math.round(report.audits["largest-contentful-paint"].numericValue),
+          );
+          const lcpMedian = median(lcpValues);
+          if (lcpMedian > budgets.lcpMs) {
+            failures.push(`Largest Contentful Paint median ${lcpMedian} ms exceeds ${budgets.lcpMs} ms`);
+          }
+
+          const transferValues = reports.map((report) =>
+            Number((report.audits["total-byte-weight"].numericValue / 1024).toFixed(1)),
+          );
+          const transferMedian = median(transferValues);
+          if (transferMedian > budgets.transferKb) {
+            failures.push(
+              `Total transfer size median ${transferMedian.toFixed(1)} KB exceeds ${budgets.transferKb.toFixed(1)} KB`,
+            );
+          }
+
+          const summaryLines = [
+            "### Lighthouse summary",
+            "",
+            ...categoryLines,
+            `- largest-contentful-paint-ms: ${lcpValues.join(", ")} (median ${Math.round(
+              lcpMedian,
+            )}, max ${budgets.lcpMs})`,
+            `- total-byte-weight-kb: ${transferValues.map((value) => value.toFixed(1)).join(", ")} (median ${transferMedian.toFixed(
+              1,
+            )}, max ${budgets.transferKb.toFixed(1)})`,
+          ];
+
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summaryLines.join("\n")}\n`);
+
+          if (failures.length > 0) {
+            console.error(failures.join("\n"));
+            process.exit(1);
+          }
+          NODE
+
+      - name: Collect server logs
+        if: always()
+        run: |
+          if [ -f /tmp/landing-page-http.log ]; then
+            cp /tmp/landing-page-http.log lighthouse/http-server.log
+          fi
+
+      - name: Upload audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: quality-${{ github.sha }}
+          path: lighthouse
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Stop static server
+        if: always()
+        run: |
+          if [ -f /tmp/landing-page-http.pid ]; then
+            kill "$(cat /tmp/landing-page-http.pid)" || true
+          fi

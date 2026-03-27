@@ -12,6 +12,7 @@
     "preview": "npm run build && wrangler dev",
     "check": "astro check",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks",
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types"
   },
