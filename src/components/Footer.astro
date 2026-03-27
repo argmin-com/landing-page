@@ -35,7 +35,7 @@ const { compact = false } = Astro.props;
                   <li>
                     <a
                       href={link.href}
-                      class="text-base leading-7 text-argmin-mid transition-colors duration-200 hover:text-argmin-dark"
+                      class="text-base leading-7 text-argmin-mid transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm"
                       target={link.href.startsWith("http") ? "_blank" : undefined}
                       rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     >

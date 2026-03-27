@@ -40,7 +40,7 @@ const isActive = (href: string) => currentPath === normalizePath(href);
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
                   class:list={[
-                    "text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark",
+                    "text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm",
                     isActive(item.href) && "nav-link-active",
                   ]}
                 >
