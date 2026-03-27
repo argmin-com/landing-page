@@ -51,7 +51,7 @@ Target host: Cloudflare Pages
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Recommended Node version: `18` in Cloudflare Pages to match the engineering spec
+- Recommended Node version: `20` in Cloudflare Pages (see `.nvmrc` and `engines` in `package.json`)
 - Required environment variable: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`
 - DNS/TLS: configured in Cloudflare outside this repository
@@ -63,7 +63,7 @@ Local validation completed on March 24, 2026:
 - `npm run check`: passed with 0 errors, 0 warnings, 0 hints
 - `npm run build`: passed
 - `npm run validate:contact-fallbacks`: passes against the no-env build and verifies the inline config-missing fallback plus the no-JavaScript contact path
-- Dist artifact size: `dist/` totals about 36 KB on disk; Lighthouse measured about 47.8 KB transfer weight
+- Dist artifact size: `dist/` includes static HTML pages plus Cloudflare worker assets
 - Lighthouse against the built static output: 100 performance / 100 accessibility / 100 best practices / 100 SEO
 - Browser validation via Playwright CLI:
   - hero CTA updates the URL hash to `#contact` and scrolls the contact section near the top of the viewport
