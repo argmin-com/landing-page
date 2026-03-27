@@ -61,7 +61,7 @@ jobs:
 
       - name: Serve dist
         run: |
-          python3 -m http.server 4173 -d dist >/tmp/landing-page-http.log 2>&1 &
+          python3 -m http.server 4173 -d dist/client >/tmp/landing-page-http.log 2>&1 &
           echo $! >/tmp/landing-page-http.pid
 
           for attempt in {1..30}; do

@@ -1,6 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme inline {
+  --color-argmin-dark: rgb(var(--color-argmin-dark));
+  --color-argmin-mid: rgb(var(--color-argmin-mid));
+  --color-argmin-light: rgb(var(--color-argmin-light));
+  --color-argmin-accent: rgb(var(--color-argmin-accent));
+  --color-argmin-accent-hover: rgb(var(--color-argmin-accent-hover));
+  --color-argmin-bg: rgb(var(--color-argmin-bg));
+  --color-argmin-surface: rgb(var(--color-argmin-surface));
+  --color-argmin-surface-alt: rgb(var(--color-argmin-surface-alt));
+  --color-argmin-border: rgb(var(--color-argmin-border));
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 
 :root {
   color-scheme: light;
