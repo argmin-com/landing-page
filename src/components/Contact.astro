@@ -27,12 +27,13 @@ const hasEndpoint = endpoint.length > 0;
     </p>
 
     <div id="form-container" class="mt-10" aria-live="polite">
-      <div
+      <form
         id="contact-form"
         class="space-y-4 p-6 md:p-8"
-        role="form"
         aria-labelledby="contact-heading"
         data-form-configured={String(hasEndpoint)}
+        action={hasEndpoint ? endpoint : undefined}
+        method="POST"
       >
         <div>
           <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
@@ -98,7 +99,7 @@ const hasEndpoint = endpoint.length > 0;
           Submission failed. Please email us directly at
           <a class="underline decoration-from-font underline-offset-4" href={`mailto:${contactEmail}`}>{contactEmail}</a>.
         </p>
-      </div>
+      </form>
     </div>
 
     <noscript>
@@ -153,6 +154,8 @@ const hasEndpoint = endpoint.length > 0;
       error?.classList.add("hidden");
 
       try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
         const response = await fetch(endpoint, {
           method: "POST",
           headers: {
@@ -160,7 +163,9 @@ const hasEndpoint = endpoint.length > 0;
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
+          signal: controller.signal,
         });
+        clearTimeout(timeout);
 
         if (!response.ok) {
           throw new Error("Form submission failed");

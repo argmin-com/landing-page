@@ -13,6 +13,7 @@ on:
       - src/**
       - tailwind.config.mjs
       - tsconfig.json
+      - wrangler.jsonc
   pull_request:
     branches:
       - main
@@ -25,6 +26,7 @@ on:
       - src/**
       - tailwind.config.mjs
       - tsconfig.json
+      - wrangler.jsonc
   workflow_dispatch:
 
 permissions:
@@ -77,7 +79,7 @@ jobs:
         run: |
           mkdir -p lighthouse
 
-          npx --yes lighthouse@13 \
+          npx --yes lighthouse@13.0.3 \
             http://127.0.0.1:4173/ \
             --only-categories=performance,accessibility,best-practices,seo \
             --chrome-flags="--headless=new --no-sandbox" \
