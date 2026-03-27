@@ -97,6 +97,12 @@ jobs:
             exit 1
           fi
 
+      - name: Set up Chrome
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-dependencies: true
+
       - name: Run Lighthouse
         run: |
           mkdir -p lighthouse
@@ -106,6 +112,7 @@ jobs:
             npx --yes lighthouse@13.0.3 \
               http://127.0.0.1:4173/ \
               --only-categories=performance,accessibility,best-practices,seo \
+              --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
               --chrome-flags="--headless=new --no-sandbox" \
               --quiet \
               --output=json \
