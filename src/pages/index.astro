@@ -43,13 +43,7 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 
 <script is:inline>
   if (!document.body.classList.contains("revealed")) {
-    const reveal = () => {
-      document.body.classList.add("revealed");
-      window.removeEventListener("scroll", reveal);
-      window.removeEventListener("touchstart", reveal);
-      window.removeEventListener("keydown", reveal);
-      window.removeEventListener("hashchange", reveal);
-    };
+    const reveal = () => document.body.classList.add("revealed");
 
     if (window.location.hash) {
       reveal();
