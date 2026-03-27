@@ -15,7 +15,6 @@ on:
       - scripts/**
       - public/**
       - src/**
-      - tailwind.config.mjs
       - tsconfig.json
       - wrangler.jsonc
   pull_request:
@@ -32,7 +31,6 @@ on:
       - scripts/**
       - public/**
       - src/**
-      - tailwind.config.mjs
       - tsconfig.json
       - wrangler.jsonc
   workflow_dispatch:
@@ -53,7 +51,6 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - 20
           - 22
 
     steps:
@@ -68,7 +65,7 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Run Astro diagnostics
         run: npm run check
@@ -90,7 +87,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload dist artifact
-        if: matrix.node == 20
+        if: matrix.node == 22
         uses: actions/upload-artifact@v7
         with:
           name: dist-${{ github.sha }}
