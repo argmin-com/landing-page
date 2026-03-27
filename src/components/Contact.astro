@@ -175,6 +175,7 @@ const hasEndpoint = endpoint.length > 0;
           '<p class="py-8 text-center text-xl text-argmin-dark">Thank you. We will be in touch shortly.</p>';
         window.plausible && window.plausible("form_submit");
       } catch (submissionError) {
+        console.error("Contact form submission failed:", submissionError);
         button.disabled = false;
         button.textContent = "Get in Touch";
         error?.classList.remove("hidden");
