@@ -31,13 +31,13 @@ export const footerGroups = [
     links: [
       { label: "About", href: "/about" },
       { label: "Team", href: "/team" },
-      { label: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Connect",
     links: [
-      { label: "Contact", href: "mailto:contact@argmin.co" },
+      { label: "Contact", href: "/contact" },
+      { label: "contact@argmin.co", href: "mailto:contact@argmin.co" },
     ],
   },
 ] as const;
