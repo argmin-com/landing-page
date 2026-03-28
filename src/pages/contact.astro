@@ -1,10 +1,12 @@
 ---
-import ContactSection from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
 import { sanitizeFormspreeUrl } from "../lib/formspree";
 
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
+const endpoint = formspreeUrl.trim();
+const hasEndpoint = endpoint.length > 0;
 ---
 
 <BaseLayout
@@ -13,7 +15,170 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
   canonicalUrl="https://argmin.co/contact"
 >
   <main id="main-content">
-    <ContactSection title="Contact Us" formspreeUrl={formspreeUrl} />
+    <PageHero
+      eyebrow="Contact"
+      title="Let's talk about your AI spend."
+      lede="We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk."
+    />
+
+    <section class="px-6 pb-10 md:pb-14">
+      <div class="site-shell">
+        <div class="mx-auto max-w-2xl">
+          <div class="surface-panel px-6 py-8 md:px-10 md:py-10" id="form-container" aria-live="polite">
+            <form
+              id="contact-form"
+              class="space-y-5"
+              aria-labelledby="form-heading"
+              data-form-configured={String(hasEndpoint)}
+              action={hasEndpoint ? endpoint : undefined}
+              method="POST"
+            >
+              <h2 id="form-heading" class="section-kicker">Send a message</h2>
+
+              <div class="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    placeholder="Your name"
+                    class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="work@company.com"
+                    class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  required
+                  placeholder="Company name"
+                  class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                />
+              </div>
+              <div>
+                <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Tell us about your AI spend challenge"
+                  class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                ></textarea>
+              </div>
+              <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+              <button
+                id="submit-btn"
+                type="submit"
+                disabled={!hasEndpoint}
+                aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
+                class="button-primary w-full py-4 text-base"
+              >
+                {hasEndpoint ? "Get in Touch" : "Form Unavailable"}
+              </button>
+              <p
+                id="form-config-error"
+                class={hasEndpoint ? "hidden text-center text-sm text-argmin-mid" : "text-center text-sm text-argmin-mid"}
+              >
+                Form submissions are currently unavailable. Please email
+                <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
+              </p>
+              <p id="form-error" class="hidden text-center text-sm text-argmin-mid">
+                Submission failed. Please email us directly at
+                <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <Footer />
   </main>
 </BaseLayout>
+
+<script is:inline define:vars={{ endpoint }}>
+  const form = document.getElementById("contact-form");
+  const button = document.getElementById("submit-btn");
+  const container = document.getElementById("form-container");
+  const error = document.getElementById("form-error");
+  const nameField = document.getElementById("name");
+  const emailField = document.getElementById("email");
+  const companyField = document.getElementById("company");
+  const messageField = document.getElementById("message");
+  const gotchaField = document.getElementById("gotcha");
+
+  if (
+    endpoint &&
+    form instanceof HTMLFormElement &&
+    button instanceof HTMLButtonElement &&
+    container instanceof HTMLElement &&
+    nameField instanceof HTMLInputElement &&
+    emailField instanceof HTMLInputElement &&
+    companyField instanceof HTMLInputElement &&
+    messageField instanceof HTMLTextAreaElement &&
+    gotchaField instanceof HTMLInputElement
+  ) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      const payload = {
+        name: nameField.value.trim(),
+        email: emailField.value.trim(),
+        company: companyField.value.trim(),
+        message: messageField.value.trim(),
+        _gotcha: gotchaField.value.trim(),
+      };
+
+      button.disabled = true;
+      button.textContent = "Sending...";
+      error?.classList.add("hidden");
+
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+
+        if (!response.ok) {
+          throw new Error("Form submission failed");
+        }
+
+        container.innerHTML =
+          '<p class="py-8 text-center text-xl text-argmin-dark">Thank you. We will be in touch shortly.</p>';
+        window.plausible && window.plausible("form_submit");
+      } catch (submissionError) {
+        console.error("Contact form submission failed:", submissionError);
+        button.disabled = false;
+        button.textContent = "Get in Touch";
+        error?.classList.remove("hidden");
+      }
+    });
+  }
+</script>

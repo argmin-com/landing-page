@@ -1,7 +1,28 @@
 ---
-import Footer from "../components/Footer.astro";
-import Founders from "../components/Founders.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+
+const founders = [
+  {
+    name: "Charlotte Wargniez",
+    title: "CTO",
+    alt: "Charlotte Wargniez, CTO",
+    webp: "/charlotte.webp",
+    jpg: "/charlotte.jpg",
+    bio: "University of Oxford DPhil researcher in AI for critical infrastructure (Intelligent Earth CDT). Visiting Researcher at the European Space Agency. Research focus: deep reinforcement learning for adaptive planning and optimization. Rose Sheinin Award: top woman in science across the University of Toronto (21,000 graduates).",
+    linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
+  },
+  {
+    name: "Richard McKinney",
+    title: "CEO",
+    alt: "Richard McKinney, CEO",
+    webp: "/richard.webp",
+    jpg: "/richard.jpg",
+    bio: "Oxford alum. 14 years building enterprise infrastructure at Amazon, Cruise/GM, and Salesforce. Built Amazon's greenhouse gas data platform across 94 countries. Co-founded the AI Energy Score with Hugging Face. Led product for Salesforce Shield Platform Encryption.",
+    linkedin: "https://www.linkedin.com/in/richardcmckinney",
+  },
+];
 ---
 
 <BaseLayout
@@ -10,7 +31,66 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   canonicalUrl="https://argmin.co/team"
 >
   <main id="main-content">
-    <Founders title="Team" intro="Meet the team building attribution and optimization for enterprise AI spend." />
+    <PageHero
+      eyebrow="Team"
+      title="Built by operators, not observers."
+      lede="We have spent years inside the infrastructure that creates the problem Argmin solves—cloud-scale cost attribution, security governance, and AI deployment."
+      actions={[
+        { href: "/contact", label: "Get in touch" },
+        { href: "/platform", label: "See the platform", variant: "secondary" },
+      ]}
+    />
+
+    <section class="px-6 pb-10 md:pb-14">
+      <div class="site-shell">
+        <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+          {founders.map((founder) => (
+            <article class="surface-panel overflow-hidden px-6 pb-8 pt-8 md:px-8">
+              <div class="flex items-start gap-5">
+                <a
+                  href={founder.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`View ${founder.name} on LinkedIn`}
+                  class="shrink-0 transition-transform duration-200 hover:scale-[1.02]"
+                >
+                  <picture>
+                    <source srcset={founder.webp} type="image/webp" />
+                    <img
+                      src={founder.jpg}
+                      alt={founder.alt}
+                      class="h-28 w-20 rounded-2xl object-cover shadow-[0_12px_30px_rgba(0,0,0,0.2)] md:h-36 md:w-24"
+                      width="96"
+                      height="144"
+                      loading="lazy"
+                    />
+                  </picture>
+                </a>
+                <div class="pt-1">
+                  <div class="flex items-center gap-2">
+                    <h2 class="text-xl font-bold text-argmin-dark">{founder.name}</h2>
+                    <a
+                      href={founder.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${founder.name} on LinkedIn`}
+                      class="text-argmin-light transition-colors duration-200 hover:text-argmin-dark"
+                    >
+                      <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current" aria-hidden="true">
+                        <path d="M4.98 3.5A2.49 2.49 0 1 1 5 8.48a2.49 2.49 0 0 1-.02-4.98ZM3 9h4v12H3Zm7 0h3.83v1.64h.05c.53-1 1.84-2.05 3.79-2.05 4.05 0 4.8 2.67 4.8 6.14V21h-4v-5.54c0-1.32-.02-3.02-1.84-3.02-1.85 0-2.13 1.44-2.13 2.93V21h-4Z" />
+                      </svg>
+                    </a>
+                  </div>
+                  <p class="mt-1 text-sm font-semibold text-argmin-accent">{founder.title}</p>
+                </div>
+              </div>
+              <p class="mt-6 text-base leading-7 text-argmin-mid">{founder.bio}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <Footer />
   </main>
 </BaseLayout>
