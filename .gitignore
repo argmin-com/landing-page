@@ -10,9 +10,13 @@ output
 
 # claude code worktrees
 .claude/
+.codex/
 
 # wrangler files
 .wrangler
 .dev.vars*
 !.dev.vars.example
 !.env.example
+
+.npm-cache
+.home 

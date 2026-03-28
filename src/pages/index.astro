@@ -14,10 +14,10 @@ import { sanitizeFormspreeUrl } from "../lib/formspree";
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
-<BaseLayout showNavbarImmediately={false}>
+<BaseLayout showNavbarImmediately={false} homeHeroOnlyInitially={true}>
   <main id="main-content">
-    <Hero fillViewport={true} />
-    <div>
+    <Hero fillViewport={true} revealContent={false} />
+    <div data-home-stage="2">
       <Problem />
       <ValueProps />
       <SubHeroBreak />
@@ -36,7 +36,162 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
       </section>
       <Founders imagesOnly={true} />
       <Contact formspreeUrl={formspreeUrl} />
+      <Footer />
     </div>
-    <Footer />
   </main>
+  <script is:inline>
+    (() => {
+      const stageKey = "homeRevealStage";
+      const finalStage = 2;
+      const advanceOffset = Math.max(window.innerHeight * 0.14, 96);
+      const minAdvanceGap = 450;
+      const stageThresholds = [
+        { wheel: 3.5, touch: 8 },
+        { wheel: 5, touch: 9 },
+      ];
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let stage = Number(document.body?.dataset[stageKey] ?? Number.NaN);
+      let lastAdvanceAt = 0;
+      let wheelGestureLocked = false;
+      let wheelGestureResetId;
+      let touchStartY = null;
+      let touchGestureAdvanced = false;
+
+      const body = document.body;
+
+      if (!(body instanceof HTMLElement) || stage !== 0) {
+        return;
+      }
+
+      const wheelOptions = { passive: true };
+      const touchOptions = { passive: true };
+
+      const cleanup = () => {
+        window.removeEventListener("wheel", onWheel, wheelOptions);
+        window.removeEventListener("keydown", onKeyDown);
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("touchstart", onTouchStart, touchOptions);
+        window.removeEventListener("touchmove", onTouchMove, touchOptions);
+        window.removeEventListener("touchend", onTouchEnd, touchOptions);
+        if (typeof wheelGestureResetId === "number") {
+          window.clearTimeout(wheelGestureResetId);
+        }
+      };
+
+      const setStage = (nextStage, advanceIntoContent) => {
+        body.dataset[stageKey] = String(nextStage);
+        stage = nextStage;
+
+        if (nextStage < finalStage) {
+          return;
+        }
+
+        cleanup();
+
+        if (!advanceIntoContent || window.scrollY > 0) {
+          return;
+        }
+
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            window.scrollBy({
+              top: advanceOffset,
+              behavior: prefersReducedMotion ? "auto" : "smooth",
+            });
+          });
+        });
+      };
+
+      const canAdvance = () => {
+        const now = window.performance.now();
+
+        if (now - lastAdvanceAt < minAdvanceGap) {
+          return false;
+        }
+
+        lastAdvanceAt = now;
+        return true;
+      };
+
+      const advanceStage = (advanceIntoContent) => {
+        if (stage >= finalStage || !canAdvance()) {
+          return;
+        }
+
+        setStage(stage + 1, advanceIntoContent);
+      };
+
+      const getThreshold = (kind) => stageThresholds[Math.min(stage, stageThresholds.length - 1)][kind];
+
+      const queueWheelUnlock = () => {
+        if (typeof wheelGestureResetId === "number") {
+          window.clearTimeout(wheelGestureResetId);
+        }
+
+        wheelGestureResetId = window.setTimeout(() => {
+          wheelGestureLocked = false;
+        }, 180);
+      };
+
+      const onWheel = (event) => {
+        if (event.deltaY > getThreshold("wheel") && !wheelGestureLocked) {
+          wheelGestureLocked = true;
+          advanceStage(true);
+        }
+
+        queueWheelUnlock();
+      };
+
+      const onKeyDown = (event) => {
+        if (event.defaultPrevented) {
+          return;
+        }
+
+        if (["ArrowDown", "PageDown", " ", "Spacebar"].includes(event.key)) {
+          advanceStage(true);
+        }
+      };
+
+      const onScroll = () => {
+        if (window.scrollY > 0) {
+          setStage(finalStage, false);
+        }
+      };
+
+      const onTouchStart = (event) => {
+        touchStartY = event.touches[0]?.clientY ?? null;
+        touchGestureAdvanced = false;
+      };
+
+      const onTouchMove = (event) => {
+        const currentY = event.touches[0]?.clientY;
+
+        if (touchStartY === null || typeof currentY !== "number") {
+          return;
+        }
+
+        if (!touchGestureAdvanced && touchStartY - currentY > getThreshold("touch")) {
+          touchGestureAdvanced = true;
+          advanceStage(true);
+        }
+      };
+
+      const onTouchEnd = () => {
+        touchStartY = null;
+        touchGestureAdvanced = false;
+      };
+
+      if (window.scrollY > 0) {
+        setStage(finalStage, false);
+        return;
+      }
+
+      window.addEventListener("wheel", onWheel, wheelOptions);
+      window.addEventListener("keydown", onKeyDown);
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("touchstart", onTouchStart, touchOptions);
+      window.addEventListener("touchmove", onTouchMove, touchOptions);
+      window.addEventListener("touchend", onTouchEnd, touchOptions);
+    })();
+  </script>
 </BaseLayout>

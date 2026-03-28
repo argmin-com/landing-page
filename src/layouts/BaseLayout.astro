@@ -7,6 +7,7 @@ interface Props {
   description?: string;
   canonicalUrl?: string;
   showNavbarImmediately?: boolean;
+  homeHeroOnlyInitially?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
     "Argmin deploys inside your environment, attributes AI spend to teams and budgets, and intervenes at decision time. Enterprise AI cost intelligence.",
   canonicalUrl = "https://argmin.co/",
   showNavbarImmediately = true,
+  homeHeroOnlyInitially = false,
 } = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
 const themeColor = "#f9f7f4";
@@ -35,6 +37,9 @@ const navbarRevealScript = !showNavbarImmediately
   (() => {
     const readyClass = "nav-reveal-ready";
     const revealClass = "nav-revealed";
+    const stageKey = "homeRevealStage";
+    const finalStage = "2";
+    const revealWithHomeContent = ${homeHeroOnlyInitially ? "true" : "false"};
     let ticking = false;
 
     const getRevealOffset = () => {
@@ -47,9 +52,17 @@ const navbarRevealScript = !showNavbarImmediately
       return 240;
     };
 
+    const shouldRevealNavbar = () => {
+      if (revealWithHomeContent) {
+        return document.body.dataset[stageKey] === finalStage;
+      }
+
+      return window.scrollY > getRevealOffset();
+    };
+
     const syncNavbarState = () => {
       document.body.classList.add(readyClass);
-      document.body.classList.toggle(revealClass, window.scrollY > getRevealOffset());
+      document.body.classList.toggle(revealClass, shouldRevealNavbar());
       ticking = false;
     };
 
@@ -137,6 +150,21 @@ const themeBootScript = String.raw`
     }
   })();
 `;
+const homeHeroNoscriptStyles = homeHeroOnlyInitially
+  ? String.raw`
+    body[data-home-reveal-stage] {
+      overflow: visible;
+    }
+
+    body[data-home-reveal-stage] [data-home-stage] {
+      max-height: none !important;
+      opacity: 1 !important;
+      overflow: visible !important;
+      pointer-events: auto !important;
+      transform: none !important;
+    }
+  `
+  : "";
 ---
 
 <!doctype html>
@@ -166,8 +194,16 @@ const themeBootScript = String.raw`
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <script is:inline set:html={themeBootScript}></script>
     <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
+    {homeHeroNoscriptStyles && (
+      <noscript>
+        <style set:html={homeHeroNoscriptStyles}></style>
+      </noscript>
+    )}
   </head>
-  <body class="font-sans text-argmin-dark antialiased">
+  <body
+    class="font-sans text-argmin-dark antialiased"
+    data-home-reveal-stage={homeHeroOnlyInitially ? "0" : undefined}
+  >
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-argmin-surface focus:px-4 focus:py-2 focus:text-argmin-dark focus:shadow-lg">
       Skip to content
     </a>

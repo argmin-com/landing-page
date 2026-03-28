@@ -5,7 +5,6 @@ interface Props {
 }
 
 const { revealContent = true, fillViewport = false } = Astro.props;
-const revealClass = revealContent ? "" : "initial-hidden";
 ---
 
 <section
@@ -17,17 +16,15 @@ const revealClass = revealContent ? "" : "initial-hidden";
 >
   <div class="mx-auto flex w-full max-w-6xl flex-col items-start justify-center px-6 py-10 text-left md:py-14">
     <h1
-      class="hero-headline max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-argmin-dark md:text-6xl lg:text-7xl xl:text-[5.5rem]"
+      class="hero-headline hero-title-intro max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.06em] text-argmin-dark md:text-6xl lg:text-7xl xl:text-[5.5rem]"
     >
       <span class="hero-headline-dark block">Argmin</span>
     </h1>
     <p
-      class:list={[
-        "hero-headline mt-6 max-w-4xl text-3xl font-semibold leading-[1.02] tracking-[-0.05em] text-argmin-dark md:text-5xl lg:text-6xl",
-        revealClass,
-      ]}
+      data-home-stage={revealContent ? undefined : "1"}
+      class="hero-headline mt-6 max-w-4xl text-3xl font-semibold leading-[1.02] tracking-[-0.05em] text-argmin-dark md:text-5xl lg:text-6xl"
     >
-       Visibility into AI usage and cost for optimized and real-time control.
+       Visibility into AI usage and cost for optimized real-time control.
     </p>
   </div>
 </section>
@@ -49,5 +46,21 @@ const revealClass = revealContent ? "" : "initial-hidden";
 
   .hero-headline-dark {
     color: rgb(var(--color-argmin-dark));
+  }
+
+  .hero-title-intro {
+    animation: hero-title-intro 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes hero-title-intro {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>

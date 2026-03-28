@@ -73,6 +73,11 @@ body {
   transition: background 220ms ease, color 220ms ease;
 }
 
+body[data-home-reveal-stage="0"],
+body[data-home-reveal-stage="1"] {
+  overflow: hidden;
+}
+
 ::selection {
   background: rgb(var(--color-argmin-accent) / 0.24);
   color: rgb(var(--color-argmin-dark));
@@ -262,15 +267,39 @@ body {
   animation-delay: 160ms;
 }
 
-.initial-hidden {
+[data-home-stage] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+[data-home-stage="1"] {
+  transition: opacity 200ms ease;
+}
+
+[data-home-stage="2"] {
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+
+body[data-home-reveal-stage="0"] [data-home-stage="1"],
+body[data-home-reveal-stage="0"] [data-home-stage="2"],
+body[data-home-reveal-stage="1"] [data-home-stage="2"] {
   opacity: 0;
   pointer-events: none;
 }
 
-body.revealed .initial-hidden {
+body[data-home-reveal-stage="0"] [data-home-stage="2"],
+body[data-home-reveal-stage="1"] [data-home-stage="2"] {
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(1.5rem);
+}
+
+body[data-home-reveal-stage="2"] [data-home-stage="2"],
+body:not([data-home-reveal-stage]) [data-home-stage="2"] {
+  max-height: none;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 200ms ease;
+  transform: translateY(0);
 }
 
 body.nav-reveal-ready .home-nav-hidden {
