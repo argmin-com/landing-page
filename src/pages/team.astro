@@ -45,21 +45,21 @@ const founders = [
       <div class="site-shell">
         <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           {founders.map((founder) => (
-            <article class="surface-panel overflow-hidden px-6 pb-8 pt-8 md:px-8">
+            <article class="surface-panel overflow-hidden px-6 pb-10 pt-8 md:px-8">
               <div class="flex items-start gap-5">
                 <a
                   href={founder.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`View ${founder.name} on LinkedIn`}
-                  class="shrink-0 transition-transform duration-200 hover:scale-[1.02]"
+                  class="group shrink-0 transition-transform duration-200 hover:scale-[1.02]"
                 >
                   <picture>
                     <source srcset={founder.webp} type="image/webp" />
                     <img
                       src={founder.jpg}
                       alt={founder.alt}
-                      class="h-28 w-20 rounded-2xl object-cover shadow-[0_12px_30px_rgba(0,0,0,0.2)] md:h-36 md:w-24"
+                      class="h-28 w-20 rounded-2xl object-cover shadow-[0_12px_30px_rgba(0,0,0,0.2)] grayscale transition-[filter] duration-300 group-hover:grayscale-0 md:h-36 md:w-24"
                       width="96"
                       height="144"
                       loading="lazy"
@@ -81,10 +81,10 @@ const founders = [
                       </svg>
                     </a>
                   </div>
-                  <p class="mt-1 text-sm font-semibold text-argmin-accent">{founder.title}</p>
+                  <p class="mt-1.5 text-base font-semibold text-argmin-accent">{founder.title}</p>
                 </div>
               </div>
-              <p class="mt-6 text-base leading-7 text-argmin-mid">{founder.bio}</p>
+              <p class="mt-8 text-base leading-8 text-argmin-mid">{founder.bio}</p>
             </article>
           ))}
         </div>
