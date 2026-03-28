@@ -1,6 +1,6 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
-import { primaryNav } from "../content/site";
+import { navGroups } from "../content/site";
 
 interface Props {
   hiddenUntilReveal?: boolean;
@@ -18,7 +18,12 @@ const normalizePath = (value: string) => {
 };
 
 const currentPath = normalizePath(pathname);
-const isActive = (href: string) => currentPath === normalizePath(href);
+const isActive = (href: string) => {
+  const base = normalizePath(href.split("#")[0]);
+  return currentPath === base;
+};
+const isGroupActive = (items: { href: string }[]) =>
+  items.some((item) => isActive(item.href));
 ---
 
 <header class:list={["px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
@@ -34,18 +39,43 @@ const isActive = (href: string) => currentPath === normalizePath(href);
       <div class="hidden min-[1080px]:flex min-[1080px]:items-center min-[1080px]:gap-6">
         <nav aria-label="Primary">
           <ul class="flex items-center gap-5">
-            {primaryNav.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  aria-current={isActive(item.href) ? "page" : undefined}
+            {navGroups.map((group) => (
+              <li class="relative" data-nav-dropdown>
+                <button
+                  type="button"
                   class:list={[
-                    "text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm",
-                    isActive(item.href) && "nav-link-active",
+                    "inline-flex items-center gap-1 text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm",
+                    isGroupActive(group.items) && "nav-link-active",
                   ]}
+                  aria-expanded="false"
+                  data-dropdown-trigger
                 >
-                  {item.label}
-                </a>
+                  {group.label}
+                  <svg viewBox="0 0 12 12" class="h-3 w-3 opacity-50" aria-hidden="true">
+                    <path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+                <div
+                  class="absolute left-1/2 top-full z-50 mt-3 hidden -translate-x-1/2 rounded-xl border border-argmin-border bg-argmin-surface p-2 shadow-[var(--page-shadow-strong)]"
+                  data-dropdown-panel
+                >
+                  <ul class="grid gap-0.5" style="min-width:11rem">
+                    {group.items.map((item) => (
+                      <li>
+                        <a
+                          href={item.href}
+                          aria-current={isActive(item.href) ? "page" : undefined}
+                          class:list={[
+                            "block rounded-lg px-3.5 py-2 text-sm font-medium text-argmin-mid transition-colors duration-150 hover:bg-argmin-surface-alt hover:text-argmin-dark",
+                            isActive(item.href) && "bg-argmin-surface-alt text-argmin-dark",
+                          ]}
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </li>
             ))}
           </ul>
@@ -78,19 +108,26 @@ const isActive = (href: string) => currentPath === normalizePath(href);
       class="mt-4 rounded-[1.75rem] border border-argmin-border bg-argmin-surface/92 p-5 shadow-[var(--page-shadow-strong)] backdrop-blur min-[1080px]:hidden"
     >
       <nav aria-label="Mobile">
-        <ul class="grid gap-3">
-          {primaryNav.map((item) => (
+        <ul class="grid gap-5">
+          {navGroups.map((group) => (
             <li>
-              <a
-                href={item.href}
-                aria-current={isActive(item.href) ? "page" : undefined}
-                class:list={[
-                  "block rounded-2xl border border-transparent bg-argmin-surface-alt/50 px-4 py-3 text-base font-semibold text-argmin-dark transition-colors duration-200 hover:border-argmin-border",
-                  isActive(item.href) && "border-argmin-border bg-argmin-surface",
-                ]}
-              >
-                {item.label}
-              </a>
+              <p class="section-kicker mb-2 px-1 text-xs">{group.label}</p>
+              <ul class="grid gap-2">
+                {group.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                      class:list={[
+                        "block rounded-2xl border border-transparent bg-argmin-surface-alt/50 px-4 py-3 text-base font-semibold text-argmin-dark transition-colors duration-200 hover:border-argmin-border",
+                        isActive(item.href) && "border-argmin-border bg-argmin-surface",
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>
@@ -107,6 +144,7 @@ const isActive = (href: string) => currentPath === normalizePath(href);
 </header>
 
 <script is:inline>
+  /* ── Mobile nav toggle ── */
   const navToggles = document.querySelectorAll("[data-nav-toggle]");
 
   for (const toggle of navToggles) {
@@ -147,6 +185,62 @@ const isActive = (href: string) => currentPath === normalizePath(href);
       if (window.innerWidth >= 1080) {
         closePanel();
       }
+    });
+  }
+
+  /* ── Desktop dropdown menus ── */
+  const dropdowns = document.querySelectorAll("[data-nav-dropdown]");
+
+  for (const dropdown of dropdowns) {
+    const trigger = dropdown.querySelector("[data-dropdown-trigger]");
+    const panel = dropdown.querySelector("[data-dropdown-panel]");
+    if (!(trigger instanceof HTMLElement) || !(panel instanceof HTMLElement)) continue;
+
+    let closeTimer;
+
+    const open = () => {
+      clearTimeout(closeTimer);
+      // close other open dropdowns
+      for (const other of dropdowns) {
+        if (other === dropdown) continue;
+        const otherPanel = other.querySelector("[data-dropdown-panel]");
+        const otherTrigger = other.querySelector("[data-dropdown-trigger]");
+        if (otherPanel instanceof HTMLElement) otherPanel.classList.add("hidden");
+        if (otherTrigger instanceof HTMLElement) otherTrigger.setAttribute("aria-expanded", "false");
+      }
+      panel.classList.remove("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+    };
+
+    const close = () => {
+      closeTimer = setTimeout(() => {
+        panel.classList.add("hidden");
+        trigger.setAttribute("aria-expanded", "false");
+      }, 150);
+    };
+
+    trigger.addEventListener("mouseenter", open);
+    trigger.addEventListener("focus", open);
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      panel.classList.contains("hidden") ? open() : close();
+    });
+
+    dropdown.addEventListener("mouseleave", close);
+    panel.addEventListener("mouseenter", () => clearTimeout(closeTimer));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        panel.classList.add("hidden");
+        trigger.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    panel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        panel.classList.add("hidden");
+        trigger.setAttribute("aria-expanded", "false");
+      });
     });
   }
 </script>

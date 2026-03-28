@@ -1,11 +1,32 @@
-export const primaryNav = [
-  { label: "Platform", href: "/platform" },
-  { label: "Use Cases", href: "/use-cases" },
-  { label: "Security", href: "/security" },
-  { label: "About", href: "/about" },
-  { label: "Team", href: "/team" },
-  { label: "Contact", href: "/contact" },
-] as const;
+export interface NavGroup {
+  label: string;
+  items: { label: string; href: string }[];
+}
+
+export const navGroups: NavGroup[] = [
+  {
+    label: "Product",
+    items: [
+      { label: "Platform", href: "/platform" },
+      { label: "Use Cases", href: "/use-cases" },
+    ],
+  },
+  {
+    label: "Architecture",
+    items: [
+      { label: "Attribution Flow", href: "/platform#attribution-flow" },
+      { label: "Decision Layer", href: "/platform#decision-layer" },
+      { label: "Deployment", href: "/platform#deployment-path" },
+    ],
+  },
+  {
+    label: "Company",
+    items: [
+      { label: "Team", href: "/team" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+];
 
 export const footerGroups = [
   {
@@ -13,7 +34,6 @@ export const footerGroups = [
     links: [
       { label: "Platform", href: "/platform" },
       { label: "Use Cases", href: "/use-cases" },
-      { label: "Security", href: "/security" },
       { label: "Request a Demo", href: "/demo" },
     ],
   },
@@ -23,21 +43,13 @@ export const footerGroups = [
       { label: "Attribution Flow", href: "/platform#attribution-flow" },
       { label: "Decision Layer", href: "/platform#decision-layer" },
       { label: "Deployment", href: "/platform#deployment-path" },
-      { label: "Trust Boundary", href: "/security#trust-boundary" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "About", href: "/about" },
       { label: "Team", href: "/team" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
       { label: "Contact", href: "/contact" },
-      { label: "contact@argmin.co", href: "mailto:contact@argmin.co" },
     ],
   },
 ] as const;
