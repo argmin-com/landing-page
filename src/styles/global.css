@@ -120,10 +120,10 @@ body[data-home-reveal-stage="1"] {
     "Helvetica Neue",
     "Segoe UI",
     sans-serif;
-  font-size: clamp(1.8rem, 3.7vw, 4.1rem);
-  font-weight: 650;
-  line-height: 0.9;
-  letter-spacing: -0.07em;
+  font-size: clamp(1rem, 0.94rem + 0.42vw, 1.18rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
   text-wrap: nowrap;
 }
 
@@ -277,7 +277,16 @@ body[data-home-reveal-stage="1"] {
 }
 
 [data-home-stage="2"] {
-  transition: opacity 260ms ease, transform 260ms ease;
+  display: grid;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 320ms ease,
+    transform 320ms ease;
+}
+
+[data-home-stage="2"] > [data-home-stage-content] {
+  min-height: 0;
 }
 
 body[data-home-reveal-stage="0"] [data-home-stage="1"],
@@ -289,14 +298,18 @@ body[data-home-reveal-stage="1"] [data-home-stage="2"] {
 
 body[data-home-reveal-stage="0"] [data-home-stage="2"],
 body[data-home-reveal-stage="1"] [data-home-stage="2"] {
-  max-height: 0;
-  overflow: hidden;
+  grid-template-rows: 0fr;
   transform: translateY(1.5rem);
+}
+
+body[data-home-reveal-stage="0"] [data-home-stage="2"] > [data-home-stage-content],
+body[data-home-reveal-stage="1"] [data-home-stage="2"] > [data-home-stage-content] {
+  overflow: hidden;
 }
 
 body[data-home-reveal-stage="2"] [data-home-stage="2"],
 body:not([data-home-reveal-stage]) [data-home-stage="2"] {
-  max-height: none;
+  grid-template-rows: 1fr;
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);

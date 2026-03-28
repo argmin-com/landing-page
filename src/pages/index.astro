@@ -18,44 +18,47 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
   <main id="main-content">
     <Hero fillViewport={true} revealContent={false} />
     <div data-home-stage="2">
-      <Problem />
-      <ValueProps />
-      <SubHeroBreak />
-      <HowItWorks />
-      <section class="px-6 py-10 md:py-14">
-        <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center text-center">
-          <AttributionFlowDiagram />
-          <a
-            href="/demo"
-            onclick="window.plausible && window.plausible('cta_click')"
-            class="mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-accent-ink transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
-          >
-            Request a Demo
-          </a>
-        </div>
-      </section>
-      <Founders imagesOnly={true} />
-      <Contact formspreeUrl={formspreeUrl} />
-      <Footer />
+      <div data-home-stage-content>
+        <Problem />
+        <ValueProps />
+        <SubHeroBreak />
+        <HowItWorks />
+        <section class="px-6 py-10 md:py-14">
+          <div class="mx-auto flex w-full max-w-6xl flex-col items-center justify-center text-center">
+            <AttributionFlowDiagram />
+            <a
+              href="/demo"
+              onclick="window.plausible && window.plausible('cta_click')"
+              class="mt-10 inline-flex items-center justify-center rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-accent-ink transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent"
+            >
+              Request a Demo
+            </a>
+          </div>
+        </section>
+        <Founders imagesOnly={true} />
+        <Contact formspreeUrl={formspreeUrl} />
+        <Footer />
+      </div>
     </div>
   </main>
   <script is:inline>
     (() => {
       const stageKey = "homeRevealStage";
+      const stageChangeEvent = "argmin-home-reveal-stage-change";
       const finalStage = 2;
+      const idleRevealDelay = 5000;
       const advanceOffset = Math.max(window.innerHeight * 0.14, 96);
-      const minAdvanceGap = 450;
-      const stageThresholds = [
+      const stageConfigs = [
         { wheel: 3.5, touch: 8 },
-        { wheel: 5, touch: 9 },
+        { wheel: 3.5, touch: 8 },
       ];
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let stage = Number(document.body?.dataset[stageKey] ?? Number.NaN);
-      let lastAdvanceAt = 0;
-      let wheelGestureLocked = false;
-      let wheelGestureResetId;
+      let idleRevealTimeoutId = 0;
+      let wheelNeedsRelease = false;
+      let wheelReleaseFrameId = 0;
       let touchStartY = null;
-      let touchGestureAdvanced = false;
+      let touchNeedsRelease = false;
 
       const body = document.body;
 
@@ -73,14 +76,32 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
         window.removeEventListener("touchstart", onTouchStart, touchOptions);
         window.removeEventListener("touchmove", onTouchMove, touchOptions);
         window.removeEventListener("touchend", onTouchEnd, touchOptions);
-        if (typeof wheelGestureResetId === "number") {
-          window.clearTimeout(wheelGestureResetId);
+        if (idleRevealTimeoutId) {
+          window.clearTimeout(idleRevealTimeoutId);
+        }
+        if (wheelReleaseFrameId) {
+          window.cancelAnimationFrame(wheelReleaseFrameId);
         }
       };
 
+      const cancelIdleReveal = () => {
+        if (!idleRevealTimeoutId) {
+          return;
+        }
+
+        window.clearTimeout(idleRevealTimeoutId);
+        idleRevealTimeoutId = 0;
+      };
+
       const setStage = (nextStage, advanceIntoContent) => {
+        cancelIdleReveal();
         body.dataset[stageKey] = String(nextStage);
         stage = nextStage;
+        window.dispatchEvent(
+          new CustomEvent(stageChangeEvent, {
+            detail: { stage: nextStage },
+          }),
+        );
 
         if (nextStage < finalStage) {
           return;
@@ -102,44 +123,41 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
         });
       };
 
-      const canAdvance = () => {
-        const now = window.performance.now();
-
-        if (now - lastAdvanceAt < minAdvanceGap) {
-          return false;
-        }
-
-        lastAdvanceAt = now;
-        return true;
-      };
-
       const advanceStage = (advanceIntoContent) => {
-        if (stage >= finalStage || !canAdvance()) {
+        if (stage >= finalStage) {
           return;
         }
 
         setStage(stage + 1, advanceIntoContent);
       };
 
-      const getThreshold = (kind) => stageThresholds[Math.min(stage, stageThresholds.length - 1)][kind];
+      const getThreshold = (kind) => stageConfigs[Math.min(stage, stageConfigs.length - 1)][kind];
 
-      const queueWheelUnlock = () => {
-        if (typeof wheelGestureResetId === "number") {
-          window.clearTimeout(wheelGestureResetId);
+      const scheduleWheelRelease = () => {
+        if (wheelReleaseFrameId) {
+          window.cancelAnimationFrame(wheelReleaseFrameId);
         }
 
-        wheelGestureResetId = window.setTimeout(() => {
-          wheelGestureLocked = false;
-        }, 180);
+        wheelReleaseFrameId = window.requestAnimationFrame(() => {
+          wheelReleaseFrameId = window.requestAnimationFrame(() => {
+            wheelReleaseFrameId = 0;
+            wheelNeedsRelease = false;
+          });
+        });
       };
 
       const onWheel = (event) => {
-        if (event.deltaY > getThreshold("wheel") && !wheelGestureLocked) {
-          wheelGestureLocked = true;
-          advanceStage(true);
+        cancelIdleReveal();
+        scheduleWheelRelease();
+
+        if (wheelNeedsRelease) {
+          return;
         }
 
-        queueWheelUnlock();
+        if (event.deltaY > getThreshold("wheel")) {
+          wheelNeedsRelease = true;
+          advanceStage(true);
+        }
       };
 
       const onKeyDown = (event) => {
@@ -148,19 +166,25 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
         }
 
         if (["ArrowDown", "PageDown", " ", "Spacebar"].includes(event.key)) {
+          cancelIdleReveal();
           advanceStage(true);
         }
       };
 
       const onScroll = () => {
         if (window.scrollY > 0) {
+          cancelIdleReveal();
           setStage(finalStage, false);
         }
       };
 
       const onTouchStart = (event) => {
+        cancelIdleReveal();
+        if (touchNeedsRelease) {
+          return;
+        }
+
         touchStartY = event.touches[0]?.clientY ?? null;
-        touchGestureAdvanced = false;
       };
 
       const onTouchMove = (event) => {
@@ -170,15 +194,15 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
           return;
         }
 
-        if (!touchGestureAdvanced && touchStartY - currentY > getThreshold("touch")) {
-          touchGestureAdvanced = true;
+        if (touchStartY - currentY > getThreshold("touch")) {
+          touchNeedsRelease = true;
           advanceStage(true);
         }
       };
 
       const onTouchEnd = () => {
         touchStartY = null;
-        touchGestureAdvanced = false;
+        touchNeedsRelease = false;
       };
 
       if (window.scrollY > 0) {
@@ -192,6 +216,11 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
       window.addEventListener("touchstart", onTouchStart, touchOptions);
       window.addEventListener("touchmove", onTouchMove, touchOptions);
       window.addEventListener("touchend", onTouchEnd, touchOptions);
+      idleRevealTimeoutId = window.setTimeout(() => {
+        if (stage === 0 && window.scrollY === 0) {
+          setStage(finalStage, false);
+        }
+      }, idleRevealDelay);
     })();
   </script>
 </BaseLayout>

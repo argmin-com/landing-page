@@ -109,19 +109,16 @@ const deploymentPhases = [
 
     <section class="px-6 py-8 md:py-12">
       <div class="site-shell section-divider pt-10">
-        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16">
-          <div class="rise-in">
+        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-stretch lg:gap-16">
+          <div class="rise-in flex flex-col self-start">
             <p class="section-kicker">Comparison</p>
-            <h2 class="display-title mt-5 max-w-3xl text-[2.4rem] md:text-[3.4rem]">
-              Why "we already have Datadog" is the wrong answer.
-            </h2>
             <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
               If you already have telemetry and cost views, the real question is whether they tell you who owns
               the spend and what to change before the next release. Usually they do not.
             </p>
           </div>
 
-          <div class="surface-panel overflow-hidden rise-in rise-in-delay-1">
+          <div class="surface-panel self-start overflow-hidden rise-in rise-in-delay-1">
             <div class="grid grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] gap-4 border-b border-argmin-border px-6 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-argmin-light md:px-8">
               <p>Dimension</p>
               <p>Telemetry / Cost Views</p>
@@ -145,11 +142,7 @@ const deploymentPhases = [
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Control Points</p>
-          <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">The job is intervention, not reporting.</h2>
-          <p class="mt-5 text-base leading-8 text-argmin-mid md:text-lg">
-            Argmin earns its place by changing the approval, deployment, and budgeting workflows that create
-            AI spend.
-          </p>
+          <h2 class="display-title mt-5 max-w-4xl text-[1.55rem] leading-[1.04] md:text-[2.05rem]">The job is intervention, not reporting.</h2>
         </div>
 
         <div class="mt-10 border-t border-argmin-border">
@@ -166,38 +159,38 @@ const deploymentPhases = [
 
     <section id="attribution-flow" class="px-6 py-8 md:py-12">
       <div class="site-shell section-divider pt-10">
-        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
-          <div class="rise-in">
-            <p class="section-kicker">Attribution Flow</p>
-            <h2 class="display-title mt-5 max-w-3xl text-[2.4rem] md:text-[3.4rem]">
-              Resolve the chain progressively instead of hiding it behind a total.
-            </h2>
-            <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
-              Each stage adds evidence. The result is not just attribution. It is an attributable decision
-              record with visible confidence and a next action.
-            </p>
+        <div class="rise-in">
+          <p class="section-kicker text-center">Attribution Flow</p>
+        </div>
 
-            <div class="mt-8 space-y-3">
-              <p class="text-sm font-semibold uppercase tracking-[0.22em] text-argmin-light">Example record</p>
-              <div class="surface-panel p-5 md:p-6">
-                <dl class="grid gap-4 md:grid-cols-2">
-                  {decisionRecord.map((item) => (
-                    <div>
-                      <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">{item.label}</dt>
-                      <dd class="mt-2 text-base leading-7 text-argmin-dark">{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-                <p class="mt-6 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-mid">
-                  Recommendation: pause the broad rollout, shift default tier-1 classification to the lower-cost
-                  route, and review the budget exception with Engineering plus FinOps before wider deployment.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="rise-in rise-in-delay-1">
+        <div class="mt-8 flex justify-center rise-in rise-in-delay-1">
+          <div class="w-full max-w-6xl">
             <AttributionFlowDiagram />
+          </div>
+        </div>
+
+        <div class="mx-auto mt-10 max-w-5xl rise-in">
+          <p class="max-w-4xl text-base leading-8 text-argmin-mid md:text-lg">
+            Each stage adds evidence. The result is not just attribution. It is an attributable decision
+            record with visible confidence and a next action.
+          </p>
+
+          <div class="mt-8 space-y-3">
+            <p class="text-sm font-semibold uppercase tracking-[0.22em] text-argmin-light">Example record</p>
+            <div class="surface-panel p-5 md:p-7">
+              <dl class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {decisionRecord.map((item) => (
+                  <div>
+                    <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">{item.label}</dt>
+                    <dd class="mt-2 text-base leading-7 text-argmin-dark">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p class="mt-6 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-mid">
+                Recommendation: pause the broad rollout, shift default tier-1 classification to the lower-cost
+                route, and review the budget exception with Engineering plus FinOps before wider deployment.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -213,7 +206,7 @@ const deploymentPhases = [
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Deployment</p>
-          <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">A buyer should know what week one looks like.</h2>
+          <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">Value starts on week one.</h2>
           <p class="mt-5 text-base leading-8 text-argmin-mid md:text-lg">
             Complex infrastructure still needs a believable time-to-value story. Buyers need to know when they
             get an attributable baseline, when teams can review it, and what has to be connected along the way.
@@ -236,27 +229,6 @@ const deploymentPhases = [
           <span class="rounded-full border border-argmin-border px-4 py-2">No rip-and-replace instrumentation required</span>
           <span class="rounded-full border border-argmin-border px-4 py-2">Read-only connectors by default</span>
           <span class="rounded-full border border-argmin-border px-4 py-2">Advisory workflows first</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="px-6 pb-10 pt-8 md:pb-14">
-      <div class="site-shell section-divider pt-10">
-        <div class="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
-          <div>
-            <p class="section-kicker">Next Step</p>
-            <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">
-              Bring the spend spike, not a generic demo request.
-            </h2>
-            <p class="mt-5 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
-              The best starting point is a recent AI spend change, model-routing decision, or approval bottleneck
-              that currently lacks cost context.
-            </p>
-          </div>
-          <div class="flex flex-col gap-3">
-            <a href="/demo" class="button-primary">Request a Demo</a>
-            <a href="/use-cases" class="button-secondary">See role-specific entry points</a>
-          </div>
         </div>
       </div>
     </section>

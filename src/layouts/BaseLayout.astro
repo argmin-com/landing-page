@@ -38,6 +38,7 @@ const navbarRevealScript = !showNavbarImmediately
     const readyClass = "nav-reveal-ready";
     const revealClass = "nav-revealed";
     const stageKey = "homeRevealStage";
+    const stageChangeEvent = "argmin-home-reveal-stage-change";
     const finalStage = "2";
     const revealWithHomeContent = ${homeHeroOnlyInitially ? "true" : "false"};
     let ticking = false;
@@ -79,6 +80,7 @@ const navbarRevealScript = !showNavbarImmediately
     window.addEventListener("scroll", requestSync, { passive: true });
     window.addEventListener("pageshow", requestSync);
     window.addEventListener("hashchange", requestSync);
+    window.addEventListener(stageChangeEvent, requestSync);
   })();
 `
   : "";
