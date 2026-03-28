@@ -10,12 +10,43 @@ const inputNodes = [
   { key: "identity", label: "Identity / HR", cx: 148, cy: 174, group: "inputs" },
   { key: "cicd", label: "CI/CD", cx: 124, cy: 252, group: "inputs" },
   { key: "source", label: "Source Control", cx: 156, cy: 330, group: "inputs" },
-  { key: "model", label: "Model Usage", cx: 136, cy: 408, group: "model" },
+  { key: "model", label: "Model Usage", cx: 136, cy: 408, group: "inputs" },
   { key: "telemetry", label: "Cloud Telemetry", cx: 166, cy: 486, group: "inputs" },
+];
+
+const liveConfidenceScores = [
+  { label: "Person -> Workload", value: "94.2%", width: 0.942 },
+  { label: "Service -> Cost Event", value: "91.6%", width: 0.916 },
+  { label: "Team -> Budget", value: "88.4%", width: 0.884 },
+];
+
+const dashboardTeamCosts = [
+  { label: "Engineering", value: "$42.5k", width: 0.84 },
+  { label: "Product", value: "$18.2k", width: 0.48 },
+  { label: "Marketing", value: "$9.9k", width: 0.26 },
 ];
 ---
 
-<figure class:list={["attribution-diagram mx-auto w-full max-w-6xl", className]} data-diagram data-active="none">
+<figure
+  class:list={["attribution-diagram relative mx-auto w-full max-w-6xl", className]}
+  data-diagram
+  data-active="none"
+  data-hover="none"
+>
+  <div class="diagram-controls pointer-events-none absolute inset-x-0 top-5 z-10 flex justify-center px-4">
+    <div class="flex flex-wrap items-center justify-center gap-3 pointer-events-auto">
+      <button type="button" class="diagram-keyword" data-keyword data-target="inputs">
+        Data Inputs
+      </button>
+      <button type="button" class="diagram-keyword" data-keyword data-target="attribution" data-hover-value="layer">
+        Attribution
+      </button>
+      <button type="button" class="diagram-keyword" data-keyword data-target="control" data-hover-value="dashboard">
+        Control
+      </button>
+    </div>
+  </div>
+
   <svg
     viewBox="0 0 1280 620"
     class="h-auto w-full"
@@ -24,46 +55,38 @@ const inputNodes = [
   >
     <title id="attribution-flow-title">Argmin attribution flow diagram</title>
     <desc id="attribution-flow-desc">
-      Fragmented enterprise inputs route through a heuristic reconciliation engine and flow into an attribution layer and dashboard.
+      Fragmented enterprise inputs route through a heuristic reconciliation engine, into an attribution layer with confidence scoring, and finally into a dashboard with spend forecasts and suggested interventions.
     </desc>
 
     <g class="diagram-backdrop" aria-hidden="true">
-      <path d="M120 86C280 86 322 86 430 166" class="pipe-shell" />
-      <path d="M136 164C286 164 330 164 432 206" class="pipe-shell" />
-      <path d="M112 242C278 242 322 236 432 246" class="pipe-shell" />
-      <path d="M144 320C300 320 336 304 438 286" class="pipe-shell" />
-      <path d="M124 398C286 398 330 372 448 326" class="pipe-shell" />
-      <path d="M154 476C318 476 358 430 470 366" class="pipe-shell" />
+      <path d="M120 86C278 84 364 120 470 252" class="pipe-shell" />
+      <path d="M136 164C286 164 374 190 470 258" class="pipe-shell" />
+      <path d="M112 242C280 242 378 248 470 266" class="pipe-shell" />
+      <path d="M144 320C300 318 386 300 470 274" class="pipe-shell" />
+      <path d="M124 398C288 392 382 352 470 282" class="pipe-shell" />
+      <path d="M154 476C326 468 404 408 470 290" class="pipe-shell" />
 
-      <path d="M120 86C280 86 322 86 430 166" class="pipe-line" data-group="inputs" />
-      <path d="M136 164C286 164 330 164 432 206" class="pipe-line" data-group="inputs" />
-      <path d="M112 242C278 242 322 236 432 246" class="pipe-line" data-group="inputs" />
-      <path d="M144 320C300 320 336 304 438 286" class="pipe-line" data-group="inputs" />
-      <path d="M124 398C286 398 330 372 448 326" class="pipe-line" data-group="model" />
-      <path d="M154 476C318 476 358 430 470 366" class="pipe-line" data-group="inputs" />
+      <path d="M120 86C278 84 364 120 470 252" class="pipe-line" data-group="inputs" />
+      <path d="M136 164C286 164 374 190 470 258" class="pipe-line" data-group="inputs" />
+      <path d="M112 242C280 242 378 248 470 266" class="pipe-line" data-group="inputs" />
+      <path d="M144 320C300 318 386 300 470 274" class="pipe-line" data-group="inputs" />
+      <path d="M124 398C288 392 382 352 470 282" class="pipe-line" data-group="inputs" />
+      <path d="M154 476C326 468 404 408 470 290" class="pipe-line" data-group="inputs" />
 
-      <path d="M498 266C512 222 546 180 596 152" class="pipe-shell" />
-      <path d="M498 266C542 256 576 254 620 260" class="pipe-shell" />
-      <path d="M498 266C518 308 552 342 602 372" class="pipe-shell" />
+      <path d="M470 270C500 264 532 262 570 264" class="pipe-shell" />
+      <path d="M470 270C500 264 532 262 570 264" class="pipe-line strong" data-group="attribution" />
 
-      <path d="M498 266C512 222 546 180 596 152" class="pipe-line" data-group="attribution" />
-      <path d="M498 266C542 256 576 254 620 260" class="pipe-line" data-group="attribution" />
-      <path d="M498 266C518 308 552 342 602 372" class="pipe-line" data-group="attribution" />
+      <path d="M720 266C792 266 836 266 884 266" class="pipe-shell" />
+      <path d="M720 266C792 266 836 266 884 266" class="pipe-line strong" data-group="attribution" />
 
-      <path d="M712 266C820 266 870 266 932 222" class="pipe-shell" />
-      <path d="M712 266C846 266 898 286 970 332" class="pipe-shell" />
-      <path d="M712 266C862 266 930 266 1038 266" class="pipe-shell" />
-
-      <path d="M712 266C820 266 870 266 932 222" class="pipe-line" data-group="attribution" />
-      <path d="M712 266C846 266 898 286 970 332" class="pipe-line" data-group="attribution" />
-      <path d="M712 266C862 266 930 266 1038 266" class="pipe-line strong" data-group="attribution" />
+      <path d="M1006 266C1040 266 1078 266 1108 266" class="pipe-shell" />
+      <path d="M1006 266C1040 266 1078 266 1108 266" class="pipe-line strong" data-group="control" />
     </g>
 
     {inputNodes.map((node) => (
       <g data-group={node.group} class="diagram-group diagram-node">
         <circle cx={node.cx} cy={node.cy} r="33" class="node-shell" />
         <circle cx={node.cx} cy={node.cy} r="19" class="node-core" />
-        <circle cx={node.cx + 45} cy={node.cy} r="6" class="junction-dot" />
 
         {node.key === "billing" && (
           <g class="node-icon">
@@ -100,7 +123,7 @@ const inputNodes = [
           </g>
         )}
 
-        <text x={node.cx + 62} y={node.cy + 4} class="diagram-label">
+        <text x={node.cx - 36} y={node.cy + 4} text-anchor="end" class="diagram-label">
           {node.label}
         </text>
       </g>
@@ -111,59 +134,136 @@ const inputNodes = [
       <circle cx="642" cy="266" r="50" class="engine-core" />
       <circle cx="642" cy="266" r="17" class="engine-kernel" />
       <path d="M642 196v-14M642 350v-14M572 266h-14M726 266h-14" class="engine-port" />
-      <path d="M598 222c20 18 30 28 44 44" class="engine-port" />
-      <path d="M686 222c-20 18-30 28-44 44" class="engine-port" />
-      <path d="M598 310c20-18 30-28 44-44" class="engine-port" />
-      <path d="M686 310c-20-18-30-28-44-44" class="engine-port" />
-      <text x="642" y="258" text-anchor="middle" class="diagram-label diagram-label--center">
+      <text x="642" y="370" text-anchor="middle" class="diagram-label diagram-label--center">
         Heuristic Attribution Engine
       </text>
-      <text x="642" y="284" text-anchor="middle" class="diagram-copy">
+      <text x="642" y="392" text-anchor="middle" class="diagram-copy">
         Reconciles fragmented signals
       </text>
     </g>
 
-    <g data-group="attribution" class="diagram-group diagram-node">
-      <circle cx="946" cy="222" r="40" class="output-shell" />
-      <circle cx="946" cy="222" r="20" class="output-core" />
+    <g
+      data-group="attribution"
+      class="diagram-group diagram-node"
+    >
+      <rect x="884" y="198" width="122" height="136" rx="32" class="output-shell" />
+      <rect x="908" y="226" width="74" height="52" rx="20" class="output-core" />
+      <path d="M922 260c8-14 16-22 24-22 8 0 12 10 19 10 7 0 15-8 24-18" class="mini-line" />
+      <circle cx="922" cy="260" r="4.5" class="mini-point" />
+      <circle cx="946" cy="238" r="4.5" class="mini-point" />
+      <circle cx="965" cy="248" r="4.5" class="mini-point" />
+      <circle cx="989" cy="230" r="4.5" class="mini-point" />
       <circle cx="1000" cy="266" r="11" class="junction-dot junction-dot--large" />
-      <text x="946" y="172" text-anchor="middle" class="diagram-label">
-        Attribution Layer
+      <text x="945" y="362" text-anchor="middle" class="diagram-label">
+        Attribution Graph
       </text>
-      <text x="946" y="289" text-anchor="middle" class="diagram-copy">
+      <text x="945" y="384" text-anchor="middle" class="diagram-copy">
         Confidence-scored graph
       </text>
     </g>
 
-    <g data-group="attribution" class="diagram-group diagram-node">
-      <rect x="1018" y="218" width="144" height="96" rx="30" class="dashboard-shell" />
-      <rect x="1048" y="242" width="84" height="48" rx="18" class="dashboard-screen" />
-      <path d="M1064 281v-16M1084 281v-28M1104 281v-12M1124 281v-22" class="icon-line" />
-      <path d="M1060 288h68" class="icon-line" />
-      <text x="1090" y="352" text-anchor="middle" class="diagram-label">
+    <g class="diagram-group diagram-hover-card" data-hover-panel="layer" aria-hidden="true">
+      <rect x="760" y="128" width="332" height="286" rx="30" class="detail-panel-shell" />
+      <text x="790" y="184" class="detail-eyebrow">
+        Live Confidence Scores
+      </text>
+      <text x="790" y="210" class="detail-title">
+        Ownership graph updates in real time
+      </text>
+      {liveConfidenceScores.map((score, index) => {
+        const y = 254 + index * 42;
+        return (
+          <g class="detail-row">
+            <text x="790" y={y} class="detail-copy" dominant-baseline="middle">
+              {score.label}
+            </text>
+            <text x="1060" y={y} text-anchor="end" class="detail-value" dominant-baseline="middle">
+              {score.value}
+            </text>
+            <rect x="790" y={y + 16} width="202" height="6" rx="999" class="detail-track" />
+            <rect x="790" y={y + 16} width={202 * score.width} height="6" rx="999" class="detail-fill" />
+          </g>
+        );
+      })}
+    </g>
+
+    <g
+      data-group="control"
+      class="diagram-group diagram-node"
+    >
+      <rect x="1108" y="206" width="154" height="122" rx="32" class="dashboard-shell" />
+      <rect x="1133" y="234" width="104" height="62" rx="20" class="dashboard-screen" />
+      <path d="M1149 281v-14M1171 281v-28M1193 281v-12M1215 281v-22" class="icon-line" />
+      <path d="M1145 288h74" class="icon-line" />
+      <text x="1185" y="362" text-anchor="middle" class="diagram-label">
         Dashboard
       </text>
-      <text x="1090" y="373" text-anchor="middle" class="diagram-copy">
+      <text x="1185" y="384" text-anchor="middle" class="diagram-copy">
         Attributable outputs
+      </text>
+    </g>
+
+    <g
+      class="diagram-group diagram-hover-card"
+      data-hover-panel="dashboard"
+      aria-hidden="true"
+    >
+      <rect x="628" y="92" width="442" height="424" rx="32" class="detail-panel-shell" />
+      <text x="662" y="151" class="detail-eyebrow">
+        Spend Forecast
+      </text>
+      <text x="1036" y="151" text-anchor="end" class="detail-copy detail-copy--caps">
+        +30 days
+      </text>
+      <rect x="662" y="157" width="376" height="92" rx="18" class="detail-subpanel" />
+      <path d="M680 225C724 225 760 223 792 217C800 214 806 209 812 203" class="forecast-line forecast-line--shared" />
+      <path d="M812 203C842 200 874 191 908 180C946 168 984 162 1020 162" class="forecast-line forecast-line--baseline" />
+      <path d="M812 203C842 200 876 196 912 192C952 188 988 185 1020 184" class="forecast-line forecast-line--optimized" />
+      <circle cx="812" cy="203" r="11" class="forecast-dot forecast-dot--halo" />
+      <circle cx="812" cy="203" r="5.5" class="forecast-dot" />
+      <text x="662" y="269" class="detail-copy detail-copy--caps">
+        <tspan class="detail-copy detail-copy--caps">Current</tspan>
+      </text>
+      <text x="1038" y="269" text-anchor="end" class="detail-copy detail-copy--caps">
+        Projected
+      </text>
+      <g class="forecast-legend">
+        <path d="M662 287h18" class="forecast-line forecast-line--baseline" />
+        <text x="688" y="291" class="detail-copy">Without optimization</text>
+        <path d="M828 287h18" class="forecast-line forecast-line--optimized" />
+        <text x="854" y="291" class="detail-copy">With optimization</text>
+      </g>
+      <text x="662" y="319" class="detail-eyebrow">
+        AI Costs Per Team
+      </text>
+      {dashboardTeamCosts.map((team, index) => {
+        const y = 343 + index * 30;
+        return (
+          <g class="detail-row">
+            <text x="662" y={y} class="detail-copy">
+              {team.label}
+            </text>
+            <text x="1038" y={y} text-anchor="end" class="detail-value">
+              {team.value}
+            </text>
+            <rect x="662" y={y + 10} width="286" height="6" rx="999" class="detail-track" />
+            <rect x="662" y={y + 10} width={286 * team.width} height="6" rx="999" class="detail-fill" />
+          </g>
+        );
+      })}
+      <rect x="662" y="437" width="376" height="30" rx="15" class="suggestion-shell" />
+      <text x="678" y="457" class="detail-copy detail-copy--strong">
+        Suggested intervention
+      </text>
+      <text x="1022" y="457" text-anchor="end" class="detail-value detail-value--accent">
+        Re-route budget owner
       </text>
     </g>
   </svg>
 
   <figcaption class="sr-only">
-    Enterprise signals from billing, identity, CI/CD, source control, model usage, and telemetry converge into a heuristic attribution engine that produces confidence-scored attribution outputs for a dashboard.
+    Enterprise signals from billing, identity, CI/CD, source control, model usage, and telemetry converge into a heuristic attribution engine, then an attribution layer with visible confidence scores, and finally a dashboard that surfaces forecasts, team costs, and suggested interventions.
   </figcaption>
-
-  <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-    <button type="button" class="diagram-keyword" data-keyword data-target="inputs">
-      Data Inputs
-    </button>
-    <button type="button" class="diagram-keyword" data-keyword data-target="model">
-      Model
-    </button>
-    <button type="button" class="diagram-keyword" data-keyword data-target="attribution">
-      Attribution
-    </button>
-  </div>
 </figure>
 
 <script is:inline>
@@ -174,11 +274,21 @@ const inputNodes = [
     const setActive = (value) => {
       diagram.setAttribute("data-active", value);
     };
+    const setHover = (value) => {
+      diagram.setAttribute("data-hover", value);
+    };
 
     for (const keyword of keywords) {
       const target = keyword.getAttribute("data-target") || "none";
-      const activate = () => setActive(target);
-      const reset = () => setActive("none");
+      const hoverValue = keyword.getAttribute("data-hover-value") || "none";
+      const activate = () => {
+        setActive(target);
+        setHover(hoverValue);
+      };
+      const reset = () => {
+        setActive("none");
+        setHover("none");
+      };
 
       keyword.addEventListener("mouseenter", activate);
       keyword.addEventListener("focus", activate);
@@ -194,7 +304,7 @@ const inputNodes = [
     --diagram-muted: rgb(var(--color-argmin-mid));
     --diagram-text: rgb(var(--color-argmin-dark));
     --diagram-accent: rgb(var(--color-argmin-accent));
-    --diagram-dim-opacity: 0.26;
+    --diagram-dim-opacity: 0.1;
   }
 
   .pipe-shell {
@@ -218,7 +328,10 @@ const inputNodes = [
 
   .node-shell,
   .output-shell,
-  .dashboard-shell {
+  .dashboard-shell,
+  .detail-panel-shell,
+  .detail-subpanel,
+  .suggestion-shell {
     fill: rgb(var(--color-argmin-surface));
     stroke: var(--diagram-border);
     stroke-width: 2;
@@ -256,12 +369,22 @@ const inputNodes = [
   }
 
   .engine-port,
-  .icon-line {
+  .icon-line,
+  .mini-line {
     fill: none;
     stroke: var(--diagram-accent);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 2;
+  }
+
+  .mini-point,
+  .detail-node {
+    fill: var(--diagram-accent);
+  }
+
+  .detail-node--soft {
+    opacity: 0.32;
   }
 
   .icon-fill {
@@ -272,10 +395,16 @@ const inputNodes = [
 
   .diagram-group {
     transition: opacity 160ms ease, transform 160ms ease;
+    transform-origin: center;
+    transform-box: fill-box;
   }
 
   .diagram-label,
-  .diagram-copy {
+  .diagram-copy,
+  .detail-eyebrow,
+  .detail-title,
+  .detail-value,
+  .detail-copy {
     fill: var(--diagram-text);
     opacity: 1;
     transition: opacity 160ms ease;
@@ -293,6 +422,98 @@ const inputNodes = [
   .diagram-copy {
     fill: var(--diagram-muted);
     font-size: 13px;
+  }
+
+  .detail-eyebrow {
+    fill: var(--diagram-muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .detail-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .detail-copy {
+    fill: var(--diagram-muted);
+    font-size: 12px;
+  }
+
+  .detail-copy--caps,
+  .detail-copy--strong {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .detail-copy--strong {
+    fill: var(--diagram-text);
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .detail-value {
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .detail-value--accent {
+    fill: var(--diagram-accent);
+  }
+
+  .detail-track {
+    fill: rgb(var(--color-argmin-border) / 0.72);
+  }
+
+  .detail-fill {
+    fill: var(--diagram-accent);
+  }
+
+  .detail-graph-line,
+  .forecast-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .detail-graph-line {
+    stroke: rgb(var(--color-argmin-accent) / 0.55);
+    stroke-width: 2;
+  }
+
+  .forecast-line {
+    stroke: var(--diagram-accent);
+    stroke-width: 2.25;
+  }
+
+  .forecast-line--shared {
+    stroke: rgb(var(--color-argmin-accent) / 0.42);
+  }
+
+  .forecast-line--optimized {
+    stroke: var(--diagram-accent);
+  }
+
+  .forecast-line--baseline {
+    stroke: rgb(var(--color-argmin-dark) / 0.18);
+    stroke-dasharray: 10 10;
+  }
+
+  .forecast-dot {
+    fill: var(--diagram-accent);
+  }
+
+  .forecast-dot--halo {
+    fill: rgb(var(--color-argmin-accent) / 0.12);
+  }
+
+  .diagram-hover-card {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(0.98);
   }
 
   .diagram-keyword {
@@ -314,27 +535,77 @@ const inputNodes = [
     outline: none;
   }
 
-  .attribution-diagram[data-active="inputs"] [data-group="model"],
   .attribution-diagram[data-active="inputs"] [data-group="attribution"],
-  .attribution-diagram[data-active="model"] [data-group="inputs"],
-  .attribution-diagram[data-active="model"] [data-group="attribution"],
+  .attribution-diagram[data-active="inputs"] [data-group="control"],
   .attribution-diagram[data-active="attribution"] [data-group="inputs"],
-  .attribution-diagram[data-active="attribution"] [data-group="model"] {
+  .attribution-diagram[data-active="attribution"] [data-group="control"],
+  .attribution-diagram[data-active="control"] [data-group="inputs"],
+  .attribution-diagram[data-active="control"] [data-group="attribution"] {
     opacity: var(--diagram-dim-opacity);
   }
 
   .attribution-diagram[data-active="inputs"] [data-group="inputs"] .diagram-label,
   .attribution-diagram[data-active="inputs"] [data-group="inputs"] .diagram-copy,
-  .attribution-diagram[data-active="model"] [data-group="model"] .diagram-label,
-  .attribution-diagram[data-active="model"] [data-group="model"] .diagram-copy,
   .attribution-diagram[data-active="attribution"] [data-group="attribution"] .diagram-label,
-  .attribution-diagram[data-active="attribution"] [data-group="attribution"] .diagram-copy {
+  .attribution-diagram[data-active="attribution"] [data-group="attribution"] .diagram-copy,
+  .attribution-diagram[data-active="control"] [data-group="control"] .diagram-label,
+  .attribution-diagram[data-active="control"] [data-group="control"] .diagram-copy {
     opacity: 1;
+  }
+
+  .attribution-diagram[data-hover="layer"] [data-hover-panel="layer"],
+  .attribution-diagram[data-hover="dashboard"] [data-hover-panel="dashboard"] {
+    display: inline;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .attribution-diagram[data-hover="layer"] .output-shell,
+  .attribution-diagram[data-hover="layer"] .output-core,
+  .attribution-diagram[data-hover="dashboard"] .dashboard-shell,
+  .attribution-diagram[data-hover="dashboard"] .dashboard-screen {
+    stroke: var(--diagram-accent);
+  }
+
+  .attribution-diagram[data-hover="layer"] .diagram-node[data-group="attribution"],
+  .attribution-diagram[data-hover="dashboard"] .diagram-node[data-group="control"] {
+    transform: translateY(-6px) scale(1.05);
+  }
+
+  .attribution-diagram[data-active="inputs"] [data-group="inputs"],
+  .attribution-diagram[data-active="attribution"] [data-group="attribution"],
+  .attribution-diagram[data-active="control"] [data-group="control"] {
+    opacity: 1;
+  }
+
+  .attribution-diagram[data-active="inputs"] .diagram-node[data-group="inputs"],
+  .attribution-diagram[data-active="attribution"] .diagram-node[data-group="attribution"],
+  .attribution-diagram[data-active="control"] .diagram-node[data-group="control"] {
+    transform: scale(1.04);
+  }
+
+  .attribution-diagram[data-active="inputs"] [data-group="inputs"] .pipe-line,
+  .attribution-diagram[data-active="attribution"] [data-group="attribution"] .pipe-line,
+  .attribution-diagram[data-active="control"] [data-group="control"] .pipe-line {
+    stroke: rgb(var(--color-argmin-accent) / 0.55);
+  }
+
+  .attribution-diagram[data-active="inputs"] [data-group="inputs"] .diagram-label,
+  .attribution-diagram[data-active="inputs"] [data-group="inputs"] .diagram-copy,
+  .attribution-diagram[data-active="attribution"] [data-group="attribution"] .diagram-label,
+  .attribution-diagram[data-active="attribution"] [data-group="attribution"] .diagram-copy,
+  .attribution-diagram[data-active="control"] [data-group="control"] .diagram-label,
+  .attribution-diagram[data-active="control"] [data-group="control"] .diagram-copy {
+    fill: var(--diagram-text);
   }
 
   @media (max-width: 767px) {
     .attribution-diagram {
       max-width: 100%;
+    }
+
+    .diagram-controls {
+      top: 1rem;
     }
 
     .diagram-keyword {
