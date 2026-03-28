@@ -66,9 +66,9 @@ const bestFit = [
 
     <section class="px-6 pb-10 pt-0 md:pb-14 md:pt-0">
       <div class="site-shell">
-        <div class="surface-panel mx-auto max-w-5xl px-6 py-8 md:px-10 md:py-10">
+        <div class="surface-panel mx-auto max-w-4xl px-6 py-8 md:px-10 md:py-10">
           <p class="section-kicker mb-4">The Problem</p>
-          <p class="text-xl leading-relaxed text-argmin-dark md:text-2xl">
+          <p class="text-xl leading-relaxed text-argmin-dark md:text-2xl max-w-[65ch]">
             Enterprises are adopting AI at scale without a unified view of usage, ownership, or outcomes.
             Critical data on spend, activity, and impact remains fragmented across systems. This lack of
             visibility limits effective governance, cost control, and ROI assessment of AI investments.
@@ -77,28 +77,108 @@ const bestFit = [
       </div>
     </section>
 
-    <section class="px-6 py-8 md:py-12">
+    <section class="px-6 py-8 md:py-12 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
+        <div class="flex flex-wrap gap-2 border-b border-argmin-border pb-0" role="tablist" aria-label="Use case personas" id="role-tabs">
+          {roles.map((role, index) => (
+            <button
+              role="tab"
+              id={`tab-${index}`}
+              aria-selected={index === 0 ? "true" : "false"}
+              aria-controls={`panel-${index}`}
+              tabindex={index === 0 ? "0" : "-1"}
+              class:list={[
+                "role-tab relative px-5 py-3 text-sm font-semibold tracking-[0.08em] uppercase transition-colors duration-180",
+                "rounded-t-xl border border-b-0 border-transparent",
+                "hover:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2",
+                index === 0 ? "text-argmin-dark border-argmin-border bg-argmin-surface" : "text-argmin-light",
+              ]}
+            >
+              {role.label}
+            </button>
+          ))}
+        </div>
+
         {roles.map((role, index) => (
-          <article class:list={["grid gap-6 border-b border-argmin-border py-9 last:border-none", index === 0 && "pt-2", "lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] lg:gap-10"]}>
-            <div class="rise-in">
+          <article
+            role="tabpanel"
+            id={`panel-${index}`}
+            aria-labelledby={`tab-${index}`}
+            class:list={[
+              "role-panel grid gap-6 py-9 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] lg:gap-10",
+              index !== 0 && "hidden",
+            ]}
+          >
+            <div>
               <p class="section-kicker text-argmin-accent">{role.label}</p>
               <h2 class="mt-5 text-3xl font-semibold tracking-[-0.05em] text-argmin-dark md:text-4xl">{role.question}</h2>
               <p class="mt-5 text-base leading-8 text-argmin-mid">{role.moment}</p>
             </div>
-            <div class="rise-in rise-in-delay-1">
+            <div>
               <p class="section-kicker">Signals</p>
               <p class="mt-4 text-base leading-8 text-argmin-dark">{role.inputs}</p>
             </div>
-            <div class="rise-in rise-in-delay-2">
+            <div>
               <p class="section-kicker">What Changes</p>
               <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
               <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
             </div>
           </article>
         ))}
+
+        <noscript>
+          <style>.role-panel { display: grid !important; border-bottom: 1px solid rgb(var(--color-argmin-border)); } .role-panel:last-of-type { border-bottom: none; } [role="tablist"] { display: none !important; }</style>
+        </noscript>
       </div>
     </section>
+
+    <script is:inline>
+      (function () {
+        const tablist = document.getElementById("role-tabs");
+        if (!tablist) return;
+        const tabs = tablist.querySelectorAll("[role='tab']");
+        const panels = document.querySelectorAll(".role-panel");
+
+        function activate(index) {
+          tabs.forEach(function (t, i) {
+            var isActive = i === index;
+            t.setAttribute("aria-selected", String(isActive));
+            t.setAttribute("tabindex", isActive ? "0" : "-1");
+            if (isActive) {
+              t.classList.add("text-argmin-dark", "border-argmin-border", "bg-argmin-surface");
+              t.classList.remove("text-argmin-light", "border-transparent");
+            } else {
+              t.classList.remove("text-argmin-dark", "border-argmin-border", "bg-argmin-surface");
+              t.classList.add("text-argmin-light", "border-transparent");
+            }
+          });
+          panels.forEach(function (p, i) {
+            if (i === index) {
+              p.classList.remove("hidden");
+            } else {
+              p.classList.add("hidden");
+            }
+          });
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener("click", function () { activate(i); });
+        });
+
+        tablist.addEventListener("keydown", function (e) {
+          var current = Array.from(tabs).findIndex(function (t) { return t.getAttribute("aria-selected") === "true"; });
+          var next = current;
+          if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+          else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+          else if (e.key === "Home") next = 0;
+          else if (e.key === "End") next = tabs.length - 1;
+          else return;
+          e.preventDefault();
+          activate(next);
+          tabs[next].focus();
+        });
+      })();
+    </script>
 
     <section class="px-6 py-8 md:py-12">
       <div class="site-shell section-divider pt-10">
