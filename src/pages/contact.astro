@@ -28,90 +28,85 @@ const hasEndpoint = endpoint.length > 0;
             We typically respond within one business day. A member of the founding team will follow up directly.
           </p>
 
-          {hasEndpoint ? (
-            <div class="surface-panel px-6 py-8 md:px-10 md:py-10" id="form-container" aria-live="polite">
-              <form
-                id="contact-form"
-                class="space-y-5"
-                aria-labelledby="form-heading"
-                data-form-configured="true"
-                action={endpoint}
-                method="POST"
-              >
-                <h2 id="form-heading" class="section-kicker">Send a message</h2>
+          <div class="surface-panel px-6 py-8 md:px-10 md:py-10" id="form-container" aria-live="polite">
+            <form
+              id="contact-form"
+              class="space-y-5"
+              aria-labelledby="form-heading"
+              data-form-configured={String(hasEndpoint)}
+              action={hasEndpoint ? endpoint : undefined}
+              method="POST"
+            >
+              <h2 id="form-heading" class="section-kicker">Send a message</h2>
 
-                <div class="grid gap-5 sm:grid-cols-2">
-                  <div>
-                    <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="Your name"
-                      class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-                    />
-                  </div>
-                  <div>
-                    <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="work@company.com"
-                      class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-                    />
-                  </div>
-                </div>
+              <div class="grid gap-5 sm:grid-cols-2">
                 <div>
-                  <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+                  <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
                   <input
-                    id="company"
-                    name="company"
+                    id="name"
+                    name="name"
                     type="text"
                     required
-                    placeholder="Company name"
+                    placeholder="Your name"
                     class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
                   />
                 </div>
                 <div>
-                  <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    placeholder="Tell us about your AI spend challenge"
+                  <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="work@company.com"
                     class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-                  ></textarea>
+                  />
                 </div>
-                <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
-                <button
-                  id="submit-btn"
-                  type="submit"
-                  class="button-primary w-full py-4 text-base"
-                >
-                  Get in Touch
-                </button>
-                <p id="form-error" class="hidden text-center text-sm text-argmin-mid">
-                  Submission failed. Please email us directly at
-                  <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
-                </p>
-              </form>
-            </div>
-          ) : (
-            <div class="surface-panel px-6 py-10 md:px-10 md:py-12 text-center">
-              <p class="text-lg leading-relaxed text-argmin-mid mb-6">
-                Reach out directly and we will get back to you.
-              </p>
-              <a
-                href="mailto:contact@argmin.co"
-                class="button-primary inline-flex px-8 py-4 text-base"
+              </div>
+              <div>
+                <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  required
+                  placeholder="Company name"
+                  class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                />
+              </div>
+              <div>
+                <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Tell us about your AI spend challenge"
+                  class="w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
+                ></textarea>
+              </div>
+              <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+              <button
+                id="submit-btn"
+                type="submit"
+                disabled={!hasEndpoint}
+                aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
+                class="button-primary w-full py-4 text-base"
               >
-                Email contact@argmin.co
-              </a>
-            </div>
-          )}
+                {hasEndpoint ? "Get in Touch" : "Form Unavailable"}
+              </button>
+              <p
+                id="form-config-error"
+                class={hasEndpoint ? "hidden text-center text-sm text-argmin-mid" : "text-center text-sm text-argmin-mid"}
+              >
+                Form submissions are currently unavailable. Please email
+                <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
+              </p>
+              <p id="form-error" class="hidden text-center text-sm text-argmin-mid">
+                Submission failed. Please email us directly at
+                <a class="font-medium text-argmin-dark underline decoration-from-font underline-offset-4" href="mailto:contact@argmin.co">contact@argmin.co</a>.
+              </p>
+            </form>
+          </div>
 
           <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm text-argmin-mid">
             <span class="rounded-full border border-argmin-border px-4 py-2">Read-only access</span>
