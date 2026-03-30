@@ -7,32 +7,38 @@ const roles = [
   {
     label: "Engineering",
     question: "Which service or release changed the bill, and can we catch that before production?",
+    trigger: "A deployment doubles inference cost overnight. No one knows which service or model change caused it.",
     inputs: "Cloud telemetry, source control, CI/CD metadata, service identity, deployment history.",
     intervention:
       "Argmin shows projected monthly impact when a model route, fallback chain, or retry policy changes before the release goes wide.",
     outcome:
-      "Pre-deploy visibility into model-route regressions and faster owner resolution when spend spikes.",
+      "Catch model-route regressions before they hit production. Typical result: 10–25% reduction in AI inference cost within six months.",
     moment: "A model-route change shows projected monthly delta before the PR is approved.",
+    inaction: "Without intervention, cost regressions compound silently across every subsequent release.",
   },
   {
     label: "Finance / FinOps",
     question: "Who owns this spend and which budget actually absorbs it?",
+    trigger: "The board asks for AI ROI by business unit. Finance has invoice totals and no way to break them down.",
     inputs: "Billing exports, budget hierarchy, org mapping, cost-center ownership, service attribution.",
     intervention:
       "Argmin resolves spend to accountable owners with confidence instead of leaving finance with invoice totals and detective work.",
     outcome:
-      "Move from invoice totals to accountable budget decisions with visible confidence scores attached.",
+      "Attribute every dollar to an owner and budget. Move from guesswork to board-ready AI spend reporting with confidence scores.",
     moment: "Approvers see owner, budget, and lower-cost alternatives before rollout.",
+    inaction: "Without attribution, AI budgets are set by negotiation instead of evidence—and overruns go undetected until quarterly close.",
   },
   {
     label: "Security",
     question: "Which identities and workflows can create ungoverned model spend inside our environment?",
+    trigger: "An audit reveals service accounts with uncapped model access and no approval flow attached.",
     inputs: "SSO or IAM, service accounts, approval flows, runtime identity, org controls.",
     intervention:
       "Argmin ties access and deploy identities to real cost exposure without broad telemetry exfiltration or mandatory write paths.",
     outcome:
-      "Tie approval decisions to real cost exposure and show which identity or workflow should be reviewed first.",
+      "Map every identity and workflow to real cost exposure. Show which access path should be reviewed first.",
     moment: "A spend spike resolves to the exact service, team, and deploy that caused it.",
+    inaction: "Without governance, ungoverned model access scales with adoption—creating audit gaps that grow harder to close.",
   },
 ];
 
@@ -69,9 +75,10 @@ const bestFit = [
         <div class="surface-panel mx-auto max-w-4xl px-6 py-8 md:px-10 md:py-10">
           <p class="section-kicker mb-4">The Problem</p>
           <p class="text-xl leading-relaxed text-argmin-dark md:text-2xl max-w-[65ch]">
-            Enterprises are adopting AI at scale without a unified view of usage, ownership, or outcomes.
-            Critical data on spend, activity, and impact remains fragmented across systems. This lack of
-            visibility limits effective governance, cost control, and ROI assessment of AI investments.
+            AI spend is growing faster than any other infrastructure line item. Without attribution,
+            every dollar is unaccountable—budgets are set by negotiation, overruns go undetected, and
+            the board cannot distinguish productive AI investment from waste. The longer you wait, the
+            harder the problem becomes.
           </p>
         </div>
       </div>
@@ -113,6 +120,7 @@ const bestFit = [
               <p class="section-kicker text-argmin-accent">{role.label}</p>
               <h2 class="mt-5 text-3xl font-semibold tracking-[-0.05em] text-argmin-dark md:text-4xl">{role.question}</h2>
               <p class="mt-5 text-base leading-8 text-argmin-mid">{role.moment}</p>
+              <p class="mt-4 rounded-lg border border-argmin-border bg-argmin-surface-alt/60 px-4 py-3 text-sm leading-7 text-argmin-mid"><span class="font-semibold text-argmin-dark">What forces action:</span> {role.trigger}</p>
             </div>
             <div>
               <p class="section-kicker">Signals</p>
@@ -122,6 +130,7 @@ const bestFit = [
               <p class="section-kicker">What Changes</p>
               <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
               <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
+              <p class="mt-4 text-sm leading-7 text-argmin-light italic">{role.inaction}</p>
             </div>
           </article>
         ))}

@@ -10,7 +10,7 @@ const founders = [
     alt: "Richard McKinney, CEO & Co-Founder",
     webp: "/richard.webp",
     jpg: "/richard.jpg",
-    bio: "As CEO, Richard brings deep enterprise infrastructure leadership from Amazon, Salesforce, and Cruise. He previously built global data platforms that saved Amazon $357M annually.",
+    bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. At Amazon, he built global data platforms that saved $357M annually. He saw firsthand that AI cost attribution requires a fundamentally different approach—identity-resolved, graph-based, and embedded in the deployment path.",
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
   {
@@ -19,7 +19,7 @@ const founders = [
     alt: "Charlotte Wargniez, CTO & Co-Founder",
     webp: "/charlotte.webp",
     jpg: "/charlotte.jpg",
-    bio: "As CTO, Charlotte drives Argmin's AI science and algorithm design. An Oxford researcher and former European Space Agency scientist, her expertise in deep reinforcement learning powers our core Heuristic Reconciliation Engine and automated workload optimization.",
+    bio: "Charlotte brings deep expertise in AI systems from Oxford and the European Space Agency. Her work in deep reinforcement learning directly powers Argmin's Heuristic Reconciliation Engine—the system that resolves fragmented signals into confidence-scored attribution. She designed the architecture to operate inside customer trust boundaries with read-only, advisory-first deployment.",
     linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
   },
 ];
@@ -34,7 +34,7 @@ const founders = [
     <PageHero
       eyebrow="Team"
       title="Built by operators, not observers."
-      lede="We have spent years inside the infrastructure that creates the problem Argmin solves—cloud-scale cost attribution, security governance, and AI deployment."
+      lede="We have spent years inside the infrastructure that creates the problem Argmin solves—cloud-scale cost attribution, security governance, and AI deployment. We built Argmin because we saw this problem from inside the systems that create it, and we know that incumbents are not going to solve it."
       actions={[
         { href: "/contact", label: "Get in touch" },
         { href: "/platform", label: "See the platform", variant: "secondary" },
@@ -87,6 +87,33 @@ const founders = [
               <p class="mt-8 text-base leading-8 text-argmin-mid">{founder.bio}</p>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 pb-10 md:pb-14">
+      <div class="site-shell">
+        <div class="mx-auto max-w-4xl">
+          <div class="surface-panel px-6 py-8 md:px-10 md:py-10">
+            <p class="section-kicker mb-4">Why Now</p>
+            <p class="text-base leading-8 text-argmin-dark md:text-lg">
+              Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost. The gap between AI adoption and AI accountability is widening every quarter—and incumbents are not closing it because their architectures were never designed to.
+            </p>
+            <div class="mt-6 grid gap-4 md:grid-cols-3">
+              <div class="rounded-lg border border-argmin-border px-4 py-3">
+                <p class="text-sm font-semibold text-argmin-dark">Distributed systems</p>
+                <p class="mt-1 text-sm leading-6 text-argmin-mid">We built and operated the infrastructure that creates this problem at enterprise scale.</p>
+              </div>
+              <div class="rounded-lg border border-argmin-border px-4 py-3">
+                <p class="text-sm font-semibold text-argmin-dark">Security-first architecture</p>
+                <p class="mt-1 text-sm leading-6 text-argmin-mid">Read-only connectors, inside-environment deployment, and trust boundary design from day one.</p>
+              </div>
+              <div class="rounded-lg border border-argmin-border px-4 py-3">
+                <p class="text-sm font-semibold text-argmin-dark">AI-native approach</p>
+                <p class="mt-1 text-sm leading-6 text-argmin-mid">Graph-based attribution built specifically for AI workloads—not retrofitted onto cloud cost tools.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
