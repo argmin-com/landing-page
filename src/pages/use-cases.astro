@@ -24,7 +24,7 @@ const roles = [
     intervention:
       "Argmin resolves spend to accountable owners with confidence instead of leaving finance with invoice totals and detective work.",
     outcome:
-      "Attribute every dollar to an owner and budget. Move from guesswork to board-ready AI spend reporting with confidence scores.",
+      "Attribute every dollar to an owner and budget. Reduce monthly close from weeks to days. Identify 10–25% in cost optimization opportunities with board-ready reporting.",
     moment: "Approvers see owner, budget, and lower-cost alternatives before rollout.",
     inaction: "Without attribution, AI budgets are set by negotiation instead of evidence—and overruns go undetected until quarterly close.",
   },
@@ -36,7 +36,7 @@ const roles = [
     intervention:
       "Argmin ties access and deploy identities to real cost exposure without broad telemetry exfiltration or mandatory write paths.",
     outcome:
-      "Map every identity and workflow to real cost exposure. Show which access path should be reviewed first.",
+      "Resolve spend spikes to exact identities in minutes, not weeks. Close governance gaps before auditors find them.",
     moment: "A spend spike resolves to the exact service, team, and deploy that caused it.",
     inaction: "Without governance, ungoverned model access scales with adoption—creating audit gaps that grow harder to close.",
   },
@@ -130,7 +130,7 @@ const bestFit = [
               <p class="section-kicker">What Changes</p>
               <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
               <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
-              <p class="mt-4 text-sm leading-7 text-argmin-light italic">{role.inaction}</p>
+              <p class="mt-4 rounded-lg border border-argmin-border/50 bg-argmin-surface-alt/40 px-4 py-3 text-sm leading-7 text-argmin-mid"><span class="font-semibold text-argmin-dark">Cost of inaction:</span> {role.inaction}</p>
             </div>
           </article>
         ))}

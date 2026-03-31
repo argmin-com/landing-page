@@ -23,6 +23,7 @@ export const navGroups: NavGroup[] = [
     label: "Company",
     items: [
       { label: "Team", href: "/team" },
+      { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -49,6 +50,7 @@ export const footerGroups = [
     title: "Company",
     links: [
       { label: "Team", href: "/team" },
+      { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },
     ],
   },
