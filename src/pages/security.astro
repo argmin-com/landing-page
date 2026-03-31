@@ -3,6 +3,43 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 
+const principles = [
+  {
+    title: "Read-only connectors",
+    description:
+      "Argmin ingests cloud telemetry, billing, identity, and CI/CD data through read-only APIs. No write access to production systems, no agents running in your workloads.",
+  },
+  {
+    title: "Inside your environment",
+    description:
+      "All data processing happens inside the customer trust boundary. Attribution graphs, cost models, and decision records stay in your cloud—never exfiltrated to ours.",
+  },
+  {
+    title: "Advisory by default",
+    description:
+      "Argmin surfaces recommendations and decision records. Hard stops and enforcement are only activated when you explicitly opt in—never silently enabled.",
+  },
+  {
+    title: "Fail-open architecture",
+    description:
+      "If Argmin is unreachable, requests proceed normally. The system operates within a 50ms latency budget and never blocks production traffic on failure.",
+  },
+];
+
+const comparisons = [
+  {
+    approach: "Observability platforms",
+    risk: "Require broad telemetry collection, often exfiltrating traces and logs to external infrastructure for analysis.",
+  },
+  {
+    approach: "Cloud cost tools",
+    risk: "Typically operate outside the customer environment, pulling billing and usage data into vendor-hosted dashboards.",
+  },
+  {
+    approach: "Argmin",
+    difference: "Processes all data inside your cloud. Read-only access. No telemetry exfiltration. Decision records stay in your environment.",
+  },
+];
 ---
 
 <BaseLayout
@@ -22,19 +59,89 @@ import PageHero from "../components/PageHero.astro";
       ]}
       actions={[
         { href: "/platform#deployment-path", label: "See deployment path" },
-        { href: "/contact", label: "Talk through your environment", variant: "secondary" },
+        { href: "/contact", label: "Discuss your environment", variant: "secondary" },
       ]}
     />
+
+    <section class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="max-w-3xl rise-in">
+          <p class="section-kicker">Security Principles</p>
+          <h2 class="display-title mt-5 max-w-4xl text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Narrow trust boundary. No shortcuts.</h2>
+          <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
+            Enterprise security teams need to know exactly what Argmin accesses, where data lives, and what happens if the system fails.
+          </p>
+        </div>
+
+        <div class="mt-10 border-t border-argmin-border">
+          {principles.map((principle, index) => (
+            <article class="grid gap-4 border-b border-argmin-border py-7 md:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] md:gap-8">
+              <h3 class="text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">{principle.title}</h3>
+              <p class="text-base leading-8 text-argmin-mid">{principle.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="max-w-3xl rise-in">
+          <p class="section-kicker">How Argmin Compares</p>
+          <h2 class="display-title mt-5 max-w-4xl text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Most cost tools require data exfiltration. Argmin does not.</h2>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+          {comparisons.map((item) => (
+            <div class:list={["surface-panel px-5 py-5", item.difference && "border-argmin-accent/30 bg-argmin-accent/5"]}>
+              <p class:list={["text-sm font-semibold", item.difference ? "text-argmin-accent" : "text-argmin-dark"]}>{item.approach}</p>
+              <p class="mt-3 text-sm leading-7 text-argmin-mid">{item.risk || item.difference}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="max-w-3xl rise-in">
+          <p class="section-kicker">Data Flow</p>
+          <h2 class="display-title mt-5 max-w-4xl text-[1.55rem] leading-[1.04] md:text-[2.05rem]">What Argmin accesses and where it lives.</h2>
+        </div>
+
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          <div class="surface-panel px-6 py-6">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">What Argmin reads</p>
+            <ul class="mt-4 space-y-3 text-base leading-7 text-argmin-mid">
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Cloud billing exports and cost allocation data</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Identity and org mapping (SSO, IAM, HR systems)</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>CI/CD metadata and deployment history</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Source control ownership (CODEOWNERS, commit metadata)</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Model usage telemetry (tokens, latency, routes)</li>
+            </ul>
+          </div>
+          <div class="surface-panel px-6 py-6">
+            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">What Argmin does not do</p>
+            <ul class="mt-4 space-y-3 text-base leading-7 text-argmin-mid">
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No write access to production systems</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No agents or sidecars in your workloads</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No exfiltration of traces, logs, or cost data</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No mandatory inline interception of model calls</li>
+              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No persistent storage outside your environment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section class="px-6 pb-10 pt-8 md:pb-14">
       <div class="site-shell section-divider pt-10">
         <div class="grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
           <div>
-            <p class="section-kicker">Operating Posture</p>
-            <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">Read-only by default. Advisory first.</h2>
+            <p class="section-kicker">Next Step</p>
+            <h2 class="display-title mt-5 max-w-4xl text-[2.4rem] md:text-[3.4rem]">Ready to review the architecture?</h2>
             <p class="mt-5 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
-              Argmin is designed to surface the accountable record first. Hard stops and enforcement paths are
-              available only when a customer explicitly chooses them.
+              We walk through trust boundaries, data access, and deployment posture with your security and infrastructure teams before any connectors are deployed.
             </p>
           </div>
           <div class="flex flex-col gap-3">

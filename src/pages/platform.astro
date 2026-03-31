@@ -7,9 +7,9 @@ import PageHero from "../components/PageHero.astro";
 
 const comparisonRows = [
   {
-    label: "Primary object",
-    incumbent: "Telemetry, traces, logs, and spend totals",
-    argmin: "AI cost decisions with accountable ownership",
+    label: "Decision moment",
+    incumbent: "Mostly after runtime behavior or invoice arrival",
+    argmin: "Before deploy, during approval, and during budget review",
   },
   {
     label: "Main question answered",
@@ -17,41 +17,41 @@ const comparisonRows = [
     argmin: "Who owns the spend, what changed it, and what should happen next?",
   },
   {
-    label: "Decision moment",
-    incumbent: "Mostly after runtime behavior or invoice arrival",
-    argmin: "Before deploy, during approval, and during budget review",
-  },
-  {
     label: "Attribution model",
     incumbent: "Service or tag centric",
     argmin: "Model -> service -> code -> identity -> org -> budget",
+  },
+  {
+    label: "Primary object",
+    incumbent: "Telemetry, traces, logs, and spend totals",
+    argmin: "AI cost decisions with accountable ownership",
   },
 ];
 
 const controlPoints = [
   {
     stage: "CI/CD",
-    title: "Pre-deploy cost checks",
+    title: "Pre-deploy cost gates",
     description:
-      "Surface projected monthly impact when a model route, token ceiling, retry policy, or fallback chain changes in a service release.",
+      "Every release gets projected cost impact before it ships. Model route changes, token ceilings, and fallback chains are checked against budget before merge.",
   },
   {
     stage: "Approvals",
     title: "Budget-aware approvals",
     description:
-      "Attach service owner, runtime identity, org unit, and budget path to changes that could materially affect AI spend.",
+      "Deployments that exceed owner budgets require explicit sign-off. Approvers see real-time cost impact, owner, and lower-cost alternatives.",
   },
   {
     stage: "Operations",
-    title: "Fast owner resolution",
+    title: "Instant owner resolution",
     description:
-      "When spend jumps, jump from model usage to the code owner and team that actually control the route.",
+      "When spend spikes, trace the cause to the exact code owner and deployment in seconds—not days of detective work across dashboards.",
   },
   {
     stage: "Planning",
-    title: "Portfolio benchmarks",
+    title: "Portfolio optimization",
     description:
-      "Compare model routes, services, and teams across the estate to find where a different model, cache strategy, or policy would actually matter.",
+      "Benchmark model routes, services, and teams across the estate. Identify where a different model or cache strategy would reduce cost without affecting quality.",
   },
 ];
 
@@ -174,6 +174,11 @@ const deploymentPhases = [
             </article>
           ))}
         </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/demo" class="button-primary">See these controls in action</a>
+          <a href="/platform#deployment-path" class="button-secondary">See deployment timeline</a>
+        </div>
       </div>
     </section>
 
@@ -286,6 +291,11 @@ const deploymentPhases = [
           <span class="rounded-full border border-argmin-border px-4 py-2">No rip-and-replace instrumentation required</span>
           <span class="rounded-full border border-argmin-border px-4 py-2">Read-only connectors by default</span>
           <span class="rounded-full border border-argmin-border px-4 py-2">Advisory workflows first</span>
+        </div>
+
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="/demo" class="button-primary">Start your deployment</a>
+          <a href="/contact" class="button-secondary">Talk to the team</a>
         </div>
       </div>
     </section>
