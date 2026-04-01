@@ -1,6 +1,6 @@
 # Argmin Landing Page
 
-Static Astro landing page for `argmin.co`, implemented from the March 24, 2026 PRD and engineering specification.
+Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026 PRD and engineering specification, with the current multi-page UX/UI review updates integrated.
 
 ## Stack
 
@@ -9,40 +9,46 @@ Static Astro landing page for `argmin.co`, implemented from the March 24, 2026 P
 - Static output for Cloudflare Pages
 - Formspree for contact submissions
 - Plausible Analytics for page view and event tracking
+- Wrangler for local Cloudflare Pages preview and manual deploys
 
 ## Project Structure
 
-- `src/layouts/BaseLayout.astro`: metadata, canonical tags, OG/Twitter tags, Plausible script, dark-mode boot
-- `src/components/`: hero, problem, value proposition grid, how-it-works, founders, contact, footer, navbar, theme toggle
-- `src/pages/`: eight pages — `index`, `contact`, `platform`, `use-cases`, `team`, `demo`, `security`, `404`
+- `src/layouts/BaseLayout.astro`: metadata, canonical tags, OG/Twitter tags, Plausible bootstrap, theme boot, shared shell
+- `src/components/`: hero, value proposition, founders, nav, shared contact section, shared contact form, footer
+- `src/pages/`: eight routes - `index`, `contact`, `platform`, `use-cases`, `team`, `demo`, `security`, `404`
 - `src/content/site.ts`: nav and footer link definitions
-- `src/lib/formspree.ts`: Formspree URL validation (regex-enforced)
+- `src/lib/contact.ts`: shared contact email constant
+- `src/lib/formspree.ts`: Formspree URL validation
 - `src/styles/global.css`: Tailwind directives, CSS custom properties, component styles
+- `scripts/validate-contact-fallbacks.mjs`: fallback assertions against the built site in `dist/`
+- `scripts/validate-contact-configured.mjs`: configured-endpoint assertions against the built site in `dist/`
 - `public/`: favicon, founder images, OG image, Cloudflare Pages security headers (`_headers`)
 - `docs/requirements-matrix.md`: requirement traceability, repo evidence, validation map
 
 ## Local Development
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 
 Validation commands:
 
 ```bash
-npm run check                       # Astro type-check
-npm run build                       # production build (outputs to dist/)
-npm run validate:contact-fallbacks  # verify contact fallbacks in dist/client/
+npm run check
+npm run build
+npm run validate:contact-fallbacks
+PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run build
+PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured
 ```
 
-Combined audit (runs all three in sequence):
+Combined fallback audit:
 
 ```bash
 npm run audit:site
 ```
 
-Local preview with Wrangler (builds first):
+Local Cloudflare Pages preview:
 
 ```bash
 npm run preview
@@ -56,44 +62,58 @@ Create `.env` from `.env.example` and provide a real Formspree endpoint:
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/<form_id>
 ```
 
-Without that value, the form fails closed: the submit button is disabled and the page renders an inline
-contact-email fallback instead of shipping a live Formspree endpoint.
+Without that value, the form fails closed: the submit button is disabled and the page renders an inline contact-email fallback instead of shipping a live Formspree endpoint.
 
 ## Deployment Contract
 
 Target host: Cloudflare Pages
 
 - Build command: `npm run build`
-- Output directory: `dist/client`
+- Output directory: `dist`
 - Node version: `22` (Astro 6 requires `>=22.12.0`; see `.nvmrc` and `engines` in `package.json`)
-- Required environment variable: `PUBLIC_FORMSPREE_URL`
+- Required environment variable for live submissions: `PUBLIC_FORMSPREE_URL`
 - Custom domain: `argmin.co`
 - DNS/TLS: configured in Cloudflare outside this repository
 
 ### GitHub Actions
 
-**Quality workflow** (`quality.yml`): runs automatically on push and pull request to `main` (path-filtered). The pipeline runs Astro diagnostics, a production build, contact fallback validation, and a three-run Lighthouse audit with median scoring, then uploads the reports as artifacts. Enforced thresholds:
+**Quality workflow** (`quality.yml`): runs automatically on push and pull request to `main` with path filters that include source, workflow, environment-contract, and documentation files. The pipeline runs Astro diagnostics, a fallback build plus fallback assertions, a configured build plus configured-path assertions, and a three-run Lighthouse audit with median scoring. Reports and the static server log are uploaded as artifacts.
 
 | Category | Minimum |
-|---|---|
+| --- | --- |
 | Performance | 90 |
 | Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
 | Largest Contentful Paint | ≤ 2500 ms |
-| Total transfer size | ≤ 105 KB |
+| Total transfer size | ≤ 150 KB |
+
+**CodeQL workflow** (`codeql.yml`): runs JavaScript/TypeScript static analysis on pushes and pull requests to `main`, plus a weekly scheduled scan.
+
+**Dependency review workflow** (`dependency-review.yml`): reviews dependency changes on pull requests that touch `package.json` or `package-lock.json`.
 
 **Deploy workflow** (`deploy.yml`): manual trigger only (`workflow_dispatch`). It requires `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets and skips gracefully if they are absent, in which case Cloudflare Pages Git integration remains the active deployment path. `PUBLIC_FORMSPREE_URL` is passed to the build from a GitHub Actions variable.
 
 ## CI Validation
 
-The quality workflow enforces correctness on every push and PR to `main`:
+The current CI contract enforces:
 
-- `npm run check`: zero type errors
-- `npm run build`: clean production build
-- `npm run validate:contact-fallbacks`: six contact-form assertions against `dist/client/` (no endpoint → disabled button, missing-config message, `noscript` mailto fallback, no hardcoded Formspree URL)
-- Lighthouse: three consecutive runs, median scored against the thresholds above
-- Build artifacts (Lighthouse reports, HTTP server log) uploaded for each run (retained 7 days)
+- `npm run check`: zero Astro diagnostics
+- `npm run build`: clean static production build to `dist/`
+- `npm run validate:contact-fallbacks`: missing-endpoint assertions across home, contact, and demo entrypoints
+- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured`: configured-endpoint assertions across the same entrypoints
+- Lighthouse: three consecutive runs with median scoring against the thresholds above
+- CodeQL JavaScript/TypeScript analysis on repository changes and weekly schedule
+
+## Validation Evidence
+
+Local validation completed on April 1, 2026:
+
+- `npm run check`: passed with 0 errors, 0 warnings, 0 hints
+- `npm run audit:site`: passed end to end
+- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run build`: passed
+- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured`: passed
+- Built output is static `dist/` content only, with no generated Cloudflare worker bundle
 
 ## Remaining External Steps
 

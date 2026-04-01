@@ -1,20 +1,6 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { collectFailures, readContactPages, reportFailures } from "./contact-validation.mjs";
 
-const pages = [
-  {
-    label: "home",
-    html: readFileSync(resolve("dist/client/index.html"), "utf8"),
-  },
-  {
-    label: "contact",
-    html: readFileSync(resolve("dist/client/contact/index.html"), "utf8"),
-  },
-  {
-    label: "demo",
-    html: readFileSync(resolve("dist/client/demo/index.html"), "utf8"),
-  },
-];
+const pages = readContactPages();
 
 const checks = [
   {
@@ -27,7 +13,7 @@ const checks = [
   },
   {
     description: "submit button is disabled when the form endpoint is missing",
-    pass: pages.every(({ html }) => /id="submit-btn"[^>]*disabled/.test(html)),
+    pass: pages.every(({ html }) => /id="submit-btn"[^>]*\sdisabled(?=[\s>])/.test(html)),
   },
   {
     description: "no hardcoded Formspree endpoint ships in the fallback build",
@@ -43,14 +29,7 @@ const checks = [
   },
 ];
 
-const failures = checks.filter((check) => !check.pass);
-
-if (failures.length > 0) {
-  console.error("Contact fallback validation failed:");
-  for (const failure of failures) {
-    console.error(`- ${failure.description}`);
-  }
-  process.exit(1);
-}
+const failures = collectFailures(checks);
+reportFailures("Contact fallback validation failed", failures);
 
 console.log("Contact fallback validation passed.");

@@ -5,30 +5,36 @@ on:
     branches:
       - main
     paths:
+      - .env.example
       - .github/workflows/**
       - .nvmrc
+      - README.md
       - astro.config.mjs
+      - codex.md
+      - docs/**
       - package.json
       - package-lock.json
       - public/**
       - scripts/**
       - src/**
       - tsconfig.json
-      - wrangler.jsonc
   pull_request:
     branches:
       - main
     paths:
+      - .env.example
       - .github/workflows/**
       - .nvmrc
+      - README.md
       - astro.config.mjs
+      - codex.md
+      - docs/**
       - package.json
       - package-lock.json
       - public/**
       - scripts/**
       - src/**
       - tsconfig.json
-      - wrangler.jsonc
   workflow_dispatch:
 
 permissions:
@@ -61,11 +67,21 @@ jobs:
       - name: Run Astro diagnostics
         run: npm run check
 
-      - name: Build static site
+      - name: Build fallback site
         run: npm run build
 
       - name: Validate contact fallbacks
         run: npm run validate:contact-fallbacks
+
+      - name: Build configured contact site
+        run: npm run build
+        env:
+          PUBLIC_FORMSPREE_URL: https://formspree.io/f/test000
+
+      - name: Validate configured contact path
+        run: npm run validate:contact-configured
+        env:
+          PUBLIC_FORMSPREE_URL: https://formspree.io/f/test000
 
       - name: Summarize build output
         run: |
@@ -73,13 +89,13 @@ jobs:
             echo "### Build output"
             echo
             echo '```text'
-            du -ah dist/client | sort -h | tail -n 20
+            du -ah dist | sort -h | tail -n 20
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Serve dist/client
+      - name: Serve dist
         run: |
-          python3 -m http.server 4173 -d dist/client >/tmp/landing-page-http.log 2>&1 &
+          python3 -m http.server 4173 -d dist >/tmp/landing-page-http.log 2>&1 &
           echo $! >/tmp/landing-page-http.pid
 
           server_ready=0
