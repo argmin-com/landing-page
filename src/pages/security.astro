@@ -12,12 +12,12 @@ const principles = [
   {
     title: "Inside your environment",
     description:
-      "All data processing happens inside the customer trust boundary. Attribution graphs, cost models, and decision records stay in your cloud—never exfiltrated to ours.",
+      "All data processing happens inside the customer trust boundary. Attribution graphs, cost models, and decision records stay in your cloud, never exfiltrated to ours.",
   },
   {
     title: "Advisory by default",
     description:
-      "Argmin surfaces recommendations and decision records. Hard stops and enforcement are only activated when you explicitly opt in—never silently enabled.",
+      "Argmin surfaces recommendations and decision records. Hard stops and enforcement are only activated when you explicitly opt in, never silently enabled.",
   },
   {
     title: "Fail-open architecture",
@@ -46,6 +46,7 @@ const comparisons = [
   title="Security | Argmin"
   description="Argmin runs inside your environment with read-only connectors, advisory-first workflows, and a narrow trust boundary."
   canonicalUrl="https://argmin.co/security"
+  showMobileThemeToggle={false}
 >
   <main id="main-content">
     <PageHero
@@ -63,7 +64,20 @@ const comparisons = [
       ]}
     />
 
-    <section class="px-6 py-10 md:py-16">
+    <section class="px-6 pb-8 pt-0 md:pb-10">
+      <div class="site-shell">
+        <div class="surface-panel mx-auto max-w-4xl px-6 py-5 md:px-8">
+          <p class="section-kicker mb-3">Jump to section</p>
+          <nav class="quick-links" aria-label="Security page sections">
+            <a class="quick-link" href="#security-principles">Principles</a>
+            <a class="quick-link" href="#security-comparison">Comparison</a>
+            <a class="quick-link" href="#security-data-flow">Data flow</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <section id="security-principles" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Security Principles</p>
@@ -84,7 +98,7 @@ const comparisons = [
       </div>
     </section>
 
-    <section class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+    <section id="security-comparison" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">How Argmin Compares</p>
@@ -102,7 +116,7 @@ const comparisons = [
       </div>
     </section>
 
-    <section class="px-6 py-10 md:py-16">
+    <section id="security-data-flow" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Data Flow</p>

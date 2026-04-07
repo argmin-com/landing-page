@@ -4,9 +4,10 @@ import { navGroups } from "../content/site";
 
 interface Props {
   hiddenUntilReveal?: boolean;
+  showMobileThemeToggle?: boolean;
 }
 
-const { hiddenUntilReveal = false } = Astro.props;
+const { hiddenUntilReveal = false, showMobileThemeToggle = true } = Astro.props;
 const navClass = hiddenUntilReveal ? "home-nav-hidden" : "";
 const pathname = Astro.url.pathname;
 
@@ -85,7 +86,7 @@ const isGroupActive = (items: { href: string }[]) =>
       </div>
 
       <div class="flex items-center gap-3 min-[1080px]:hidden">
-        <ThemeToggle />
+        {showMobileThemeToggle && <ThemeToggle />}
         <button
           type="button"
           class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-argmin-border bg-argmin-surface text-argmin-dark"
@@ -134,6 +135,12 @@ const isGroupActive = (items: { href: string }[]) =>
       </nav>
 
       <div class="mt-5 border-t border-argmin-border pt-5">
+        {!showMobileThemeToggle && (
+          <div class="mb-5">
+            <p class="section-kicker mb-3 px-1 text-xs">Theme</p>
+            <ThemeToggle />
+          </div>
+        )}
         <p class="text-sm leading-7 text-argmin-mid">
           Browse the expanded product architecture, then bring a real spend spike or routing problem to the demo.
         </p>

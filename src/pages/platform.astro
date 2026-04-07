@@ -45,7 +45,7 @@ const controlPoints = [
     stage: "Operations",
     title: "Instant owner resolution",
     description:
-      "When spend spikes, trace the cause to the exact code owner and deployment in seconds—not days of detective work across dashboards.",
+      "When spend spikes, trace the cause to the exact code owner and deployment in seconds, not days of detective work across dashboards.",
   },
   {
     stage: "Planning",
@@ -90,12 +90,13 @@ const deploymentPhases = [
   title="Platform | Argmin"
   description="Argmin resolves AI spend to services, owners, budgets, and deployment decisions before costs compound."
   canonicalUrl="https://argmin.co/platform"
+  showMobileThemeToggle={false}
 >
   <main id="main-content">
     <PageHero
       eyebrow="Platform"
       title="You're already spending millions on AI. Can you explain where it goes?"
-      lede="Most teams cannot attribute AI spend by team, model, and outcome. Argmin resolves who used which model, from which service, under whose budget, and what should happen next—before the expensive route becomes the default."
+      lede="Most teams cannot attribute AI spend by team, model, and outcome. Argmin resolves who used which model, from which service, under whose budget, and what should happen next before the expensive route becomes the default."
       notes={[
         { label: "Variance", value: "The same AI model can cost up to 700x more depending on how it is used." },
         { label: "Chain", value: "Model -> service -> code -> identity -> org -> budget." },
@@ -106,6 +107,21 @@ const deploymentPhases = [
         { href: "/contact", label: "Talk to us", variant: "secondary" },
       ]}
     />
+
+    <section class="px-6 pb-8 pt-0 md:pb-10">
+      <div class="site-shell">
+        <div class="surface-panel mx-auto max-w-5xl px-6 py-5 md:px-8">
+          <p class="section-kicker mb-3">Jump to section</p>
+          <nav class="quick-links" aria-label="Platform page sections">
+            <a class="quick-link" href="#control-points">Control points</a>
+            <a class="quick-link" href="#landscape">Landscape</a>
+            <a class="quick-link" href="#attribution-flow">Attribution flow</a>
+            <a class="quick-link" href="#decision-layer">Decision layer</a>
+            <a class="quick-link" href="#deployment-path">Deployment path</a>
+          </nav>
+        </div>
+      </div>
+    </section>
 
     <section class="px-6 pb-10 pt-0 md:pb-14 md:pt-0">
       <div class="site-shell">
@@ -194,7 +210,7 @@ const deploymentPhases = [
         <div class="mt-8 grid gap-4 md:grid-cols-3">
           <div class="surface-panel px-5 py-5">
             <p class="text-sm font-semibold text-argmin-dark">Tag-based attribution</p>
-            <p class="mt-3 text-sm leading-7 text-argmin-mid">Manual tagging. Breaks under AI variance—model calls shift routes, retry, and fan out in ways static tags cannot follow.</p>
+            <p class="mt-3 text-sm leading-7 text-argmin-mid">Manual tagging. Breaks under AI variance, model calls shift routes, retry, and fan out in ways static tags cannot follow.</p>
           </div>
           <div class="surface-panel px-5 py-5">
             <p class="text-sm font-semibold text-argmin-dark">Observability platforms</p>
@@ -209,6 +225,37 @@ const deploymentPhases = [
         <p class="mt-8 text-base leading-8 text-argmin-dark md:text-lg rise-in">
           Argmin takes a fundamentally different approach: an identity-resolved attribution graph that links model usage to services, code owners, and budgets automatically.
         </p>
+      </div>
+    </section>
+
+    <section id="landscape" class="px-6 py-20 lg:py-32">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto w-full max-w-[1080px] overflow-hidden rounded-[12px]">
+          <img
+            src="/images/competitive-landscape.png"
+            alt="AI operations landscape. LLM observability tools, AI gateways, enterprise APM, and FinOps platforms each operate within a single layer. Argmin is the AI consumption system of record, spanning all three layers as a single system: multi-source signal ingestion as a cross-system integration surface across cloud billing, CI/CD, source control, identity providers, HRIS, and telemetry; an identity-resolved attribution graph linking model to service to code to identity to org to budget; and decision-time control with organizational context, operating in Shape (advisory) or Gate (enforcement) modes."
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="960"
+            class="block h-auto w-full"
+          />
+        </div>
+
+        <div class="mx-auto mt-6 max-w-[640px] text-center">
+          <p class="text-base font-medium leading-[1.5] text-[#0F172A]">
+            Others operate within layers. Argmin resolves fragmented signals into a system of record for AI consumption.
+          </p>
+          <p class="mt-2 text-[0.9375rem] font-normal leading-[1.6] text-[#64748B]">
+            No existing system resolves identity-based attribution across billing, observability, code ownership, and identity, or enables decision-time control with organizational context.
+          </p>
+          <p class="mt-2 text-sm italic leading-[1.6] text-[#64748B]">
+            Without a system of record, AI usage cannot be attributed, governed, or optimized at scale.
+          </p>
+          <p class="mt-3 text-xs font-normal text-[#94A3B8]">
+            Positions reflect architectural scope, not market share. April 2026.
+          </p>
+        </div>
       </div>
     </section>
 

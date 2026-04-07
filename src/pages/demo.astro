@@ -1,21 +1,58 @@
 ---
-import Contact from "../components/Contact.astro";
+import ContactForm from "../components/ContactForm.astro";
 import Footer from "../components/Footer.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
 import { sanitizeFormspreeUrl } from "../lib/formspree";
 
 const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
-const intro =
-  "We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk.";
 ---
 
 <BaseLayout
   title="Request a Demo | Argmin"
   description="Request a demo of Argmin's AI spend attribution and decision-control platform."
   canonicalUrl="https://argmin.co/demo"
+  showMobileThemeToggle={false}
 >
   <main id="main-content">
-    <Contact title="Request a Demo" intro={intro} formspreeUrl={formspreeUrl} />
+    <PageHero
+      eyebrow="Request a Demo"
+      title="Bring the workload where AI spend already hurts."
+      lede="Show us the route change, approval bottleneck, or budget ambiguity that is already creating friction. We scope one workload first, connect read-only, and show the attribution path before you commit further."
+      notes={[
+        { label: "Best input", value: "One service, one route change, or one spend spike that already needs an answer." },
+        { label: "What you see", value: "Owner, budget path, confidence, and lower-cost alternatives tied to the same event." },
+        { label: "Who joins", value: "Usually an engineering owner plus finance or security, depending on the blocker." },
+      ]}
+      actions={[
+        { href: "/platform", label: "See the platform" },
+        { href: "/contact", label: "Prefer a direct note?", variant: "secondary" },
+      ]}
+    />
+
+    <section class="px-6 pb-10 md:pb-14">
+      <div class="site-shell">
+        <div class="mx-auto max-w-2xl">
+          <p class="mb-6 text-center text-sm leading-relaxed text-argmin-mid">
+            We usually respond within one business day. A member of the founding team follows up directly.
+          </p>
+
+          <ContactForm
+            formspreeUrl={formspreeUrl}
+            headingId="demo-form-heading"
+            headingText="Request a demo"
+            variant="standalone"
+          />
+
+          <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm text-argmin-mid">
+            <span class="rounded-full border border-argmin-border px-4 py-2">Single workload scope</span>
+            <span class="rounded-full border border-argmin-border px-4 py-2">Read-only onboarding</span>
+            <span class="rounded-full border border-argmin-border px-4 py-2">Founding team follow-up</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <Footer />
   </main>
 </BaseLayout>

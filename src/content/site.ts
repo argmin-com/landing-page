@@ -16,12 +16,14 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: "Attribution Flow", href: "/platform#attribution-flow" },
       { label: "Decision Layer", href: "/platform#decision-layer" },
+      { label: "Landscape", href: "/platform#landscape" },
       { label: "Deployment", href: "/platform#deployment-path" },
     ],
   },
   {
     label: "Company",
     items: [
+      { label: "About", href: "/about" },
       { label: "Team", href: "/team" },
       { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },
@@ -43,12 +45,14 @@ export const footerGroups = [
     links: [
       { label: "Attribution Flow", href: "/platform#attribution-flow" },
       { label: "Decision Layer", href: "/platform#decision-layer" },
+      { label: "Landscape", href: "/platform#landscape" },
       { label: "Deployment", href: "/platform#deployment-path" },
     ],
   },
   {
     title: "Company",
     links: [
+      { label: "About", href: "/about" },
       { label: "Team", href: "/team" },
       { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },

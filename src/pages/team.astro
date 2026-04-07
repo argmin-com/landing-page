@@ -10,7 +10,12 @@ const founders = [
     alt: "Richard McKinney, CEO & Co-Founder",
     webp: "/richard.webp",
     jpg: "/richard.jpg",
-    bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. At Amazon, he built global data platforms that saved $357M annually. He saw firsthand that AI cost attribution requires a fundamentally different approach—identity-resolved, graph-based, and embedded in the deployment path.",
+    bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. He saw firsthand that AI cost attribution needs an identity-resolved, graph-based approach embedded in the deployment path.",
+    highlights: [
+      "$357M annual infrastructure savings delivered at Amazon.",
+      "Built global data platforms used across large engineering organizations.",
+      "Focused on making cost ownership operational, not retrospective.",
+    ],
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
   {
@@ -19,7 +24,12 @@ const founders = [
     alt: "Charlotte Wargniez, CTO & Co-Founder",
     webp: "/charlotte.webp",
     jpg: "/charlotte.jpg",
-    bio: "Charlotte brings deep expertise in AI systems from Oxford and the European Space Agency. Her work in deep reinforcement learning directly powers Argmin's Heuristic Reconciliation Engine—the system that resolves fragmented signals into confidence-scored attribution. She designed the architecture to operate inside customer trust boundaries with read-only, advisory-first deployment.",
+    bio: "Charlotte brings deep expertise in AI systems from Oxford and the European Space Agency. She designed Argmin's reconciliation and attribution architecture to operate inside customer trust boundaries with read-only deployment.",
+    highlights: [
+      "Deep reinforcement learning background applied to attribution and routing.",
+      "Designed the confidence-scored reconciliation engine behind Argmin.",
+      "Built for customer environments where governance constraints are real.",
+    ],
     linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
   },
 ];
@@ -29,12 +39,13 @@ const founders = [
   title="Team | Argmin"
   description="Meet the team building attribution and optimization for enterprise AI spend."
   canonicalUrl="https://argmin.co/team"
+  showMobileThemeToggle={false}
 >
   <main id="main-content">
     <PageHero
       eyebrow="Team"
       title="Built by operators, not observers."
-      lede="We have spent years inside the infrastructure that creates the problem Argmin solves—cloud-scale cost attribution, security governance, and AI deployment. We built Argmin because we saw this problem from inside the systems that create it, and we know that incumbents are not going to solve it."
+      lede="We have worked inside the infrastructure that creates this problem: cloud-scale cost ownership, security governance, and AI deployment. Argmin exists because we saw the gap from inside the systems that create it."
       actions={[
         { href: "/contact", label: "Get in touch" },
         { href: "/platform", label: "See the platform", variant: "secondary" },
@@ -85,6 +96,13 @@ const founders = [
                 </div>
               </div>
               <p class="mt-8 text-base leading-8 text-argmin-mid">{founder.bio}</p>
+              <ul class="mt-6 grid gap-3">
+                {founder.highlights.map((highlight) => (
+                  <li class="rounded-2xl border border-argmin-border bg-argmin-surface-alt/45 px-4 py-3 text-sm leading-7 text-argmin-dark">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
@@ -97,7 +115,7 @@ const founders = [
           <div class="surface-panel px-6 py-8 md:px-10 md:py-10">
             <p class="section-kicker mb-4">Why Now</p>
             <p class="text-base leading-8 text-argmin-dark md:text-lg">
-              Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost. The gap between AI adoption and AI accountability is widening every quarter—and incumbents are not closing it because their architectures were never designed to.
+              Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.
             </p>
             <div class="mt-6 grid gap-4 md:grid-cols-3">
               <div class="rounded-lg border border-argmin-border px-4 py-3">
@@ -110,7 +128,7 @@ const founders = [
               </div>
               <div class="rounded-lg border border-argmin-border px-4 py-3">
                 <p class="text-sm font-semibold text-argmin-dark">AI-native approach</p>
-                <p class="mt-1 text-sm leading-6 text-argmin-mid">Graph-based attribution built specifically for AI workloads—not retrofitted onto cloud cost tools.</p>
+                <p class="mt-1 text-sm leading-6 text-argmin-mid">Graph-based attribution built specifically for AI workloads, not retrofitted onto cloud cost tools.</p>
               </div>
             </div>
           </div>

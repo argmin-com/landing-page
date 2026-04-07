@@ -8,6 +8,7 @@ interface Props {
   canonicalUrl?: string;
   showNavbarImmediately?: boolean;
   homeHeroOnlyInitially?: boolean;
+  showMobileThemeToggle?: boolean;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   canonicalUrl = "https://argmin.co/",
   showNavbarImmediately = true,
   homeHeroOnlyInitially = false,
+  showMobileThemeToggle = true,
 } = Astro.props;
 const ogImage = "https://argmin.co/og-image.png";
 const themeColor = "#f9f7f4";
@@ -209,7 +211,10 @@ const homeHeroNoscriptStyles = homeHeroOnlyInitially
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-argmin-surface focus:px-4 focus:py-2 focus:text-argmin-dark focus:shadow-lg">
       Skip to content
     </a>
-    <Navbar hiddenUntilReveal={!showNavbarImmediately} />
+    <Navbar
+      hiddenUntilReveal={!showNavbarImmediately}
+      showMobileThemeToggle={showMobileThemeToggle}
+    />
     <slot />
     {navbarRevealScript && <script is:inline set:html={navbarRevealScript}></script>}
   </body>

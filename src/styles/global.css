@@ -216,6 +216,35 @@ body[data-home-reveal-stage="1"] {
   backdrop-filter: blur(14px);
 }
 
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgb(var(--color-argmin-border));
+  border-radius: 999px;
+  background: rgb(var(--color-argmin-surface) / 0.85);
+  color: rgb(var(--color-argmin-mid));
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.85rem;
+  text-transform: uppercase;
+  transition: transform 180ms ease, border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.quick-link:hover,
+.quick-link:focus-visible {
+  border-color: rgb(var(--color-argmin-accent) / 0.5);
+  color: rgb(var(--color-argmin-dark));
+  transform: translateY(-1px);
+  outline: none;
+}
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;

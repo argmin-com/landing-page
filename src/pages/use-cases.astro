@@ -12,9 +12,8 @@ const roles = [
     intervention:
       "Argmin shows projected monthly impact when a model route, fallback chain, or retry policy changes before the release goes wide.",
     outcome:
-      "Catch model-route regressions before they hit production. Typical result: 10–25% reduction in AI inference cost within six months.",
+      "Catch model-route regressions before they hit production, then resolve spikes to the owner and release that caused them.",
     moment: "A model-route change shows projected monthly delta before the PR is approved.",
-    inaction: "Without intervention, cost regressions compound silently across every subsequent release.",
   },
   {
     label: "Finance / FinOps",
@@ -24,9 +23,8 @@ const roles = [
     intervention:
       "Argmin resolves spend to accountable owners with confidence instead of leaving finance with invoice totals and detective work.",
     outcome:
-      "Attribute every dollar to an owner and budget. Reduce monthly close from weeks to days. Identify 10–25% in cost optimization opportunities with board-ready reporting.",
+      "Attribute spend to an owner and budget, reduce monthly close friction, and surface the highest-leverage cost decisions sooner.",
     moment: "Approvers see owner, budget, and lower-cost alternatives before rollout.",
-    inaction: "Without attribution, AI budgets are set by negotiation instead of evidence—and overruns go undetected until quarterly close.",
   },
   {
     label: "Security",
@@ -36,9 +34,8 @@ const roles = [
     intervention:
       "Argmin ties access and deploy identities to real cost exposure without broad telemetry exfiltration or mandatory write paths.",
     outcome:
-      "Resolve spend spikes to exact identities in minutes, not weeks. Close governance gaps before auditors find them.",
+      "Resolve spend spikes to exact identities and close governance gaps before they turn into audit findings.",
     moment: "A spend spike resolves to the exact service, team, and deploy that caused it.",
-    inaction: "Without governance, ungoverned model access scales with adoption—creating audit gaps that grow harder to close.",
   },
 ];
 
@@ -47,18 +44,21 @@ const bestFit = [
   "Teams that already have telemetry but still cannot answer who changed the unit economics.",
   "Organizations that need to keep decision evidence inside the customer trust boundary.",
 ];
+
+const roleAnchors = ["engineering", "finance-finops", "security"];
 ---
 
 <BaseLayout
   title="Use Cases | Argmin"
   description="How engineering, finance, and security teams use Argmin to trace AI spend and intervene earlier."
   canonicalUrl="https://argmin.co/use-cases"
+  showMobileThemeToggle={false}
 >
   <main id="main-content">
     <PageHero
       eyebrow="Use Cases"
       title="Three buyers. One decision layer."
-      lede="Different stakeholders come with different questions. Argmin meets each where they are—while relying on a single, unified attribution layer underneath."
+      lede="Different stakeholders come with different questions. Argmin meets each where they are while relying on a single, unified attribution layer underneath."
       notes={[
         { label: "Engineering", value: "Catch model-route regressions before they land in production." },
         { label: "Finance / FinOps", value: "Move from invoice totals to accountable budget decisions." },
@@ -70,13 +70,26 @@ const bestFit = [
       ]}
     />
 
-    <section class="px-6 pb-10 pt-0 md:pb-14 md:pt-0">
+    <section class="px-6 pb-8 pt-0 md:pb-10">
+      <div class="site-shell">
+        <div class="surface-panel mx-auto max-w-4xl px-6 py-5 md:px-8">
+          <p class="section-kicker mb-3">Jump to section</p>
+          <nav class="quick-links" aria-label="Use cases page sections">
+            <a class="quick-link" href="#problem">Problem</a>
+            <a class="quick-link" href="#personas">Personas</a>
+            <a class="quick-link" href="#best-fit">Best fit</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <section id="problem" class="px-6 pb-10 pt-0 md:pb-14 md:pt-0">
       <div class="site-shell">
         <div class="surface-panel mx-auto max-w-4xl px-6 py-8 md:px-10 md:py-10">
           <p class="section-kicker mb-4">The Problem</p>
           <p class="text-xl leading-relaxed text-argmin-dark md:text-2xl max-w-[65ch]">
             AI spend is growing faster than any other infrastructure line item. Without attribution,
-            every dollar is unaccountable—budgets are set by negotiation, overruns go undetected, and
+            every dollar is unaccountable, budgets are set by negotiation, overruns go undetected, and
             the board cannot distinguish productive AI investment from waste. The longer you wait, the
             harder the problem becomes.
           </p>
@@ -84,13 +97,14 @@ const bestFit = [
       </div>
     </section>
 
-    <section class="px-6 py-8 md:py-12 bg-argmin-surface-alt/30">
+    <section id="personas" class="px-6 py-8 md:py-12 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
         <div class="flex flex-wrap gap-2 border-b border-argmin-border pb-0" role="tablist" aria-label="Use case personas" id="role-tabs">
           {roles.map((role, index) => (
             <button
               role="tab"
               id={`tab-${index}`}
+              data-slug={roleAnchors[index]}
               aria-selected={index === 0 ? "true" : "false"}
               aria-controls={`panel-${index}`}
               tabindex={index === 0 ? "0" : "-1"}
@@ -112,7 +126,7 @@ const bestFit = [
             id={`panel-${index}`}
             aria-labelledby={`tab-${index}`}
             class:list={[
-              "role-panel grid gap-6 py-9 lg:grid-cols-[minmax(0,0.34fr)_minmax(0,0.33fr)_minmax(0,0.33fr)] lg:gap-10",
+              "role-panel grid gap-6 py-9 lg:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] lg:gap-10",
               index !== 0 && "hidden",
             ]}
           >
@@ -120,17 +134,20 @@ const bestFit = [
               <p class="section-kicker text-argmin-accent">{role.label}</p>
               <h2 class="mt-5 text-3xl font-semibold tracking-[-0.05em] text-argmin-dark md:text-4xl">{role.question}</h2>
               <p class="mt-5 text-base leading-8 text-argmin-mid">{role.moment}</p>
-              <p class="mt-4 rounded-lg border border-argmin-border bg-argmin-surface-alt/60 px-4 py-3 text-sm leading-7 text-argmin-mid"><span class="font-semibold text-argmin-dark">What forces action:</span> {role.trigger}</p>
+              <p class="mt-4 rounded-lg border border-argmin-border bg-argmin-surface-alt/60 px-4 py-3 text-sm leading-7 text-argmin-mid">
+                <span class="font-semibold text-argmin-dark">What forces action:</span> {role.trigger}
+              </p>
             </div>
-            <div>
-              <p class="section-kicker">Signals</p>
-              <p class="mt-4 text-base leading-8 text-argmin-dark">{role.inputs}</p>
-            </div>
-            <div>
-              <p class="section-kicker">What Changes</p>
-              <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
-              <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
-              <p class="mt-4 rounded-lg border border-argmin-border/50 bg-argmin-surface-alt/40 px-4 py-3 text-sm leading-7 text-argmin-mid"><span class="font-semibold text-argmin-dark">Cost of inaction:</span> {role.inaction}</p>
+            <div class="grid gap-4 md:grid-cols-2">
+              <div class="surface-panel px-5 py-5">
+                <p class="section-kicker">Signals</p>
+                <p class="mt-4 text-base leading-8 text-argmin-dark">{role.inputs}</p>
+              </div>
+              <div class="surface-panel px-5 py-5">
+                <p class="section-kicker">What Changes</p>
+                <p class="mt-4 text-base leading-8 text-argmin-mid">{role.intervention}</p>
+                <p class="mt-5 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-dark">{role.outcome}</p>
+              </div>
             </div>
           </article>
         ))}
@@ -141,7 +158,7 @@ const bestFit = [
       </div>
     </section>
 
-    <script is:inline>
+    <script define:vars={{ roleAnchors }} is:inline>
       (function () {
         const tablist = document.getElementById("role-tabs");
         if (!tablist) return;
@@ -168,6 +185,10 @@ const bestFit = [
               p.classList.add("hidden");
             }
           });
+          var nextHash = "#" + roleAnchors[index];
+          if (window.location.hash !== nextHash) {
+            history.replaceState(null, "", nextHash);
+          }
         }
 
         tabs.forEach(function (tab, i) {
@@ -186,10 +207,14 @@ const bestFit = [
           activate(next);
           tabs[next].focus();
         });
+
+        var hash = window.location.hash.replace("#", "");
+        var matchedIndex = roleAnchors.indexOf(hash);
+        if (matchedIndex >= 0) activate(matchedIndex);
       })();
     </script>
 
-    <section class="px-6 py-8 md:py-12">
+    <section id="best-fit" class="px-6 py-8 md:py-12">
       <div class="site-shell section-divider pt-10">
         <div class="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)] lg:gap-16">
           <div class="rise-in">
