@@ -1,0 +1,453 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="Privacy Policy | Argmin"
+  description="Privacy Policy for Argmin Technologies, Inc. — how we collect, use, and share personal data when you visit argmin.co."
+  canonicalUrl="https://argmin.co/privacy"
+  showMobileThemeToggle={false}
+>
+  <main id="main-content">
+    <PageHero
+      eyebrow="Privacy"
+      title="Privacy Policy."
+      lede='This Privacy Policy explains how Argmin Technologies, Inc. ("Argmin," "we," "us," or "our") collects, uses, and shares personal data when you visit our website at argmin.co or communicate with us. If we launch additional products or services, we will update this policy to reflect any new data processing activities.'
+      notes={[
+        { label: "Last updated", value: "April 8, 2026" },
+        { label: "Data controller", value: "Argmin Technologies, Inc., incorporated in Delaware, United States, with principal office in Seattle, Washington." },
+      ]}
+      actions={[
+        { href: "mailto:privacy@argmin.co", label: "Privacy inquiries", variant: "secondary" },
+      ]}
+    />
+
+    <section class="px-6 pb-8 pt-0 md:pb-10">
+      <div class="site-shell">
+        <div class="surface-panel mx-auto max-w-4xl px-6 py-5 md:px-8">
+          <p class="section-kicker mb-3">Jump to section</p>
+          <nav class="quick-links" aria-label="Privacy policy sections">
+            <a class="quick-link" href="#information-we-collect">Information We Collect</a>
+            <a class="quick-link" href="#how-we-use-data">How We Use Data</a>
+            <a class="quick-link" href="#legal-basis">Legal Basis</a>
+            <a class="quick-link" href="#cookies">Cookies &amp; Analytics</a>
+            <a class="quick-link" href="#sharing">Data Sharing</a>
+            <a class="quick-link" href="#international-transfers">International Transfers</a>
+            <a class="quick-link" href="#retention">Retention</a>
+            <a class="quick-link" href="#your-rights">Your Rights</a>
+            <a class="quick-link" href="#ccpa">CCPA / CPRA</a>
+            <a class="quick-link" href="#security">Security</a>
+            <a class="quick-link" href="#children">Children</a>
+            <a class="quick-link" href="#contact">Contact</a>
+            <a class="quick-link" href="#changes">Changes</a>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Information We Collect -->
+    <section id="information-we-collect" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Data Collection</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Information We Collect</h2>
+
+          <h3 class="mt-10 text-xl font-semibold tracking-[-0.03em] text-argmin-dark">Information You Provide</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Contact information:</strong> Name, email address, company name, job title, and any other details you submit through forms or email correspondence.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Communications:</strong> The content of messages you send us, including form submissions and email correspondence. When you submit a form on our website, your data is transmitted to and processed by Formspree, Inc., a third-party form processing service hosted on Amazon Web Services in the United States, before being delivered to us.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Marketing preferences:</strong> Your choices regarding communications from us, where you have opted in.</span>
+            </li>
+          </ul>
+
+          <h3 class="mt-10 text-xl font-semibold tracking-[-0.03em] text-argmin-dark">Information Collected Automatically</h3>
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Analytics data:</strong> We use <a href="https://plausible.io" target="_blank" rel="noopener" class="text-argmin-accent hover:underline">Plausible Analytics</a>, a privacy-focused, cookieless analytics service. Plausible does not use cookies, does not track individuals across sites, and does not retain IP addresses. It processes aggregate page view and referrer data to provide us with website usage statistics. Plausible does not build user profiles and cannot identify individual visitors.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Server logs:</strong> Our hosting and CDN provider, Cloudflare, may process IP addresses, request timestamps, and user agent strings as part of standard web delivery and security operations. For certain security functions (such as bot detection and DDoS mitigation), Cloudflare may act as an independent data controller. For content delivery, Cloudflare processes data on our behalf. See Cloudflare&rsquo;s <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" class="text-argmin-accent hover:underline">privacy policy</a> for details.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. How We Use Your Information -->
+    <section id="how-we-use-data" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Data Usage</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">How We Use Your Information</h2>
+
+          <ul class="mt-8 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Respond to inquiries and provide requested information</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Deliver access to gated content such as white papers or technical briefs</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Operate, maintain, and improve our website</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Send service-related or transactional communications</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Understand aggregate website usage patterns (via cookieless analytics)</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Ensure security, prevent abuse, and comply with applicable legal requirements</span>
+            </li>
+          </ul>
+
+          <h3 class="mt-10 text-xl font-semibold tracking-[-0.03em] text-argmin-dark">Gated Content</h3>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            When you request gated content, we process your email address to deliver the requested material. This delivery is a transactional communication based on your request. If you separately opt in to receive additional communications from us, we may send marketing or informational follow-ups; you can unsubscribe at any time.
+            We do not sell or share this data with third parties for their independent marketing purposes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Legal Basis for Processing -->
+    <section id="legal-basis" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Legal Basis</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Legal Basis for Processing (GDPR / UK GDPR)</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">Where the GDPR or UK GDPR applies, we process personal data on the following bases:</p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Legitimate interests:</strong> Responding to inquiries submitted through our website, operating and securing our website, improving our services, and understanding aggregate usage patterns. We rely on this basis where our interests are not overridden by your rights and freedoms.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Consent:</strong> Where you have opted in to receive marketing communications or other non-transactional follow-ups. You may withdraw consent at any time.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Contractual necessity:</strong> Where processing is necessary to perform a contract with you or to take pre-contractual steps at your request (for example, when you engage us as a customer or design partner).</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Legal obligation:</strong> Where we are required by law to process or retain data.</span>
+            </li>
+          </ul>
+
+          <h3 class="mt-10 text-xl font-semibold tracking-[-0.03em] text-argmin-dark">EEA and UK Representative</h3>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            We do not currently maintain an establishment in the European Economic Area or the United Kingdom. Given our current scale of processing (limited to website visitors and form submissions, with no large-scale processing of special category data), we have not appointed a representative under GDPR Article 27 or the equivalent UK GDPR provision. We will appoint one if our processing activities require it. If you are located in the EEA or UK and wish to exercise your rights, contact us at <a href="mailto:privacy@argmin.co" class="text-argmin-accent hover:underline">privacy@argmin.co</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Cookies and Analytics -->
+    <section id="cookies" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Cookies &amp; Analytics</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Cookies and Analytics</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            We do not use cookies for analytics. Our analytics provider, Plausible Analytics, is fully cookieless and does not track individual users or retain IP addresses. No consent banner is required for Plausible under GDPR, UK GDPR, or ePrivacy Directive guidance, because no personal data is processed and no information is stored on or read from your device for analytics purposes.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            Cloudflare, our hosting and CDN provider, may use strictly necessary cookies (such as <code class="rounded bg-argmin-surface px-1.5 py-0.5 text-sm font-mono text-argmin-dark border border-argmin-border">__cf_bm</code>) for bot management and security purposes. These cookies are exempt from consent requirements under the ePrivacy Directive because they are essential to delivering the service you have requested.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            If we introduce non-essential cookies or tracking technologies in the future, we will update this policy and implement a consent mechanism before activating them.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            <strong class="font-semibold text-argmin-dark">Do Not Track:</strong> Because we do not track individual users or serve targeted advertising, our website responds to Do Not Track (DNT) browser signals by default: there is no tracking to disable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Service Providers and Data Sharing -->
+    <section id="sharing" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Data Sharing</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Service Providers and Data Sharing</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">We share personal data with the following categories of service providers:</p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Hosting and content delivery:</strong> Cloudflare (acts as a processor for content delivery; may act as an independent controller for security functions such as bot management and DDoS protection)</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Form processing:</strong> Formspree</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Analytics:</strong> Plausible Analytics (cookieless; does not retain IP addresses or track individuals)</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span><strong class="font-semibold text-argmin-dark">Email and communications:</strong> Google Workspace</span>
+            </li>
+          </ul>
+
+          <p class="mt-6 text-base leading-8 text-argmin-mid">
+            Where these providers act as processors on our behalf, they process data under contractual terms that restrict their use of the data to the services they provide to us. Where a provider acts as an independent controller (as noted above for Cloudflare security functions), their own privacy policy governs that processing.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            We do not sell personal data. We do not share personal data with third parties for their own marketing purposes.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            We may disclose personal data where required by law, regulation, legal process, or governmental request, or where necessary to protect our rights, safety, or property.
+          </p>
+          <p class="mt-4 text-base leading-8 text-argmin-mid">
+            In the event of a merger, acquisition, reorganization, or sale of assets, personal data we hold may be transferred as part of that transaction. If such a transfer occurs, we will require the acquiring entity to honor the commitments made in this policy or notify affected individuals before personal data is subject to a different privacy policy.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. International Data Transfers -->
+    <section id="international-transfers" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">International Transfers</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">International Data Transfers</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            Your data may be transferred to and processed in the United States. Where personal data is transferred from the European Economic Area, United Kingdom, or Switzerland, we rely on appropriate safeguards. Our primary service providers (Google and Cloudflare) are certified under the EU-US Data Privacy Framework (DPF) and include Standard Contractual Clauses (SCCs) in their data processing agreements. We maintain SCCs as a supplementary safeguard alongside DPF certification given the evolving status of transatlantic transfer frameworks. For other providers, we evaluate available transfer mechanisms and contractual protections on a case-by-case basis.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Data Retention -->
+    <section id="retention" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Data Retention</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Data Retention</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            We retain personal data only as long as necessary for the purposes described in this policy. Our standard retention periods are:
+          </p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Contact form submissions and inquiry correspondence: up to 24 months from the date of last contact, unless an ongoing relationship exists.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Gated content access records: up to 12 months from download.</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Server logs (Cloudflare): retained according to Cloudflare&rsquo;s standard retention schedule, which varies by service tier.</span>
+            </li>
+          </ul>
+
+          <p class="mt-6 text-base leading-8 text-argmin-mid">
+            We may retain data for longer periods where required by applicable law or to resolve disputes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Your Rights -->
+    <section id="your-rights" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Your Rights</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Your Rights</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">Depending on your jurisdiction, you may have the right to:</p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Access the personal data we hold about you</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Correct inaccurate or incomplete data</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Request deletion of your data</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Restrict or object to certain processing</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Receive your data in a portable format</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Withdraw consent at any time, where processing is based on consent</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Lodge a complaint with a supervisory authority (for EEA and UK residents)</span>
+            </li>
+          </ul>
+
+          <p class="mt-6 text-base leading-8 text-argmin-mid">
+            To exercise any of these rights, contact us at <a href="mailto:privacy@argmin.co" class="text-argmin-accent hover:underline">privacy@argmin.co</a>.
+            We will respond within one calendar month of receiving your request, or within the timeframe required by applicable law (including 45 days for requests under the CCPA). If we need additional time due to the complexity of a request, we will notify you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. California Privacy Rights -->
+    <section id="ccpa" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">California Privacy</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">California Privacy Rights (CCPA/CPRA)</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">If you are a California resident, you have the right to:</p>
+
+          <ul class="mt-4 space-y-3">
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Know what categories of personal information we collect, use, and disclose</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Request deletion of your personal information</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Correct inaccurate personal information</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Opt out of the sale or sharing of personal information (we do not sell or share personal information as defined by the CCPA)</span>
+            </li>
+            <li class="flex items-start gap-3 text-base leading-8 text-argmin-mid">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>
+              <span>Limit the use of sensitive personal information, if applicable</span>
+            </li>
+          </ul>
+
+          <p class="mt-6 text-base leading-8 text-argmin-mid">
+            To exercise these rights, contact us at <a href="mailto:privacy@argmin.co" class="text-argmin-accent hover:underline">privacy@argmin.co</a>.
+            We will not discriminate against you for exercising your rights under the CCPA.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Security -->
+    <section id="security" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Security</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Security</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            We implement reasonable technical and organizational measures to protect personal data against unauthorized access, alteration, disclosure, or destruction. These include encryption in transit (TLS), access controls, and secure service provider selection. No method of transmission or storage is completely secure, and we cannot guarantee absolute security.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Children's Privacy -->
+    <section id="children" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Children&rsquo;s Privacy</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Children&rsquo;s Privacy</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            Our website and services are not directed to individuals under 16. We do not knowingly collect personal data from children. If we learn that we have collected personal data from a child under 16, we will delete it promptly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Contact Information -->
+    <section id="contact" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Contact</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Contact Information</h2>
+
+          <div class="mt-8 grid gap-6 md:grid-cols-2">
+            <div class="surface-panel px-6 py-6">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">General &amp; Privacy</p>
+              <div class="mt-4 space-y-2 text-base leading-8 text-argmin-mid">
+                <p><strong class="font-semibold text-argmin-dark">Argmin Technologies, Inc.</strong></p>
+                <p><strong class="font-semibold text-argmin-dark">Email:</strong> <a href="mailto:contact@argmin.co" class="text-argmin-accent hover:underline">contact@argmin.co</a></p>
+                <p><strong class="font-semibold text-argmin-dark">Privacy inquiries:</strong> <a href="mailto:privacy@argmin.co" class="text-argmin-accent hover:underline">privacy@argmin.co</a></p>
+                <p><strong class="font-semibold text-argmin-dark">Phone:</strong> +1 (415) 748-5826</p>
+              </div>
+            </div>
+
+            <div class="surface-panel px-6 py-6">
+              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">Addresses</p>
+              <div class="mt-4 space-y-4 text-base leading-7 text-argmin-mid">
+                <div>
+                  <p class="font-semibold text-argmin-dark">Registered / Mailing Address</p>
+                  <p>2810 N Church St PMB 49771</p>
+                  <p>Wilmington, DE 19802-4447</p>
+                  <p>United States</p>
+                </div>
+                <div>
+                  <p class="font-semibold text-argmin-dark">Physical Office</p>
+                  <p>600 1st Ave Ste 330 PMB 49771</p>
+                  <p>Seattle, WA</p>
+                  <p>United States</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Changes to This Policy -->
+    <section id="changes" class="px-6 py-10 md:py-16">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Policy Updates</p>
+          <h2 class="display-title mt-5 text-[1.55rem] leading-[1.04] md:text-[2.05rem]">Changes to This Policy</h2>
+
+          <p class="mt-8 text-base leading-8 text-argmin-mid">
+            We may update this Privacy Policy from time to time. When we do, we will revise the &ldquo;Last updated&rdquo; date at the top of this page. If changes are material, we will provide additional notice where appropriate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+  </main>
+</BaseLayout>

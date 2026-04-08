@@ -56,6 +56,7 @@ export const footerGroups = [
       { label: "Team", href: "/team" },
       { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },
+      { label: "Privacy Policy", href: "/privacy" },
     ],
   },
 ] as const;
