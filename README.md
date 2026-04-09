@@ -1,6 +1,19 @@
 # Argmin Landing Page
 
-Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026 PRD and engineering specification, with the current multi-page UX/UI review updates integrated.
+Marketing site for **Argmin**, an enterprise platform for AI spend attribution, governance, and decision-time control.
+
+This repository powers `argmin.co`: a static Astro site that explains how Argmin helps engineering, finance/FinOps, and security teams trace AI spend to accountable owners, budgets, and deployment decisions before costs compound.
+
+## Product Positioning Reflected in This Site
+
+The current site presents Argmin as:
+
+- a system of record for enterprise AI consumption
+- an attribution layer that connects **model -> service -> code -> identity -> org -> budget**
+- a decision layer for pre-deploy review, approvals, and budget control
+- an enterprise-first deployment model with **read-only connectors**, **inside-your-environment processing**, and **advisory-first workflows**
+
+This repository contains the public marketing experience for that offering. It does **not** contain the customer product runtime.
 
 ## Stack
 
@@ -8,22 +21,47 @@ Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026
 - Tailwind CSS 4
 - Static output for Cloudflare Pages
 - Formspree for contact submissions
-- Plausible Analytics for page view and event tracking
+- Plausible Analytics for page-view and CTA tracking
 - Wrangler for local Cloudflare Pages preview and manual deploys
 
-## Project Structure
+## Site Map
 
-- `src/layouts/BaseLayout.astro`: metadata, canonical tags, OG/Twitter tags, Plausible bootstrap, theme boot, shared shell
-- `src/components/`: hero, value proposition, founders, nav, shared contact section, shared contact form, footer
-- `src/pages/`: eight routes - `index`, `contact`, `platform`, `use-cases`, `team`, `demo`, `security`, `404`
-- `src/content/site.ts`: nav and footer link definitions
+Current Astro routes in `src/pages/`:
+
+- `/`
+- `/about`
+- `/contact`
+- `/demo`
+- `/platform`
+- `/privacy`
+- `/security`
+- `/team`
+- `/use-cases`
+- `/404`
+
+These pages map to the current product narrative:
+
+- **Home**: problem framing, value proposition, attribution flow, and contact CTA
+- **Platform**: attribution model, control points, deployment path, and architectural differentiation
+- **Use Cases**: buying context for engineering, finance/FinOps, and security stakeholders
+- **Security**: trust boundary, data flow, and deployment posture
+- **About / Team**: company point of view, founders, and design-partner framing
+- **Contact / Demo**: conversion paths for inbound interest
+- **Privacy**: website privacy policy
+
+## Repository Structure
+
+- `src/layouts/BaseLayout.astro`: metadata, canonical tags, analytics bootstrap, theme boot, shared shell
+- `src/components/`: reusable sections, navigation, footer, and shared contact form
+- `src/pages/`: public site routes
+- `src/content/site.ts`: navigation, footer links, and site summary copy
 - `src/lib/contact.ts`: shared contact email constant
-- `src/lib/formspree.ts`: Formspree URL validation
-- `src/styles/global.css`: Tailwind directives, CSS custom properties, component styles
-- `scripts/validate-contact-fallbacks.mjs`: fallback assertions against the built site in `dist/`
-- `scripts/validate-contact-configured.mjs`: configured-endpoint assertions against the built site in `dist/`
-- `public/`: favicon, founder images, OG image, Cloudflare Pages security headers (`_headers`)
-- `docs/requirements-matrix.md`: requirement traceability, repo evidence, validation map
+- `src/lib/formspree.ts`: Formspree URL validation and sanitization
+- `src/styles/global.css`: global theme tokens and shared component styling
+- `scripts/validate-contact-fallbacks.mjs`: asserts fail-closed contact behavior against the built site in `dist/`
+- `scripts/validate-contact-configured.mjs`: asserts configured contact behavior against the built site in `dist/`
+- `public/`: static assets, favicon, images, and Cloudflare Pages headers
+- `docs/requirements-matrix.md`: requirements traceability and validation evidence
 
 ## Local Development
 
@@ -32,7 +70,9 @@ npm install
 npm run dev
 ```
 
-Validation commands:
+## Validation
+
+Run the standard repository checks from the root:
 
 ```bash
 npm run check
@@ -42,7 +82,7 @@ PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run build
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured
 ```
 
-Combined fallback audit:
+Combined local audit:
 
 ```bash
 npm run audit:site
@@ -54,15 +94,19 @@ Local Cloudflare Pages preview:
 npm run preview
 ```
 
-## Environment
+## Environment Contract
 
-Create `.env` from `.env.example` and provide a real Formspree endpoint:
+Create `.env` from `.env.example` and provide a valid Formspree endpoint for live submissions:
 
 ```bash
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/<form_id>
 ```
 
-Without that value, the form fails closed: the submit button is disabled and the page renders an inline contact-email fallback instead of shipping a live Formspree endpoint.
+If `PUBLIC_FORMSPREE_URL` is missing or invalid, the site fails closed:
+
+- the contact form submit button is disabled
+- the UI shows the direct email fallback
+- the built pages include the expected no-JavaScript mailto fallback
 
 ## Deployment Contract
 
@@ -70,53 +114,40 @@ Target host: Cloudflare Pages
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- Node version: `22` (Astro 6 requires `>=22.12.0`; see `.nvmrc` and `engines` in `package.json`)
+- Node version: `>=22.12.0` (see `.nvmrc` and `package.json`)
 - Required environment variable for live submissions: `PUBLIC_FORMSPREE_URL`
-- Custom domain: `argmin.co`
-- DNS/TLS: configured in Cloudflare outside this repository
+- Production domain: `https://argmin.co`
 
-### GitHub Actions
+Manual deploy workflow:
 
-**Quality workflow** (`quality.yml`): runs automatically on push and pull request to `main` with path filters that include source, workflow, environment-contract, and documentation files. The pipeline runs Astro diagnostics, a fallback build plus fallback assertions, a configured build plus configured-path assertions, and a three-run Lighthouse audit with median scoring. Reports and the static server log are uploaded as artifacts.
+- `deploy.yml` runs only on `workflow_dispatch`
+- GitHub Actions deploys with `wrangler pages deploy dist --project-name=landing-page`
+- `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` must be configured for manual deploys from Actions
+- if those secrets are absent, Cloudflare Pages Git integration remains the active deployment path
 
-| Category | Minimum |
-| --- | --- |
-| Performance | 90 |
-| Accessibility | 100 |
-| Best Practices | 100 |
-| SEO | 100 |
-| Largest Contentful Paint | ≤ 2500 ms |
-| Total transfer size | ≤ 150 KB |
+## CI Quality Gates
 
-**CodeQL workflow** (`codeql.yml`): runs JavaScript/TypeScript static analysis on pushes and pull requests to `main`, plus a weekly scheduled scan.
+The `quality.yml` workflow currently enforces:
 
-**Dependency review workflow** (`dependency-review.yml`): reviews dependency changes on pull requests that touch `package.json` or `package-lock.json`.
+- `npm run check`
+- `npm run build`
+- `npm run validate:contact-fallbacks`
+- configured contact build plus `npm run validate:contact-configured`
+- Lighthouse median thresholds:
+  - Performance: `>= 90`
+  - Accessibility: `100`
+  - Best Practices: `100`
+  - SEO: `100`
+  - Largest Contentful Paint: `<= 2500 ms`
+  - Total transfer size: `<= 150 KB`
 
-**Deploy workflow** (`deploy.yml`): manual trigger only (`workflow_dispatch`). It requires `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` secrets and skips gracefully if they are absent, in which case Cloudflare Pages Git integration remains the active deployment path. `PUBLIC_FORMSPREE_URL` is passed to the build from a GitHub Actions variable.
+Additional workflows:
 
-## CI Validation
+- `codeql.yml`: JavaScript/TypeScript static analysis
+- `dependency-review.yml`: dependency review on pull requests that change package manifests
 
-The current CI contract enforces:
+## Operational Follow-Up Outside This Repository
 
-- `npm run check`: zero Astro diagnostics
-- `npm run build`: clean static production build to `dist/`
-- `npm run validate:contact-fallbacks`: missing-endpoint assertions across home, contact, and demo entrypoints
-- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured`: configured-endpoint assertions across the same entrypoints
-- Lighthouse: three consecutive runs with median scoring against the thresholds above
-- CodeQL JavaScript/TypeScript analysis on repository changes and weekly schedule
-
-## Validation Evidence
-
-Local validation completed on April 1, 2026:
-
-- `npm run check`: passed with 0 errors, 0 warnings, 0 hints
-- `npm run audit:site`: passed end to end
-- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run build`: passed
-- `PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-configured`: passed
-- Built output is static `dist/` content only, with no generated Cloudflare worker bundle
-
-## Remaining External Steps
-
-- Configure a live Formspree form and set `PUBLIC_FORMSPREE_URL`
-- Verify live Plausible data for `cta_click` and `form_submit` on the production domain
-- Configure Cloudflare Pages project settings, DNS, and HTTPS redirects
+- Configure a live Formspree endpoint for production contact flows
+- Verify Plausible events on the production domain
+- Maintain Cloudflare Pages project, DNS, and TLS settings
