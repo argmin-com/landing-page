@@ -14,7 +14,7 @@ Shared repository instructions for coding assistants working in this project.
 Run these from the repository root:
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 npm run check
 npm run build
 npm run validate:contact-fallbacks

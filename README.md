@@ -28,7 +28,7 @@ Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026
 ## Local Development
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 npm run dev
 ```
 
