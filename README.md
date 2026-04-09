@@ -15,7 +15,7 @@ Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026
 
 - `src/layouts/BaseLayout.astro`: metadata, canonical tags, OG/Twitter tags, Plausible bootstrap, theme boot, shared shell
 - `src/components/`: hero, value proposition, founders, nav, shared contact section, shared contact form, footer
-- `src/pages/`: eight routes - `index`, `contact`, `platform`, `use-cases`, `team`, `demo`, `security`, `404`
+- `src/pages/`: ten routes — `index`, `about`, `contact`, `demo`, `platform`, `privacy`, `security`, `team`, `use-cases`, `404`
 - `src/content/site.ts`: nav and footer link definitions
 - `src/lib/contact.ts`: shared contact email constant
 - `src/lib/formspree.ts`: Formspree URL validation
@@ -24,6 +24,47 @@ Static Astro marketing site for `argmin.co`, implemented from the March 24, 2026
 - `scripts/validate-contact-configured.mjs`: configured-endpoint assertions against the built site in `dist/`
 - `public/`: favicon, founder images, OG image, Cloudflare Pages security headers (`_headers`)
 - `docs/requirements-matrix.md`: requirement traceability, repo evidence, validation map
+
+## Internal Link Graph
+
+Source-defined internal link structure derived from `src/content/site.ts` and each page's markup.
+
+### Global navigation
+
+Defined in `src/content/site.ts` and rendered by `Navbar.astro` and `Footer.astro` on every page.
+
+**Nav bar:**
+
+| Group | Links |
+| --- | --- |
+| Product | `/platform`, `/use-cases` |
+| Architecture | `/platform#attribution-flow`, `/platform#decision-layer`, `/platform#landscape`, `/platform#deployment-path` |
+| Company | `/about`, `/team`, `/security`, `/contact` |
+
+Brand logo links to `/`. CTA button links to `/demo`.
+
+**Footer:**
+
+| Group | Links |
+| --- | --- |
+| Product | `/platform`, `/use-cases`, `/demo` |
+| Architecture | `/platform#attribution-flow`, `/platform#decision-layer`, `/platform#landscape`, `/platform#deployment-path` |
+| Company | `/about`, `/team`, `/security`, `/contact`, `/privacy` |
+
+### Per-page anchors and CTAs
+
+| Page | Route | Anchor sections | Page-body CTAs |
+| --- | --- | --- | --- |
+| Home | `/` | — | `/demo` |
+| About | `/about` | — | `/demo`, `/contact` |
+| Contact | `/contact` | — | — |
+| Demo | `/demo` | — | — |
+| Platform | `/platform` | `#control-points`, `#landscape`, `#attribution-flow`, `#decision-layer`, `#deployment-path` | `/demo`, `/contact` |
+| Privacy | `/privacy` | `#information-we-collect`, `#how-we-use-data`, `#legal-basis`, `#cookies`, `#sharing`, `#international-transfers`, `#retention`, `#your-rights`, `#ccpa`, `#security`, `#children`, `#contact`, `#changes` | — |
+| Security | `/security` | `#security-principles`, `#security-comparison`, `#security-data-flow` | `/demo`, `/platform` |
+| Team | `/team` | — | — |
+| Use Cases | `/use-cases` | `#problem`, `#personas`, `#best-fit`, `#engineering`, `#finance-finops`, `#security` | `/contact`, `/platform` |
+| 404 | `/404` | — | `/`, `/contact` |
 
 ## Local Development
 
