@@ -9,14 +9,16 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "npm run build && wrangler pages dev dist",
+    "preview": "npm run build && wrangler dev",
     "check": "astro check",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
     "validate:contact-configured": "node scripts/validate-contact-configured.mjs",
     "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page"
+    "deploy": "npm run build && wrangler deploy",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^13.1.8",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.4",
     "tailwindcss": "^4.2.2"
@@ -24,6 +26,9 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
     "typescript": "^5.9.3",
-    "wrangler": "^4.80.0"
+    "wrangler": "^4.81.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
