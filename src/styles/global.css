@@ -113,6 +113,36 @@ body[data-home-reveal-stage="1"] {
   text-wrap: balance;
 }
 
+.section-title {
+  font-family:
+    "SF Pro Display",
+    "Inter Tight",
+    "Helvetica Neue",
+    "Segoe UI",
+    sans-serif;
+  font-size: clamp(1.55rem, 3vw, 2.05rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: rgb(var(--color-argmin-dark));
+  text-wrap: balance;
+}
+
+.section-title-lg {
+  font-family:
+    "SF Pro Display",
+    "Inter Tight",
+    "Helvetica Neue",
+    "Segoe UI",
+    sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 650;
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  color: rgb(var(--color-argmin-dark));
+  text-wrap: balance;
+}
+
 .site-wordmark {
   font-family:
     "SF Pro Display",
