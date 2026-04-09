@@ -9,7 +9,7 @@ This repository powers `argmin.co`: a static Astro site that explains how Argmin
 The current site presents Argmin as:
 
 - a system of record for enterprise AI consumption
-- an attribution layer that connects **model -> service -> code -> identity -> org -> budget**
+- an attribution layer that connects **model → service → code → identity → org → budget**
 - a decision layer for pre-deploy review, approvals, and budget control
 - an enterprise-first deployment model with **read-only connectors**, **inside-your-environment processing**, and **advisory-first workflows**
 
@@ -45,7 +45,8 @@ These pages map to the current product narrative:
 - **Platform**: attribution model, control points, deployment path, and architectural differentiation
 - **Use Cases**: buying context for engineering, finance/FinOps, and security stakeholders
 - **Security**: trust boundary, data flow, and deployment posture
-- **About / Team**: company point of view, founders, and design-partner framing
+- **About**: company point of view and design-partner framing
+- **Team**: founders and leadership context
 - **Contact / Demo**: conversion paths for inbound interest
 - **Privacy**: website privacy policy
 
@@ -102,11 +103,7 @@ Create `.env` from `.env.example` and provide a valid Formspree endpoint for liv
 PUBLIC_FORMSPREE_URL=https://formspree.io/f/<form_id>
 ```
 
-If `PUBLIC_FORMSPREE_URL` is missing or invalid, the site fails closed:
-
-- the contact form submit button is disabled
-- the UI shows the direct email fallback
-- the built pages include the expected no-JavaScript mailto fallback
+If `PUBLIC_FORMSPREE_URL` is missing or invalid, the site fails closed: the contact form is disabled and displays a direct email fallback, including no-JavaScript mailto support in the built pages.
 
 ## Deployment Contract
 
