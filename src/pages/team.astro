@@ -53,7 +53,14 @@ const founders = [
     />
 
     <section class="px-6 pb-10 md:pb-14">
-      <div class="site-shell">
+      <div class="site-shell section-divider pt-10">
+        <div class="page-section-intro mx-auto mb-8 max-w-4xl text-center">
+          <p class="section-kicker">Founders</p>
+          <p class="text-base leading-8 text-argmin-mid md:text-lg">
+            The founding team responds directly and brings operating experience from the systems where cloud cost ownership and AI deployment already intersect.
+          </p>
+        </div>
+
         <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
           {founders.map((founder) => (
             <article class="surface-panel overflow-hidden px-6 pb-10 pt-8 md:px-8">
@@ -112,7 +119,7 @@ const founders = [
     <section class="px-6 pb-10 md:pb-14">
       <div class="site-shell">
         <div class="mx-auto max-w-4xl">
-          <div class="surface-panel px-6 py-8 md:px-10 md:py-10">
+          <div class="page-section-shell px-6 py-8 md:px-10 md:py-10">
             <p class="section-kicker mb-4">Why Now</p>
             <p class="text-base leading-8 text-argmin-dark md:text-lg">
               Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.

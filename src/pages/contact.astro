@@ -28,9 +28,12 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
     <section class="px-6 pb-10 md:pb-14">
       <div class="site-shell">
         <div class="mx-auto max-w-2xl">
-          <p class="mb-6 text-center text-sm leading-relaxed text-argmin-mid">
-            We typically respond within one business day. A member of the founding team will follow up directly.
-          </p>
+          <div class="page-section-intro mb-6 text-center">
+            <p class="section-kicker">How we respond</p>
+            <p class="text-sm leading-relaxed text-argmin-mid md:text-base">
+              We typically respond within one business day. A member of the founding team will follow up directly.
+            </p>
+          </div>
 
           <ContactForm
             formspreeUrl={formspreeUrl}
