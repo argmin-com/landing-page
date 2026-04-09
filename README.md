@@ -51,6 +51,8 @@ Brand logo links to `/`. CTA button links to `/demo`.
 | Architecture | `/platform#attribution-flow`, `/platform#decision-layer`, `/platform#landscape`, `/platform#deployment-path` |
 | Company | `/about`, `/team`, `/security`, `/contact`, `/privacy` |
 
+Footer CTA buttons link to `/demo` and `/contact`.
+
 ### Per-page anchors and CTAs
 
 | Page | Route | Anchor sections | Page-body CTAs |
