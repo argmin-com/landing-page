@@ -8,10 +8,10 @@ This repository powers `argmin.co`: a static Astro site that explains how Argmin
 
 The current site presents Argmin as:
 
-- a system of record for enterprise AI consumption
-- an attribution layer that connects **model → service → code → identity → org → budget**
-- a decision layer for pre-deploy review, approvals, and budget control
-- an enterprise-first deployment model with **read-only connectors**, **inside-your-environment processing**, and **advisory-first workflows**
+- A system of record for enterprise AI consumption
+- An attribution layer that connects **model → service → code → identity → org → budget**
+- A decision layer for pre-deploy review, approvals, and budget control
+- An enterprise-first deployment model with **read-only connectors**, **inside-your-environment processing**, and **advisory-first workflows**
 
 This repository contains the public marketing experience for that offering. It does **not** contain the customer product runtime.
 
@@ -50,7 +50,7 @@ These pages map to the current product narrative:
 - **Contact / Demo**: conversion paths for inbound interest
 - **Privacy**: website privacy policy
 
-## Repository Structure
+## Project Structure
 
 - `src/layouts/BaseLayout.astro`: metadata, canonical tags, analytics bootstrap, theme boot, shared shell
 - `src/components/`: reusable sections, navigation, footer, and shared contact form
