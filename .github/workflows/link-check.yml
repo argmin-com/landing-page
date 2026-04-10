@@ -52,6 +52,10 @@ jobs:
       - name: Link check with lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          # --root-dir is required so root-relative links like /about and
+          # /platform#landscape resolve against the local dist/ tree instead
+          # of failing with "Cannot convert path to a URI".
+          #
           # linkedin.com is bot-hostile and returns 999/403 to automated
           # checkers regardless of link validity, so it's excluded entirely.
           # argmin.co self-references are excluded because the workflow runs
@@ -59,6 +63,7 @@ jobs:
           args: >-
             --verbose
             --no-progress
+            --root-dir ${{ github.workspace }}/dist
             --accept 200,204,206,301,302,307,308,403,429,999
             --exclude-path dist/_astro
             --exclude "^https?://(localhost|127\.0\.0\.1)"
