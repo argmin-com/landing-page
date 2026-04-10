@@ -15,6 +15,13 @@ updates:
       prefix: "chore(deps)"
       prefix-development: "chore(deps-dev)"
       include: "scope"
+    ignore:
+      # TypeScript 6.x is blocked until @astrojs/check ships a compatible
+      # release — its peer dep is currently "^5.0.0" and `astro check` in
+      # CI fails at the type-check step with TS 6. See the closing comment
+      # on #57 and the prior fix commit b98bb71 for full context.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
       production:
         dependency-type: "production"
