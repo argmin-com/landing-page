@@ -92,7 +92,7 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
           <h2 class="section-title mt-5 max-w-4xl">Pick the stakeholder already feeling the pain.</h2>
         </div>
 
-        <div class="mt-10 flex flex-wrap gap-1 border-b border-argmin-border" role="tablist" aria-label="Use case personas" id="role-tabs">
+        <div class="role-tablist mt-10 flex flex-wrap gap-1 border-b border-argmin-border" role="tablist" aria-label="Use case personas" id="role-tabs">
           {roles.map((role, index) => (
             <button
               role="tab"
@@ -117,11 +117,13 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
             role="tabpanel"
             id={`panel-${index}`}
             aria-labelledby={`tab-${index}`}
+            data-role-index={index}
             class:list={[
               "role-panel grid gap-6 py-9 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,0.58fr)] lg:gap-10",
               index !== 0 && "hidden",
             ]}
           >
+            <p class="role-panel-mobile-label section-kicker text-argmin-accent">{role.label}</p>
             <div>
               <h3 class="section-title-lg max-w-xl">{role.question}</h3>
 
@@ -156,12 +158,39 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
       </div>
     </section>
 
+    <style>
+      .role-panel-mobile-label {
+        display: none;
+      }
+
+      @media (max-width: 767px) {
+        .role-tablist {
+          display: none !important;
+        }
+        .role-panel {
+          display: grid !important;
+          border-bottom: 1px solid rgb(var(--color-argmin-border));
+          padding-block: 2rem;
+        }
+        .role-panel:last-of-type {
+          border-bottom: none;
+        }
+        .role-panel-mobile-label {
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+      }
+    </style>
+
     <script define:vars={{ roleAnchors }} is:inline>
       (function () {
         const tablist = document.getElementById("role-tabs");
         if (!tablist) return;
         const tabs = tablist.querySelectorAll("[role='tab']");
         const panels = document.querySelectorAll(".role-panel");
+        const mobileMedia = window.matchMedia("(max-width: 767px)");
+
+        function isMobile() { return mobileMedia.matches; }
 
         function activate(index) {
           tabs.forEach(function (t, i) {
@@ -176,18 +205,29 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
               t.classList.add("text-argmin-light", "border-transparent");
             }
           });
-          panels.forEach(function (p, i) {
-            if (i === index) {
-              p.classList.remove("hidden");
-            } else {
-              p.classList.add("hidden");
-            }
-          });
+          if (!isMobile()) {
+            panels.forEach(function (p, i) {
+              if (i === index) {
+                p.classList.remove("hidden");
+              } else {
+                p.classList.add("hidden");
+              }
+            });
+          } else {
+            // Mobile: show all panels (stacked accordion style)
+            panels.forEach(function (p) { p.classList.remove("hidden"); });
+          }
           var nextHash = "#" + roleAnchors[index];
           if (window.location.hash !== nextHash) {
             history.replaceState(null, "", nextHash);
           }
         }
+
+        // When crossing the breakpoint, re-apply the current state
+        mobileMedia.addEventListener("change", function () {
+          var current = Array.from(tabs).findIndex(function (t) { return t.getAttribute("aria-selected") === "true"; });
+          activate(current === -1 ? 0 : current);
+        });
 
         tabs.forEach(function (tab, i) {
           tab.addEventListener("click", function () { activate(i); });

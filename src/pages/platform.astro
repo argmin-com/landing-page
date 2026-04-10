@@ -4,6 +4,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import DecisionRule from "../components/DecisionRule.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
+import SectionNav from "../components/SectionNav.astro";
+
+const platformSections = [
+  { id: "landscape", label: "Landscape" },
+  { id: "control-points", label: "Control Points" },
+  { id: "attribution-flow", label: "Attribution" },
+  { id: "decision-layer", label: "Decision Layer" },
+  { id: "deployment-path", label: "Deployment" },
+];
 
 const comparisonRows = [
   {
@@ -107,6 +116,25 @@ const deploymentPhases = [
   canonicalUrl="https://argmin.co/platform"
   showMobileThemeToggle={false}
 >
+  <script is:inline type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Argmin",
+    "applicationCategory": "BusinessApplication",
+    "applicationSubCategory": "FinOps / AI Cost Governance",
+    "operatingSystem": "Cloud (AWS, Azure, GCP)",
+    "description": "Identity-resolved attribution and decision-time control for enterprise AI spend. Runs inside the customer environment with read-only connectors.",
+    "url": "https://argmin.co/platform",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Argmin Technologies, Inc."
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/PreOrder"
+    }
+  })}></script>
   <main id="main-content">
     <PageHero
       eyebrow="Platform"
@@ -123,20 +151,7 @@ const deploymentPhases = [
       ]}
     />
 
-    <section class="px-6 pb-8 pt-0 md:pb-10">
-      <div class="site-shell">
-        <div class="surface-panel mx-auto max-w-5xl px-6 py-5 md:px-8">
-          <p class="section-kicker mb-3">Jump to section</p>
-          <nav class="quick-links" aria-label="Platform page sections">
-            <a class="quick-link" href="#landscape">Landscape</a>
-            <a class="quick-link" href="#control-points">Control points</a>
-            <a class="quick-link" href="#attribution-flow">Attribution flow</a>
-            <a class="quick-link" href="#decision-layer">Decision layer</a>
-            <a class="quick-link" href="#deployment-path">Deployment path</a>
-          </nav>
-        </div>
-      </div>
-    </section>
+    <SectionNav sections={platformSections} ariaLabel="Platform page sections" />
 
     <section id="landscape" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">

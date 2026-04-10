@@ -29,7 +29,7 @@ const isGroupActive = (items: { href: string }[]) =>
 
 <header class:list={["px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
   <div class="site-shell">
-    <div class="flex items-center justify-between gap-3 rounded-[2rem] border border-argmin-border bg-argmin-surface/82 px-5 py-3 shadow-[var(--page-shadow-soft)] backdrop-blur md:gap-5 md:px-6">
+    <div class="navbar-bar flex items-center justify-between gap-3 rounded-[2rem] border border-argmin-border px-5 py-3 shadow-[var(--page-shadow-soft)] md:gap-5 md:px-6">
       <a
         href="/"
         class="site-wordmark shrink-0 text-argmin-dark transition-opacity duration-200 hover:opacity-72"
@@ -248,3 +248,26 @@ const isGroupActive = (items: { href: string }[]) =>
     });
   }
 </script>
+
+<style>
+  /*
+   * Move backdrop-filter off the navbar container onto a ::before pseudo-element
+   * so it doesn't create a containing block that clips absolutely positioned
+   * dropdown panels.
+   */
+  .navbar-bar {
+    position: relative;
+    overflow: visible;
+  }
+
+  .navbar-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 2rem;
+    background: rgb(var(--color-argmin-surface) / 0.82);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: -1;
+  }
+</style>

@@ -2,6 +2,23 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
+import SectionNav from "../components/SectionNav.astro";
+
+const privacySections = [
+  { id: "information-we-collect", label: "Collect" },
+  { id: "how-we-use-data", label: "Use" },
+  { id: "legal-basis", label: "Legal Basis" },
+  { id: "cookies", label: "Cookies" },
+  { id: "sharing", label: "Sharing" },
+  { id: "international-transfers", label: "Transfers" },
+  { id: "retention", label: "Retention" },
+  { id: "your-rights", label: "Rights" },
+  { id: "ccpa", label: "CCPA" },
+  { id: "security", label: "Security" },
+  { id: "children", label: "Children" },
+  { id: "contact", label: "Contact" },
+  { id: "changes", label: "Changes" },
+];
 ---
 
 <BaseLayout
@@ -23,6 +40,8 @@ import PageHero from "../components/PageHero.astro";
         { href: "mailto:privacy@argmin.co", label: "Privacy inquiries", variant: "secondary" },
       ]}
     />
+
+    <SectionNav sections={privacySections} ariaLabel="Privacy policy sections" />
 
     <section class="px-6 pb-8 pt-0 md:pb-10">
       <div class="site-shell">
