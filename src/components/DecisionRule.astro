@@ -19,9 +19,9 @@
       </p>
     </div>
 
-    <details class="decision-rule-details mt-6 rounded-[1.75rem] border border-argmin-border bg-argmin-surface/84 p-6 shadow-[var(--page-shadow-soft)] backdrop-blur md:p-8">
+    <details class="group mt-6 rounded-[1.75rem] border border-argmin-border bg-argmin-surface/84 p-6 shadow-[var(--page-shadow-soft)] backdrop-blur md:p-8">
       <summary class="flex cursor-pointer list-none items-center gap-2 text-sm font-semibold text-argmin-accent select-none">
-        <svg viewBox="0 0 12 12" class="decision-rule-chevron h-3 w-3 transition-transform duration-200" aria-hidden="true">
+        <svg viewBox="0 0 12 12" class="h-3 w-3 transition-transform duration-200 group-open:rotate-180" aria-hidden="true">
           <path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>Show formal decision rule</span>
@@ -97,10 +97,6 @@
   .equation-expression {
     font-size: clamp(2.4rem, 4.6vw, 4rem);
     letter-spacing: -0.05em;
-  }
-
-  .decision-rule-details[open] .decision-rule-chevron {
-    transform: rotate(180deg);
   }
 
   @media (max-width: 640px) {

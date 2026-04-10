@@ -100,17 +100,17 @@ const { sections, ariaLabel } = Astro.props;
 
 <script is:inline>
   (function () {
-    var navs = document.querySelectorAll("[data-section-nav]");
+    const navs = document.querySelectorAll("[data-section-nav]");
     navs.forEach(function (nav) {
-      var links = nav.querySelectorAll("[data-section-target]");
+      const links = nav.querySelectorAll("[data-section-target]");
       if (links.length === 0) return;
 
-      var linkMap = {};
-      var sections = [];
+      const linkMap = {};
+      const sections = [];
       links.forEach(function (link) {
-        var id = link.getAttribute("data-section-target");
+        const id = link.getAttribute("data-section-target");
         if (!id) return;
-        var target = document.getElementById(id);
+        const target = document.getElementById(id);
         if (!target) return;
         linkMap[id] = link;
         sections.push(target);
@@ -118,31 +118,55 @@ const { sections, ariaLabel } = Astro.props;
 
       if (sections.length === 0) return;
 
-      function setActive(id) {
-        links.forEach(function (l) { l.removeAttribute("data-active"); });
+      const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const navScrollContainer = nav.querySelector(".section-nav-inner");
+
+      function prefersReducedMotion() {
+        return reducedMotionMedia.matches;
+      }
+
+      function scrollLinkIntoView(link, isClick) {
+        if (!navScrollContainer) return;
+        // Only auto-scroll the pill bar when the active link is actually out of
+        // view horizontally. This avoids continuous smooth-scroll jank on every
+        // IntersectionObserver update during normal page scrolling.
+        const containerRect = navScrollContainer.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const outOfView =
+          linkRect.left < containerRect.left + 8 ||
+          linkRect.right > containerRect.right - 8;
+        if (!outOfView && !isClick) return;
+        try {
+          link.scrollIntoView({
+            behavior: isClick && !prefersReducedMotion() ? "smooth" : "auto",
+            inline: "center",
+            block: "nearest",
+          });
+        } catch (e) {}
+      }
+
+      function setActive(id, isClick) {
+        links.forEach(function (l) {
+          l.removeAttribute("data-active");
+          l.removeAttribute("aria-current");
+        });
         if (linkMap[id]) {
           linkMap[id].setAttribute("data-active", "true");
-          // Scroll the active link into view inside the sticky pill bar on mobile
-          try {
-            linkMap[id].scrollIntoView({
-              behavior: "smooth",
-              inline: "center",
-              block: "nearest",
-            });
-          } catch (e) {}
+          linkMap[id].setAttribute("aria-current", "location");
+          scrollLinkIntoView(linkMap[id], Boolean(isClick));
         }
       }
 
-      var observer = new IntersectionObserver(
+      const observer = new IntersectionObserver(
         function (entries) {
           // Pick the entry closest to the top of the viewport that is intersecting
-          var visible = entries
+          const visible = entries
             .filter(function (e) { return e.isIntersecting; })
             .sort(function (a, b) {
               return a.boundingClientRect.top - b.boundingClientRect.top;
             });
           if (visible.length > 0) {
-            setActive(visible[0].target.id);
+            setActive(visible[0].target.id, false);
           }
         },
         {
@@ -153,27 +177,30 @@ const { sections, ariaLabel } = Astro.props;
 
       sections.forEach(function (section) { observer.observe(section); });
 
-      // Click handling: smooth scroll and immediately mark active
+      // Click handling: smooth scroll to target and immediately mark active
       links.forEach(function (link) {
         link.addEventListener("click", function (e) {
-          var id = link.getAttribute("data-section-target");
+          const id = link.getAttribute("data-section-target");
           if (!id) return;
-          var target = document.getElementById(id);
+          const target = document.getElementById(id);
           if (!target) return;
           e.preventDefault();
-          setActive(id);
-          var top = target.getBoundingClientRect().top + window.scrollY - 24;
-          window.scrollTo({ top: top, behavior: "smooth" });
+          setActive(id, true);
+          const top = target.getBoundingClientRect().top + window.scrollY - 24;
+          window.scrollTo({
+            top: top,
+            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          });
           history.replaceState(null, "", "#" + id);
         });
       });
 
       // Set initial active from hash or first section
-      var hashId = window.location.hash.replace("#", "");
+      const hashId = window.location.hash.replace("#", "");
       if (hashId && linkMap[hashId]) {
-        setActive(hashId);
+        setActive(hashId, false);
       } else {
-        setActive(sections[0].id);
+        setActive(sections[0].id, false);
       }
     });
   })();

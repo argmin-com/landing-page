@@ -269,14 +269,14 @@ const deploymentPhases = [
 
     <script is:inline>
       (function () {
-        var tablist = document.getElementById("platform-tabs");
+        const tablist = document.getElementById("platform-tabs");
         if (!tablist) return;
-        var tabs = tablist.querySelectorAll("[role='tab']");
-        var panels = document.querySelectorAll(".platform-panel");
+        const tabs = tablist.querySelectorAll("[role='tab']");
+        const panels = document.querySelectorAll(".platform-panel");
 
         function activate(index) {
           tabs.forEach(function (t, i) {
-            var isActive = i === index;
+            const isActive = i === index;
             t.setAttribute("aria-selected", String(isActive));
             t.setAttribute("tabindex", isActive ? "0" : "-1");
             if (isActive) {
@@ -301,10 +301,10 @@ const deploymentPhases = [
         });
 
         tablist.addEventListener("keydown", function (e) {
-          var current = Array.prototype.findIndex.call(tabs, function (t) {
+          const current = Array.prototype.findIndex.call(tabs, function (t) {
             return t.getAttribute("aria-selected") === "true";
           });
-          var next = current;
+          let next = current;
           if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
           else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
           else if (e.key === "Home") next = 0;

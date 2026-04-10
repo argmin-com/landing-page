@@ -197,18 +197,18 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
 
 <script is:inline define:vars={{ endpoint }}>
   (function () {
-    var form = document.getElementById("contact-form");
-    var button = document.getElementById("submit-btn");
-    var container = document.getElementById("form-container");
-    var error = document.getElementById("form-error");
-    var nameField = document.getElementById("name");
-    var emailField = document.getElementById("email");
-    var companyField = document.getElementById("company");
-    var cloudField = document.getElementById("cloud");
-    var aiSpendField = document.getElementById("ai-spend");
-    var teamsField = document.getElementById("teams");
-    var messageField = document.getElementById("message");
-    var gotchaField = document.getElementById("gotcha");
+    const form = document.getElementById("contact-form");
+    const button = document.getElementById("submit-btn");
+    const container = document.getElementById("form-container");
+    const error = document.getElementById("form-error");
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const companyField = document.getElementById("company");
+    const cloudField = document.getElementById("cloud");
+    const aiSpendField = document.getElementById("ai-spend");
+    const teamsField = document.getElementById("teams");
+    const messageField = document.getElementById("message");
+    const gotchaField = document.getElementById("gotcha");
 
     if (
       !endpoint ||
@@ -224,16 +224,14 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
       return;
     }
 
-    var defaultLabel = button.dataset.defaultLabel || "Request a Demo";
-    var questionLabel = button.dataset.questionLabel || "Send Message";
-    var loadingLabel = button.dataset.loadingLabel || "Sending...";
+    const defaultLabel = button.dataset.defaultLabel || "Request a Demo";
+    const questionLabel = button.dataset.questionLabel || "Send Message";
+    const loadingLabel = button.dataset.loadingLabel || "Sending...";
 
-    var intentRadios = form.querySelectorAll('input[name="intent"]');
+    const intentRadios = form.querySelectorAll('input[name="intent"]');
     function getIntent() {
-      for (var i = 0; i < intentRadios.length; i++) {
-        if (intentRadios[i].checked) return intentRadios[i].value;
-      }
-      return "demo";
+      const checked = form.querySelector('input[name="intent"]:checked');
+      return checked ? checked.value : "demo";
     }
     function syncButtonLabel() {
       button.textContent = getIntent() === "question" ? questionLabel : defaultLabel;
@@ -250,7 +248,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
         return;
       }
 
-      var payload = {
+      const payload = {
         intent: getIntent(),
         name: nameField.value.trim(),
         email: emailField.value.trim(),
@@ -275,13 +273,13 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
         error.classList.add("hidden");
       }
 
-      var controller = new AbortController();
-      var timeoutId = window.setTimeout(function () {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(function () {
         controller.abort();
       }, 10000);
 
       try {
-        var response = await fetch(endpoint, {
+        const response = await fetch(endpoint, {
           method: "POST",
           headers: {
             Accept: "application/json",

@@ -258,6 +258,10 @@ const isGroupActive = (items: { href: string }[]) =>
   .navbar-bar {
     position: relative;
     overflow: visible;
+    /* Establish a stacking context so the ::before pseudo-element with
+       z-index: -1 is contained here instead of falling behind other
+       page content. */
+    isolation: isolate;
   }
 
   .navbar-bar::before {

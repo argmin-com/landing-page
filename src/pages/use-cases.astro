@@ -116,6 +116,7 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
           <article
             role="tabpanel"
             id={`panel-${index}`}
+            data-role-anchor={roleAnchors[index]}
             aria-labelledby={`tab-${index}`}
             data-role-index={index}
             class:list={[
@@ -123,6 +124,8 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
               index !== 0 && "hidden",
             ]}
           >
+            {/* Hash-target anchor so /use-cases#engineering etc. actually scroll to the panel */}
+            <span id={roleAnchors[index]} class="role-panel-anchor" aria-hidden="true"></span>
             <p class="role-panel-mobile-label section-kicker text-argmin-accent">{role.label}</p>
             <div>
               <h3 class="section-title-lg max-w-xl">{role.question}</h3>
@@ -163,6 +166,13 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
         display: none;
       }
 
+      .role-panel-anchor {
+        display: block;
+        position: relative;
+        height: 0;
+        scroll-margin-top: 96px;
+      }
+
       @media (max-width: 767px) {
         .role-tablist {
           display: none !important;
@@ -186,17 +196,58 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
       (function () {
         const tablist = document.getElementById("role-tabs");
         if (!tablist) return;
-        const tabs = tablist.querySelectorAll("[role='tab']");
+        const tabs = tablist.querySelectorAll("[data-role-tab], [role='tab']");
         const panels = document.querySelectorAll(".role-panel");
         const mobileMedia = window.matchMedia("(max-width: 767px)");
 
+        // Tag tabs with a stable selector so the mobile ARIA reset can still
+        // find them after we strip role="tab".
+        tabs.forEach(function (t) { t.setAttribute("data-role-tab", ""); });
+
         function isMobile() { return mobileMedia.matches; }
+
+        function applyAriaForBreakpoint() {
+          if (isMobile()) {
+            // Mobile layout stacks all panels; the tablist is display:none and
+            // would orphan its tabpanels, so strip the tab roles entirely.
+            tablist.removeAttribute("role");
+            tablist.removeAttribute("aria-label");
+            tabs.forEach(function (t) {
+              t.removeAttribute("role");
+              t.removeAttribute("aria-selected");
+              t.removeAttribute("aria-controls");
+              t.removeAttribute("tabindex");
+            });
+            panels.forEach(function (p, i) {
+              p.removeAttribute("role");
+              p.removeAttribute("aria-labelledby");
+              // Give each panel a stable landmark label via aria-label so it's
+              // still announced as a region even without the tabpanel role.
+              p.setAttribute("aria-label", roleAnchors[i]);
+            });
+          } else {
+            tablist.setAttribute("role", "tablist");
+            tablist.setAttribute("aria-label", "Use case personas");
+            tabs.forEach(function (t, i) {
+              t.setAttribute("role", "tab");
+              t.setAttribute("aria-controls", "panel-" + i);
+              t.setAttribute("id", "tab-" + i);
+            });
+            panels.forEach(function (p, i) {
+              p.setAttribute("role", "tabpanel");
+              p.setAttribute("aria-labelledby", "tab-" + i);
+              p.removeAttribute("aria-label");
+            });
+          }
+        }
 
         function activate(index) {
           tabs.forEach(function (t, i) {
             var isActive = i === index;
-            t.setAttribute("aria-selected", String(isActive));
-            t.setAttribute("tabindex", isActive ? "0" : "-1");
+            if (!isMobile()) {
+              t.setAttribute("aria-selected", String(isActive));
+              t.setAttribute("tabindex", isActive ? "0" : "-1");
+            }
             if (isActive) {
               t.classList.add("text-argmin-dark", "border-argmin-accent");
               t.classList.remove("text-argmin-light", "border-transparent");
@@ -223,8 +274,11 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
           }
         }
 
-        // When crossing the breakpoint, re-apply the current state
+        applyAriaForBreakpoint();
+
+        // When crossing the breakpoint, re-apply ARIA state and the current tab
         mobileMedia.addEventListener("change", function () {
+          applyAriaForBreakpoint();
           var current = Array.from(tabs).findIndex(function (t) { return t.getAttribute("aria-selected") === "true"; });
           activate(current === -1 ? 0 : current);
         });
