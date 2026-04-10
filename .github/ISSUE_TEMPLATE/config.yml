@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/argmin-com/landing-page/security/advisories/new
+    about: Privately report a suspected security issue via GitHub advisories (see SECURITY.md).
+  - name: Contact Argmin
+    url: https://argmin.co/contact
+    about: Request a demo, ask a question, or reach the founding team.

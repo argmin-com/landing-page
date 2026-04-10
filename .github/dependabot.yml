@@ -8,6 +8,13 @@ updates:
       time: "07:00"
       timezone: "America/Los_Angeles"
     open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: "scope"
     groups:
       production:
         dependency-type: "production"
@@ -22,3 +29,21 @@ updates:
       time: "07:30"
       timezone: "America/Los_Angeles"
     open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(ci)"
+      include: "scope"
+    groups:
+      # First-party actions maintained by the same org land in one PR per
+      # week — low blast radius, easy to revert together.
+      actions-core:
+        patterns:
+          - "actions/*"
+      github-core:
+        patterns:
+          - "github/*"
+      # Third-party actions (e.g., lycheeverse/lychee-action,
+      # browser-actions/setup-chrome) get individual PRs so a regression
+      # in one can be reverted without touching the others.
