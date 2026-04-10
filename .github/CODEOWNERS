@@ -14,8 +14,6 @@
 /astro.config.mjs              @richardcmckinney
 /package.json                  @richardcmckinney
 /package-lock.json             @richardcmckinney
-/wrangler.toml                 @richardcmckinney
-/wrangler.jsonc                @richardcmckinney
 
 # Public assets + SEO surface
 /public/                       @richardcmckinney
@@ -27,4 +25,3 @@
 
 # Legal content
 /src/pages/privacy.astro       @richardcmckinney
-/src/pages/terms.astro         @richardcmckinney

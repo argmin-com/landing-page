@@ -36,6 +36,14 @@ updates:
       prefix: "chore(ci)"
       include: "scope"
     groups:
-      actions:
+      # First-party actions maintained by the same org land in one PR per
+      # week — low blast radius, easy to revert together.
+      actions-core:
         patterns:
-          - "*"
+          - "actions/*"
+      github-core:
+        patterns:
+          - "github/*"
+      # Third-party actions (e.g., lycheeverse/lychee-action,
+      # browser-actions/setup-chrome) get individual PRs so a regression
+      # in one can be reverted without touching the others.

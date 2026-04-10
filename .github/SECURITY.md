@@ -35,10 +35,14 @@ Please include as much of the following as you can:
   - **Critical**: within 7 days
   - **High**: within 14 days
   - **Medium**: within 30 days
-  - **Low**: next regular release
+  - **Low**: within 60 days
 
-We will credit reporters in the release notes unless you ask to remain
-anonymous. We do not currently run a paid bug bounty program.
+This repository follows a continuous deployment model — fixes ship to
+`argmin.co` via Cloudflare Pages as soon as they land on `main`, so there
+are no scheduled release trains to wait on.
+
+We will credit reporters in the published fix commit unless you ask to
+remain anonymous. We do not currently run a paid bug bounty program.
 
 ## Out of scope
 

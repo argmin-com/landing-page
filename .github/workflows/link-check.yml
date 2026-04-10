@@ -52,14 +52,19 @@ jobs:
       - name: Link check with lychee
         uses: lycheeverse/lychee-action@v2
         with:
+          # linkedin.com is bot-hostile and returns 999/403 to automated
+          # checkers regardless of link validity, so it's excluded entirely.
+          # argmin.co self-references are excluded because the workflow runs
+          # against the built dist/ and cannot hit the deployed site.
           args: >-
             --verbose
             --no-progress
-            --accept 200,204,206,301,302,307,308,403,429
+            --accept 200,204,206,301,302,307,308,403,429,999
             --exclude-path dist/_astro
             --exclude "^https?://(localhost|127\.0\.0\.1)"
             --exclude "^mailto:"
             --exclude "^https?://argmin\.co"
+            --exclude "^https?://(www\.)?linkedin\.com"
             './dist/**/*.html'
           fail: true
           format: markdown
