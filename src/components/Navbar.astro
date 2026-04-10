@@ -27,7 +27,7 @@ const isGroupActive = (items: { href: string }[]) =>
   items.some((item) => isActive(item.href));
 ---
 
-<header class:list={["px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
+<header class:list={["relative z-[90] px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
   <div class="site-shell">
     <div class="navbar-bar flex items-center justify-between gap-3 rounded-[2rem] border border-argmin-border px-5 py-3 shadow-[var(--page-shadow-soft)] md:gap-5 md:px-6">
       <a

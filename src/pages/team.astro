@@ -10,12 +10,9 @@ const founders = [
     alt: "Richard McKinney, CEO & Co-Founder",
     webp: "/richard.webp",
     jpg: "/richard.jpg",
-    bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. He saw firsthand that AI cost attribution needs an identity-resolved, graph-based approach embedded in the deployment path.",
-    stats: [
-      { value: "$357M", label: "infra savings" },
-      { value: "3", label: "enterprise orgs" },
-      { value: "10+", label: "years in cost infra" },
-    ],
+    bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. He saw firsthand that attribution and accountable control need an identity-resolved, graph-based approach embedded in the deployment path.",
+    bioExtended:
+      "At Amazon, his work delivered $357M in annual infrastructure savings on top of global data platforms used across large engineering organizations. That track record shaped Argmin's focus on making ownership operational rather than retrospective, so decisions happen where the work does.",
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
   {
@@ -24,12 +21,9 @@ const founders = [
     alt: "Charlotte Wargniez, CTO & Co-Founder",
     webp: "/charlotte.webp",
     jpg: "/charlotte.jpg",
-    bio: "Charlotte brings deep expertise in AI systems from Oxford and the European Space Agency. She designed Argmin's reconciliation and attribution architecture to operate inside customer trust boundaries with read-only deployment.",
-    stats: [
-      { value: "Oxford", label: "+ ESA research" },
-      { value: "0.97", label: "model confidence" },
-      { value: "Zero-write", label: "deploy posture" },
-    ],
+    bio: "Charlotte brings deep expertise in systems research from Oxford and the European Space Agency. She designed Argmin's reconciliation and attribution architecture to operate inside customer trust boundaries with read-only deployment.",
+    bioExtended:
+      "Her deep reinforcement learning background powers the confidence-scored reconciliation engine behind Argmin, built from the start for customer environments where governance constraints are real and the answer has to be defensible, not just plausible.",
     linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
   },
 ];
@@ -37,7 +31,7 @@ const founders = [
 
 <BaseLayout
   title="Team | Argmin"
-  description="Meet the team building attribution and optimization for enterprise AI spend."
+  description="Meet the team building decision control, attribution, and accountable governance for enterprise environments."
   canonicalUrl="https://argmin.co/team"
   showMobileThemeToggle={false}
 >
@@ -45,20 +39,16 @@ const founders = [
     <PageHero
       eyebrow="Team"
       title="Built by operators, not observers."
-      lede="We have worked inside the infrastructure that creates this problem: cloud-scale cost ownership, security governance, and AI deployment. Argmin exists because we saw the gap from inside the systems that create it."
-      actions={[
-        { href: "/contact", label: "Request a Demo" },
-        { href: "/contact", label: "Contact Us", variant: "secondary" },
-      ]}
+      lede="We have worked inside the infrastructure that creates this problem: cloud-scale cost ownership, security governance, and production AI deployment. Argmin exists because we saw the gap from inside the systems that create it."
     />
 
-    <section class="px-6 pb-10 md:pb-14">
-      <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-4xl">
-          <p class="section-kicker text-center">Founders</p>
+    <section class="px-6 pb-12 md:pb-20">
+      <div class="site-shell">
+        <div class="mx-auto mb-10 max-w-4xl text-center">
+          <p class="section-kicker">Founders</p>
         </div>
 
-        <div class="mx-auto mt-10 grid max-w-5xl gap-8 md:grid-cols-2">
+        <div class="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
           {founders.map((founder) => (
             <article class="surface-panel overflow-hidden px-6 pb-10 pt-8 md:px-8">
               <div class="flex items-start gap-6">
@@ -101,22 +91,9 @@ const founders = [
               </div>
 
               <p class="mt-6 text-base leading-8 text-argmin-mid">{founder.bio}</p>
-
-              <div class="mt-8 flex flex-wrap gap-6 border-t border-argmin-border pt-6">
-                {founder.stats.map((stat) => (
-                  <div class="text-center">
-                    <p class="font-mono text-xl font-semibold tracking-[-0.02em] text-argmin-accent md:text-2xl">{stat.value}</p>
-                    <p class="mt-1 text-xs text-argmin-light">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
+              <p class="mt-5 text-base leading-8 text-argmin-mid">{founder.bioExtended}</p>
             </article>
           ))}
-        </div>
-
-        <div class="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-3">
-          <a href="/contact" class="button-primary">Request a Demo</a>
-          <a href="/contact" class="button-secondary">Contact Us</a>
         </div>
       </div>
     </section>
