@@ -26,23 +26,38 @@ import PageHero from "../components/PageHero.astro";
 
     <section class="px-6 pb-8 pt-0 md:pb-10">
       <div class="site-shell">
-        <div class="surface-panel mx-auto max-w-4xl px-6 py-5 md:px-8">
-          <p class="section-kicker mb-3">Jump to section</p>
-          <nav class="quick-links" aria-label="Privacy policy sections">
-            <a class="quick-link" href="#information-we-collect">Information We Collect</a>
-            <a class="quick-link" href="#how-we-use-data">How We Use Data</a>
-            <a class="quick-link" href="#legal-basis">Legal Basis</a>
-            <a class="quick-link" href="#cookies">Cookies &amp; Analytics</a>
-            <a class="quick-link" href="#sharing">Data Sharing</a>
-            <a class="quick-link" href="#international-transfers">International Transfers</a>
-            <a class="quick-link" href="#retention">Retention</a>
-            <a class="quick-link" href="#your-rights">Your Rights</a>
-            <a class="quick-link" href="#ccpa">CCPA / CPRA</a>
-            <a class="quick-link" href="#security">Security</a>
-            <a class="quick-link" href="#children">Children</a>
-            <a class="quick-link" href="#contact">Contact</a>
-            <a class="quick-link" href="#changes">Changes</a>
-          </nav>
+        <div class="surface-panel mx-auto max-w-3xl px-6 py-6 md:px-8">
+          <p class="section-kicker mb-4">Contents</p>
+          <div class="grid gap-5 md:grid-cols-3">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.12em] text-argmin-accent mb-2.5">Collection &amp; Use</p>
+              <nav class="quick-links flex-col" aria-label="Collection and use">
+                <a class="quick-link" href="#information-we-collect">Information We Collect</a>
+                <a class="quick-link" href="#how-we-use-data">How We Use Data</a>
+                <a class="quick-link" href="#legal-basis">Legal Basis</a>
+                <a class="quick-link" href="#cookies">Cookies &amp; Analytics</a>
+              </nav>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.12em] text-argmin-accent mb-2.5">Sharing &amp; Transfers</p>
+              <nav class="quick-links flex-col" aria-label="Sharing and transfers">
+                <a class="quick-link" href="#sharing">Data Sharing</a>
+                <a class="quick-link" href="#international-transfers">International Transfers</a>
+                <a class="quick-link" href="#retention">Retention</a>
+              </nav>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.12em] text-argmin-accent mb-2.5">Rights &amp; Contact</p>
+              <nav class="quick-links flex-col" aria-label="Rights and contact">
+                <a class="quick-link" href="#your-rights">Your Rights</a>
+                <a class="quick-link" href="#ccpa">CCPA / CPRA</a>
+                <a class="quick-link" href="#security">Security</a>
+                <a class="quick-link" href="#children">Children</a>
+                <a class="quick-link" href="#contact">Contact</a>
+                <a class="quick-link" href="#changes">Changes</a>
+              </nav>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -50,7 +65,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 1. Information We Collect -->
     <section id="information-we-collect" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Data Collection</p>
           <h2 class="section-title mt-5">Information We Collect</h2>
 
@@ -88,7 +103,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 2. How We Use Your Information -->
     <section id="how-we-use-data" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Data Usage</p>
           <h2 class="section-title mt-5">How We Use Your Information</h2>
 
@@ -131,7 +146,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 3. Legal Basis for Processing -->
     <section id="legal-basis" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Legal Basis</p>
           <h2 class="section-title mt-5">Legal Basis for Processing (GDPR / UK GDPR)</h2>
 
@@ -167,7 +182,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 4. Cookies and Analytics -->
     <section id="cookies" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Cookies &amp; Analytics</p>
           <h2 class="section-title mt-5">Cookies and Analytics</h2>
 
@@ -190,7 +205,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 5. Service Providers and Data Sharing -->
     <section id="sharing" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Data Sharing</p>
           <h2 class="section-title mt-5">Service Providers and Data Sharing</h2>
 
@@ -234,7 +249,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 6. International Data Transfers -->
     <section id="international-transfers" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">International Transfers</p>
           <h2 class="section-title mt-5">International Data Transfers</h2>
 
@@ -248,7 +263,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 7. Data Retention -->
     <section id="retention" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Data Retention</p>
           <h2 class="section-title mt-5">Data Retention</h2>
 
@@ -281,7 +296,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 8. Your Rights -->
     <section id="your-rights" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Your Rights</p>
           <h2 class="section-title mt-5">Your Rights</h2>
 
@@ -329,7 +344,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 9. California Privacy Rights -->
     <section id="ccpa" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">California Privacy</p>
           <h2 class="section-title mt-5">California Privacy Rights (CCPA/CPRA)</h2>
 
@@ -369,7 +384,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 10. Security -->
     <section id="security" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Security</p>
           <h2 class="section-title mt-5">Security</h2>
 
@@ -383,7 +398,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 11. Children's Privacy -->
     <section id="children" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Children&rsquo;s Privacy</p>
           <h2 class="section-title mt-5">Children&rsquo;s Privacy</h2>
 
@@ -397,7 +412,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 12. Contact Information -->
     <section id="contact" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Contact</p>
           <h2 class="section-title mt-5">Contact Information</h2>
 
@@ -417,7 +432,7 @@ import PageHero from "../components/PageHero.astro";
     <!-- 13. Changes to This Policy -->
     <section id="changes" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto max-w-3xl rise-in">
+        <div class="mx-auto max-w-[640px] rise-in">
           <p class="section-kicker">Policy Updates</p>
           <h2 class="section-title mt-5">Changes to This Policy</h2>
 

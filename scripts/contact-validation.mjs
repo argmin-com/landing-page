@@ -6,7 +6,6 @@ export const CONTACT_EMAIL = "contact@argmin.co";
 const CONTACT_PAGE_PATHS = [
   { label: "home", relativePath: "index.html" },
   { label: "contact", relativePath: "contact/index.html" },
-  { label: "demo", relativePath: "demo/index.html" },
 ];
 
 export function readContactPages(rootDirectory = "dist") {

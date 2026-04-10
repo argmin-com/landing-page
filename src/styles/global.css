@@ -31,6 +31,31 @@
   --page-glow-tertiary: 255 212 138;
   --page-shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.08);
   --page-shadow-strong: 0 28px 70px rgba(15, 23, 42, 0.12);
+  --section-gap: 6rem;
+  --subsection-gap: 3rem;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-gap: 4rem;
+    --subsection-gap: 2rem;
+  }
+}
+
+.prose-narrow {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.diagram-wide {
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.quick-links.flex-col {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
 }
 
 html[data-theme="dark"] {

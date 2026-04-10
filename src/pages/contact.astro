@@ -9,19 +9,20 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
 ---
 
 <BaseLayout
-  title="Contact Us | Argmin"
-  description="Contact Argmin about enterprise AI spend attribution, governance, and optimization."
+  title="Contact | Argmin"
+  description="Request a demo of Argmin's AI spend attribution and decision-control platform, or get in touch with our team."
   canonicalUrl="https://argmin.co/contact"
   showMobileThemeToggle={false}
 >
   <main id="main-content">
     <PageHero
       eyebrow="Contact"
-      title="Let's talk about your AI spend."
-      lede="We are working with a limited number of design partners. If your team is spending on AI inference and cannot track what it is spending, who is spending it, or whether it is money well spent, we should talk."
+      title="Bring the workload where AI spend already hurts."
+      lede="Show us the route change, approval bottleneck, or budget ambiguity that is already creating friction. We scope one workload first, connect read-only, and show the attribution path before you commit further."
       notes={[
-        { label: "Typical deployment", value: "2–4 weeks to first attributable insight. Single cloud, 1–2 workloads to start." },
-        { label: "What to expect", value: "We scope one workload, connect read-only, and show attribution before you commit." },
+        { label: "Best input", value: "One service, one route change, or one spend spike that already needs an answer." },
+        { label: "What you see", value: "Owner, budget path, confidence, and lower-cost alternatives tied to the same event." },
+        { label: "Who joins", value: "Usually an engineering owner plus finance or security, depending on the blocker." },
       ]}
     />
 
@@ -29,16 +30,16 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
       <div class="site-shell">
         <div class="mx-auto max-w-2xl">
           <div class="page-section-intro mb-6 text-center">
-            <p class="section-kicker">How we respond</p>
+            <p class="section-kicker">What happens next</p>
             <p class="text-sm leading-relaxed text-argmin-mid md:text-base">
-              We typically respond within one business day. A member of the founding team will follow up directly.
+              We usually respond within one business day. A member of the founding team follows up directly.
             </p>
           </div>
 
           <ContactForm
             formspreeUrl={formspreeUrl}
-            headingId="form-heading"
-            headingText="Send a message"
+            headingId="contact-form-heading"
+            headingText="Get in touch"
             variant="standalone"
           />
 

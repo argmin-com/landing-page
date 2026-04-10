@@ -56,12 +56,27 @@ const controlPoints = [
 ];
 
 const decisionRecord = [
-  { label: "Owning service", value: "support-router-prod" },
+  { label: "Owning service", value: "support-router-prod", mono: true },
   { label: "Primary owner", value: "Customer Ops Platform" },
   { label: "Budget path", value: "FY26 Assistants / Support Automation" },
-  { label: "Projected monthly delta", value: "+$28.6k" },
+  { label: "Projected monthly delta", value: "+$28.6k", mono: true },
   { label: "Lower-cost route", value: "GPT-4.1 mini for tier-1 intents" },
-  { label: "Confidence", value: "0.88 overall / 0.97 at model usage" },
+  { label: "Confidence", value: "0.88 overall / 0.97 at model usage", mono: true },
+];
+
+const whyFailReasons = [
+  {
+    title: "Tag-based attribution",
+    description: "Manual tagging. Breaks under AI variance, model calls shift routes, retry, and fan out in ways static tags cannot follow.",
+  },
+  {
+    title: "Observability platforms",
+    description: "Great for traces and latency. No cost attribution, no budget path, no owner resolution. You see what happened, not who pays.",
+  },
+  {
+    title: "Cloud billing tools",
+    description: "Account-level totals with no application context. Cannot distinguish which service, team, or use case drives the line item.",
+  },
 ];
 
 const deploymentPhases = [
@@ -103,8 +118,8 @@ const deploymentPhases = [
         { label: "Posture", value: "Read-only connectors, advisory by default, and inside-your-environment deployment." },
       ]}
       actions={[
-        { href: "/demo", label: "See Your AI Cost Breakdown" },
-        { href: "/contact", label: "Talk to us", variant: "secondary" },
+        { href: "/contact", label: "Request a Demo" },
+        { href: "/contact", label: "Contact Us", variant: "secondary" },
       ]}
     />
 
@@ -113,8 +128,8 @@ const deploymentPhases = [
         <div class="surface-panel mx-auto max-w-5xl px-6 py-5 md:px-8">
           <p class="section-kicker mb-3">Jump to section</p>
           <nav class="quick-links" aria-label="Platform page sections">
-            <a class="quick-link" href="#control-points">Control points</a>
             <a class="quick-link" href="#landscape">Landscape</a>
+            <a class="quick-link" href="#control-points">Control points</a>
             <a class="quick-link" href="#attribution-flow">Attribution flow</a>
             <a class="quick-link" href="#decision-layer">Decision layer</a>
             <a class="quick-link" href="#deployment-path">Deployment path</a>
@@ -123,117 +138,17 @@ const deploymentPhases = [
       </div>
     </section>
 
-    <section class="px-6 pb-10 pt-0 md:pb-14 md:pt-0">
-      <div class="site-shell">
-        <div class="surface-panel mx-auto max-w-5xl px-6 py-8 md:px-10 md:py-10">
-          <p class="section-kicker mb-6">Before and After</p>
-          <div class="grid gap-6 md:grid-cols-2">
-            <div class="rounded-xl border border-argmin-border bg-argmin-surface-alt/60 p-5">
-              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">Without Argmin</p>
-              <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M AI spend</p>
-              <p class="mt-2 text-base leading-7 text-argmin-mid">Unknown ownership. No budget attribution. No way to tell which teams, models, or use cases drive the bill. Finance gets invoice totals and guesswork.</p>
-            </div>
-            <div class="rounded-xl border border-argmin-accent/30 bg-argmin-accent/5 p-5">
-              <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-accent">With Argmin</p>
-              <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M → 14 teams, 6 use cases, 3 waste clusters</p>
-              <p class="mt-2 text-base leading-7 text-argmin-mid">Every dollar resolved to an owner, budget, and decision. Typical result: 10–25% cost reduction within six months.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
-      <div class="site-shell section-divider pt-10">
-        <div class="grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:items-stretch lg:gap-16">
-          <div class="rise-in flex flex-col self-start">
-            <p class="section-kicker">Comparison</p>
-            <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
-              If you already have telemetry and cost views, the real question is whether they tell you who owns
-              the spend and what to change before the next release. Usually they do not.
-            </p>
-          </div>
-
-          <div class="surface-panel self-start overflow-hidden rise-in rise-in-delay-1">
-            <div class="grid grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] gap-4 border-b-2 border-argmin-accent/30 bg-argmin-surface-alt px-6 py-5 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-argmin-light md:px-8">
-              <p>Dimension</p>
-              <p>Telemetry / Cost Views</p>
-              <p class="text-argmin-accent">Argmin</p>
-            </div>
-            <div class="px-6 md:px-8">
-              {comparisonRows.map((row, index) => (
-                <div class:list={["grid grid-cols-1 gap-3 border-b border-argmin-border/70 py-5 last:border-none md:grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] md:gap-4", index % 2 === 1 && "bg-argmin-surface-alt/30 -mx-6 px-6 md:-mx-8 md:px-8"]}>
-                  <p class="text-sm font-semibold text-argmin-dark">{row.label}</p>
-                  <p class="text-sm leading-7 text-argmin-mid">{row.incumbent}</p>
-                  <p class="text-sm leading-7 text-argmin-dark">{row.argmin}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="control-points" class="px-6 py-10 md:py-16">
+    <section id="landscape" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
-          <p class="section-kicker">Control Points</p>
-          <h2 class="section-title mt-5 max-w-4xl">The job is intervention, not reporting.</h2>
+          <p class="section-kicker">Why This Problem Is Unsolved</p>
+          <h2 class="section-title mt-5 max-w-4xl">Existing tools each see only part of the picture.</h2>
         </div>
 
-        <div class="mt-10 border-t border-argmin-border">
-          {controlPoints.map((point, index) => (
-            <article class="grid gap-4 border-b border-argmin-border py-7 md:grid-cols-[minmax(0,0.18fr)_minmax(0,0.32fr)_minmax(0,0.5fr)] md:gap-8">
-              <p class="section-kicker text-argmin-accent">0{index + 1} / {point.stage}</p>
-              <h3 class="text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">{point.title}</h3>
-              <p class="text-base leading-8 text-argmin-mid">{point.description}</p>
-            </article>
-          ))}
-        </div>
-
-        <div class="mt-8 flex flex-wrap gap-3">
-          <a href="/demo" class="button-primary">See these controls in action</a>
-          <a href="/platform#deployment-path" class="button-secondary">See deployment timeline</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="px-6 py-10 md:py-16">
-      <div class="site-shell section-divider pt-10">
-        <div class="max-w-3xl rise-in">
-          <p class="section-kicker">Why Existing Approaches Fail</p>
-          <p class="mt-5 max-w-2xl text-base leading-8 text-argmin-mid md:text-lg">
-            Enterprises have tried to solve AI cost visibility before. Each approach breaks in a predictable way.
-          </p>
-        </div>
-
-        <div class="mt-8 grid gap-4 md:grid-cols-3">
-          <div class="surface-panel px-5 py-5">
-            <p class="text-sm font-semibold text-argmin-dark">Tag-based attribution</p>
-            <p class="mt-3 text-sm leading-7 text-argmin-mid">Manual tagging. Breaks under AI variance, model calls shift routes, retry, and fan out in ways static tags cannot follow.</p>
-          </div>
-          <div class="surface-panel px-5 py-5">
-            <p class="text-sm font-semibold text-argmin-dark">Observability platforms</p>
-            <p class="mt-3 text-sm leading-7 text-argmin-mid">Great for traces and latency. No cost attribution, no budget path, no owner resolution. You see what happened, not who pays.</p>
-          </div>
-          <div class="surface-panel px-5 py-5">
-            <p class="text-sm font-semibold text-argmin-dark">Cloud billing tools</p>
-            <p class="mt-3 text-sm leading-7 text-argmin-mid">Account-level totals with no application context. Cannot distinguish which service, team, or use case drives the line item.</p>
-          </div>
-        </div>
-
-        <p class="mt-8 text-base leading-8 text-argmin-dark md:text-lg rise-in">
-          Argmin takes a fundamentally different approach: an identity-resolved attribution graph that links model usage to services, code owners, and budgets automatically.
-        </p>
-      </div>
-    </section>
-
-    <section id="landscape" class="px-6 py-20 lg:py-32">
-      <div class="site-shell section-divider pt-10">
-        <div class="mx-auto w-full max-w-[1080px] overflow-hidden rounded-[12px]">
+        <div class="mx-auto mt-10 w-full max-w-[960px] overflow-hidden rounded-[12px]">
           <img
             src="/images/competitive-landscape.png"
-            alt="AI operations landscape. LLM observability tools, AI gateways, enterprise APM, and FinOps platforms each operate within a single layer. Argmin is the AI consumption system of record, spanning all three layers as a single system: multi-source signal ingestion as a cross-system integration surface across cloud billing, CI/CD, source control, identity providers, HRIS, and telemetry; an identity-resolved attribution graph linking model to service to code to identity to org to budget; and decision-time control with organizational context, operating in Shape (advisory) or Gate (enforcement) modes."
+            alt="AI operations landscape showing LLM observability, AI gateways, APM, and FinOps tools each operating within a single layer, while Argmin spans all three as the AI consumption system of record."
             loading="lazy"
             decoding="async"
             width="1200"
@@ -242,69 +157,208 @@ const deploymentPhases = [
           />
         </div>
 
-        <div class="mx-auto mt-6 max-w-[640px] text-center">
-          <p class="text-base font-medium leading-[1.5] text-[#0F172A]">
-            Others operate within layers. Argmin resolves fragmented signals into a system of record for AI consumption.
+        <div class="mx-auto mt-6 max-w-[720px] text-center">
+          <p class="text-base font-medium leading-[1.5] text-argmin-dark">
+            No existing system resolves identity-based attribution across billing, observability, code ownership, and identity.
           </p>
-          <p class="mt-2 text-[0.9375rem] font-normal leading-[1.6] text-[#64748B]">
-            No existing system resolves identity-based attribution across billing, observability, code ownership, and identity, or enables decision-time control with organizational context.
-          </p>
-          <p class="mt-2 text-sm italic leading-[1.6] text-[#64748B]">
-            Without a system of record, AI usage cannot be attributed, governed, or optimized at scale.
-          </p>
-          <p class="mt-3 text-xs font-normal text-[#94A3B8]">
-            Positions reflect architectural scope, not market share. April 2026.
-          </p>
+        </div>
+
+        <div class="mx-auto mt-12 max-w-5xl">
+          <div class="flex flex-wrap gap-1 border-b border-argmin-border" role="tablist" aria-label="Why this problem is unsolved" id="platform-tabs">
+            <button
+              role="tab"
+              id="ptab-0"
+              aria-selected="true"
+              aria-controls="ppanel-0"
+              tabindex="0"
+              class="platform-tab relative px-5 py-3 text-sm font-semibold tracking-[0.02em] transition-colors duration-180 border-b-[3px] border-argmin-accent text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2"
+            >
+              Before vs. After
+            </button>
+            <button
+              role="tab"
+              id="ptab-1"
+              aria-selected="false"
+              aria-controls="ppanel-1"
+              tabindex="-1"
+              class="platform-tab relative px-5 py-3 text-sm font-semibold tracking-[0.02em] transition-colors duration-180 border-b-[3px] border-transparent text-argmin-light hover:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2"
+            >
+              How We Compare
+            </button>
+            <button
+              role="tab"
+              id="ptab-2"
+              aria-selected="false"
+              aria-controls="ppanel-2"
+              tabindex="-1"
+              class="platform-tab relative px-5 py-3 text-sm font-semibold tracking-[0.02em] transition-colors duration-180 border-b-[3px] border-transparent text-argmin-light hover:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2"
+            >
+              Why Current Tools Fail
+            </button>
+          </div>
+
+          <div role="tabpanel" id="ppanel-0" aria-labelledby="ptab-0" class="platform-panel py-9">
+            <div class="grid gap-6 md:grid-cols-2">
+              <div class="rounded-xl border border-argmin-border bg-argmin-surface-alt/60 p-5">
+                <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">Without Argmin</p>
+                <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M AI spend</p>
+                <p class="mt-2 text-base leading-7 text-argmin-mid">Unknown ownership. No budget attribution. No way to tell which teams, models, or use cases drive the bill. Finance gets invoice totals and guesswork.</p>
+              </div>
+              <div class="rounded-xl border border-argmin-accent/30 bg-argmin-accent/5 p-5">
+                <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-accent">With Argmin</p>
+                <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M → 14 teams, 6 use cases, 3 waste clusters</p>
+                <p class="mt-2 text-base leading-7 text-argmin-mid">Every dollar resolved to an owner, budget, and decision. Typical result: 10–25% cost reduction within six months.</p>
+              </div>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="ppanel-1" aria-labelledby="ptab-1" class="platform-panel hidden py-9">
+            <div class="surface-panel overflow-hidden">
+              <div class="grid grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] gap-4 border-b-2 border-argmin-accent/30 bg-argmin-surface-alt px-6 py-5 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-argmin-light md:px-8">
+                <p>Dimension</p>
+                <p>Telemetry / Cost Views</p>
+                <p class="text-argmin-accent">Argmin</p>
+              </div>
+              <div class="px-6 md:px-8">
+                {comparisonRows.map((row, index) => (
+                  <div class:list={["grid grid-cols-1 gap-3 border-b border-argmin-border/70 py-5 last:border-none md:grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] md:gap-4", index % 2 === 1 && "bg-argmin-surface-alt/30 -mx-6 px-6 md:-mx-8 md:px-8"]}>
+                    <p class="text-sm font-semibold text-argmin-dark">{row.label}</p>
+                    <p class="text-sm leading-7 text-argmin-mid">{row.incumbent}</p>
+                    <p class="text-sm leading-7 text-argmin-dark">{row.argmin}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="ppanel-2" aria-labelledby="ptab-2" class="platform-panel hidden py-9">
+            <div class="grid gap-4 md:grid-cols-3">
+              {whyFailReasons.map((reason) => (
+                <div class="surface-panel px-5 py-5">
+                  <p class="text-sm font-semibold text-argmin-dark">{reason.title}</p>
+                  <p class="mt-3 text-sm leading-7 text-argmin-mid">{reason.description}</p>
+                </div>
+              ))}
+            </div>
+            <p class="mt-8 text-base leading-8 text-argmin-dark md:text-lg">
+              Argmin takes a fundamentally different approach: an identity-resolved attribution graph that links model usage to services, code owners, and budgets automatically.
+            </p>
+          </div>
+        </div>
+
+        <noscript>
+          <style>.platform-panel { display: block !important; } [role="tablist"] { display: none !important; }</style>
+        </noscript>
+      </div>
+    </section>
+
+    <script is:inline>
+      (function () {
+        var tablist = document.getElementById("platform-tabs");
+        if (!tablist) return;
+        var tabs = tablist.querySelectorAll("[role='tab']");
+        var panels = document.querySelectorAll(".platform-panel");
+
+        function activate(index) {
+          tabs.forEach(function (t, i) {
+            var isActive = i === index;
+            t.setAttribute("aria-selected", String(isActive));
+            t.setAttribute("tabindex", isActive ? "0" : "-1");
+            if (isActive) {
+              t.classList.remove("border-transparent", "text-argmin-light");
+              t.classList.add("border-argmin-accent", "text-argmin-dark");
+            } else {
+              t.classList.remove("border-argmin-accent", "text-argmin-dark");
+              t.classList.add("border-transparent", "text-argmin-light");
+            }
+          });
+          panels.forEach(function (p, i) {
+            if (i === index) {
+              p.classList.remove("hidden");
+            } else {
+              p.classList.add("hidden");
+            }
+          });
+        }
+
+        tabs.forEach(function (tab, i) {
+          tab.addEventListener("click", function () { activate(i); });
+        });
+
+        tablist.addEventListener("keydown", function (e) {
+          var current = Array.prototype.findIndex.call(tabs, function (t) {
+            return t.getAttribute("aria-selected") === "true";
+          });
+          var next = current;
+          if (e.key === "ArrowRight") next = (current + 1) % tabs.length;
+          else if (e.key === "ArrowLeft") next = (current - 1 + tabs.length) % tabs.length;
+          else if (e.key === "Home") next = 0;
+          else if (e.key === "End") next = tabs.length - 1;
+          else return;
+          e.preventDefault();
+          activate(next);
+          tabs[next].focus();
+        });
+      })();
+    </script>
+
+    <section id="control-points" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+      <div class="site-shell section-divider pt-10">
+        <div class="max-w-3xl rise-in">
+          <p class="section-kicker">Control Points</p>
+          <h2 class="section-title mt-5 max-w-4xl">The job is intervention, not reporting.</h2>
+        </div>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2">
+          {controlPoints.map((point, index) => (
+            <article class="rounded-xl border border-argmin-border bg-argmin-surface-alt/50 p-6">
+              <p class="section-kicker text-argmin-accent">0{index + 1} / {point.stage}</p>
+              <h3 class="mt-4 text-xl font-semibold tracking-[-0.03em] text-argmin-dark">{point.title}</h3>
+              <p class="mt-3 text-base leading-7 text-argmin-mid">{point.description}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
 
-    <section id="attribution-flow" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+    <section id="attribution-flow" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
         <div class="rise-in">
           <p class="section-kicker text-center">Attribution Flow</p>
         </div>
 
         <div class="mt-8 flex justify-center rise-in rise-in-delay-1">
-          <div class="surface-panel w-full max-w-6xl overflow-hidden px-4 pb-6 pt-14 md:px-6 md:pb-8 md:pt-16">
+          <div class="surface-panel w-full max-w-[960px] overflow-hidden px-4 pb-6 pt-14 md:px-6 md:pb-8 md:pt-16">
             <AttributionFlowDiagram />
           </div>
         </div>
 
-        <div class="mx-auto mt-12 max-w-5xl rise-in">
-          <p class="max-w-4xl text-base leading-8 text-argmin-mid md:text-lg">
-            Each stage adds evidence. The result is not just attribution. It is an attributable decision
-            record with visible confidence and a next action.
-          </p>
-
-          <div class="mt-8 space-y-3">
-            <p class="text-sm font-semibold uppercase tracking-[0.22em] text-argmin-light">Example record</p>
-            <div class="surface-panel p-5 md:p-7">
-              <dl class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {decisionRecord.map((item) => (
-                  <div>
-                    <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">{item.label}</dt>
-                    <dd class="mt-2 text-base leading-7 text-argmin-dark">{item.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p class="mt-6 border-t border-argmin-border pt-5 text-base leading-8 text-argmin-mid">
-                Recommendation: pause the broad rollout, shift default tier-1 classification to the lower-cost
-                route, and review the budget exception with Engineering plus FinOps before wider deployment.
-              </p>
-            </div>
+        <div class="mx-auto mt-10 max-w-[960px]">
+          <div class="rounded-xl border border-argmin-accent/30 border-l-[4px] border-l-argmin-accent bg-argmin-accent/5 p-6 md:p-8">
+            <h3 class="text-xl font-semibold tracking-[-0.03em] text-argmin-dark md:text-2xl">What an attribution record looks like</h3>
+            <dl class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+              {decisionRecord.map((item) => (
+                <div>
+                  <dt class="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-argmin-light">{item.label}</dt>
+                  <dd class:list={["mt-2 text-base leading-7 text-argmin-dark", item.mono && "font-mono"]}>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p class="mt-6 border-t border-argmin-accent/20 pt-5 text-base leading-8 text-argmin-mid">
+              <span class="font-semibold text-argmin-dark">Recommendation:</span> pause the broad rollout, shift default tier-1 classification to the lower-cost route, and review the budget exception with Engineering plus FinOps before wider deployment.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="decision-layer" class="px-6 py-10 md:py-16">
+    <section id="decision-layer" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
         <DecisionRule />
       </div>
     </section>
 
-    <section id="deployment-path" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
+    <section id="deployment-path" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Deployment</p>
@@ -341,8 +395,8 @@ const deploymentPhases = [
         </div>
 
         <div class="mt-10 flex flex-wrap gap-3">
-          <a href="/demo" class="button-primary">Start your deployment</a>
-          <a href="/contact" class="button-secondary">Talk to the team</a>
+          <a href="/contact" class="button-primary">Request a Demo</a>
+          <a href="/contact" class="button-secondary">Contact Us</a>
         </div>
       </div>
     </section>

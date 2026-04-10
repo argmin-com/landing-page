@@ -12,15 +12,6 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Architecture",
-    items: [
-      { label: "Attribution Flow", href: "/platform#attribution-flow" },
-      { label: "Decision Layer", href: "/platform#decision-layer" },
-      { label: "Landscape", href: "/platform#landscape" },
-      { label: "Deployment", href: "/platform#deployment-path" },
-    ],
-  },
-  {
     label: "Company",
     items: [
       { label: "About", href: "/about" },
@@ -31,34 +22,13 @@ export const navGroups: NavGroup[] = [
   },
 ];
 
-export const footerGroups = [
-  {
-    title: "Product",
-    links: [
-      { label: "Platform", href: "/platform" },
-      { label: "Use Cases", href: "/use-cases" },
-      { label: "Request a Demo", href: "/demo" },
-    ],
-  },
-  {
-    title: "Architecture",
-    links: [
-      { label: "Attribution Flow", href: "/platform#attribution-flow" },
-      { label: "Decision Layer", href: "/platform#decision-layer" },
-      { label: "Landscape", href: "/platform#landscape" },
-      { label: "Deployment", href: "/platform#deployment-path" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Team", href: "/team" },
-      { label: "Security", href: "/security" },
-      { label: "Contact", href: "/contact" },
-      { label: "Privacy Policy", href: "/privacy" },
-    ],
-  },
+export const footerLinks = [
+  { label: "Platform", href: "/platform" },
+  { label: "Use Cases", href: "/use-cases" },
+  { label: "Team", href: "/team" },
+  { label: "Security", href: "/security" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const siteSummary = {
