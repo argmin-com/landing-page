@@ -1,0 +1,30 @@
+# CODEOWNERS for argmin-com/landing-page
+#
+# Default reviewers for every file in the repo.
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+* @richardcmckinney
+
+# Higher-risk areas get an explicit callout so changes always notify
+# the primary maintainer even if blanket ownership ever changes.
+
+# Deployment + CI/CD configuration
+/.github/workflows/            @richardcmckinney
+/.github/dependabot.yml        @richardcmckinney
+/astro.config.mjs              @richardcmckinney
+/package.json                  @richardcmckinney
+/package-lock.json             @richardcmckinney
+/wrangler.toml                 @richardcmckinney
+/wrangler.jsonc                @richardcmckinney
+
+# Public assets + SEO surface
+/public/                       @richardcmckinney
+
+# Contact form integration
+/src/components/ContactForm.astro @richardcmckinney
+/src/lib/formspree.ts          @richardcmckinney
+/scripts/                      @richardcmckinney
+
+# Legal content
+/src/pages/privacy.astro       @richardcmckinney
+/src/pages/terms.astro         @richardcmckinney
