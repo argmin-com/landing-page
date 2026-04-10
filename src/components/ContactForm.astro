@@ -191,8 +191,29 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
     });
     syncButtonLabel();
 
+    // Required text fields that must contain real content after trimming.
+    // Keeps browser-native reportValidity() in charge of surfacing messages
+    // while preventing whitespace-only submissions from reaching the payload.
+    const trimmedRequiredFields = [
+      { field: nameField, message: "Please enter your name." },
+      { field: emailField, message: "Please enter your email address." },
+      { field: companyField, message: "Please enter your company." },
+      { field: messageField, message: "Please enter a message." },
+    ];
+    trimmedRequiredFields.forEach(function (entry) {
+      entry.field.addEventListener("input", function () {
+        entry.field.setCustomValidity("");
+      });
+    });
+
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
+
+      trimmedRequiredFields.forEach(function (entry) {
+        entry.field.setCustomValidity(
+          entry.field.value.trim() === "" ? entry.message : "",
+        );
+      });
 
       if (!form.reportValidity()) {
         return;
