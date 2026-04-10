@@ -196,6 +196,26 @@ const homeHeroNoscriptStyles = homeHeroOnlyInitially
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Argmin",
+      "legalName": "Argmin Technologies, Inc.",
+      "url": "https://argmin.co",
+      "logo": "https://argmin.co/favicon.svg",
+      "description": "Decision control for enterprise AI spend, with attribution that reaches from model call to budget owner before costs compound.",
+      "sameAs": [
+        "https://www.linkedin.com/in/richardcmckinney",
+        "https://www.linkedin.com/in/charlotte-wargniez"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "contact@argmin.co",
+        "contactType": "customer service",
+        "availableLanguage": ["English"]
+      }
+    })}></script>
     <script is:inline set:html={themeBootScript}></script>
     <script is:inline defer data-domain="argmin.co" src="https://plausible.io/js/script.js"></script>
     {homeHeroNoscriptStyles && (

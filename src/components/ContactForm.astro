@@ -55,149 +55,55 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
       <h2 id={headingId} class="section-kicker">{headingText}</h2>
     ) : null}
 
-    {isStandalone ? (
-      <>
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              placeholder="Your name"
-              class={textInputClass}
-            />
-          </div>
-          <div>
-            <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="work@company.com"
-              class={textInputClass}
-            />
-          </div>
-        </div>
-        <div>
-          <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            required
-            placeholder="Company name"
-            class={textInputClass}
-          />
-        </div>
-        <div class="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="cloud" class="mb-2 block text-sm font-medium text-argmin-dark">Primary cloud</label>
-            <select id="cloud" name="cloud" required class={selectClass}>
-              <option value="">Select...</option>
-              <option value="aws">AWS</option>
-              <option value="azure">Azure</option>
-              <option value="gcp">GCP</option>
-              <option value="multi">Multi-cloud</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label for="ai-spend" class="mb-2 block text-sm font-medium text-argmin-dark">Monthly AI spend</label>
-            <select id="ai-spend" name="ai_spend" required class={selectClass}>
-              <option value="">Select...</option>
-              <option value="under-50k">Under $50k</option>
-              <option value="50k-250k">$50k–$250k</option>
-              <option value="250k-1m">$250k–$1M</option>
-              <option value="over-1m">Over $1M</option>
-              <option value="unsure">Not sure</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label for="teams" class="mb-2 block text-sm font-medium text-argmin-dark">Teams using AI</label>
-          <select id="teams" name="teams_using_ai" required class={selectClass}>
-            <option value="">Select...</option>
-            <option value="1-3">1–3 teams</option>
-            <option value="4-10">4–10 teams</option>
-            <option value="10-plus">10+ teams</option>
-            <option value="unsure">Not sure</option>
-          </select>
-        </div>
-      </>
-    ) : (
-      <>
-        <div>
-          <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            required
-            placeholder="Your name"
-            class={textInputClass}
-          />
-        </div>
-        <div>
-          <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            placeholder="work@company.com"
-            class={textInputClass}
-          />
-        </div>
-        <div>
-          <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
-          <input
-            id="company"
-            name="company"
-            type="text"
-            required
-            placeholder="Company name"
-            class={textInputClass}
-          />
-        </div>
-        <div class="grid gap-4 sm:grid-cols-3">
-          <div>
-            <label for="cloud" class="mb-2 block text-sm font-medium text-argmin-dark">Primary cloud</label>
-            <select id="cloud" name="cloud" required class={selectClass}>
-              <option value="">Select...</option>
-              <option value="aws">AWS</option>
-              <option value="azure">Azure</option>
-              <option value="gcp">GCP</option>
-              <option value="multi">Multi-cloud</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div>
-            <label for="ai-spend" class="mb-2 block text-sm font-medium text-argmin-dark">Monthly AI spend</label>
-            <select id="ai-spend" name="ai_spend" required class={selectClass}>
-              <option value="">Select...</option>
-              <option value="under-50k">Under $50k</option>
-              <option value="50k-250k">$50k–$250k</option>
-              <option value="250k-1m">$250k–$1M</option>
-              <option value="over-1m">Over $1M</option>
-              <option value="unsure">Not sure</option>
-            </select>
-          </div>
-          <div>
-            <label for="teams" class="mb-2 block text-sm font-medium text-argmin-dark">Teams using AI</label>
-            <select id="teams" name="teams_using_ai" required class={selectClass}>
-              <option value="">Select...</option>
-              <option value="1-3">1–3 teams</option>
-              <option value="4-10">4–10 teams</option>
-              <option value="10-plus">10+ teams</option>
-              <option value="unsure">Not sure</option>
-            </select>
-          </div>
-        </div>
-      </>
-    )}
+    <fieldset class="grid gap-3 border border-argmin-border rounded-xl p-4">
+      <legend class="px-2 text-sm font-medium text-argmin-dark">I want to</legend>
+      <div class="flex flex-wrap gap-5">
+        <label class="inline-flex items-center gap-2 text-sm text-argmin-dark cursor-pointer">
+          <input type="radio" name="intent" value="demo" checked class="h-4 w-4 accent-argmin-accent" />
+          Request a demo
+        </label>
+        <label class="inline-flex items-center gap-2 text-sm text-argmin-dark cursor-pointer">
+          <input type="radio" name="intent" value="question" class="h-4 w-4 accent-argmin-accent" />
+          Ask a question
+        </label>
+      </div>
+    </fieldset>
+
+    <div class:list={[isStandalone ? "grid gap-5 sm:grid-cols-2" : ""]}>
+      <div>
+        <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          placeholder="Your name"
+          class={textInputClass}
+        />
+      </div>
+      <div class:list={[!isStandalone && "mt-4"]}>
+        <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="work@company.com"
+          class={textInputClass}
+        />
+      </div>
+    </div>
+    <div>
+      <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+      <input
+        id="company"
+        name="company"
+        type="text"
+        required
+        placeholder="Company name"
+        class={textInputClass}
+      />
+    </div>
 
     <div>
       <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
@@ -209,17 +115,64 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
         class={textInputClass}
       ></textarea>
     </div>
+
+    <details class="rounded-xl border border-argmin-border bg-argmin-surface-alt/40 group">
+      <summary class="cursor-pointer list-none px-4 py-3 text-sm font-medium text-argmin-dark flex items-center justify-between select-none">
+        <span>Help us prepare (optional)</span>
+        <svg viewBox="0 0 12 12" class="h-3 w-3 opacity-60 transition-transform duration-200 group-open:rotate-180" aria-hidden="true">
+          <path d="M3 5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </summary>
+      <div class="space-y-4 px-4 pb-4 pt-1">
+        <div class:list={[isStandalone ? "grid gap-4 sm:grid-cols-2" : ""]}>
+          <div>
+            <label for="cloud" class="mb-2 block text-sm font-medium text-argmin-dark">Primary cloud</label>
+            <select id="cloud" name="cloud" class={selectClass}>
+              <option value="">Select...</option>
+              <option value="aws">AWS</option>
+              <option value="azure">Azure</option>
+              <option value="gcp">GCP</option>
+              <option value="multi">Multi-cloud</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class:list={[!isStandalone && "mt-4"]}>
+            <label for="ai-spend" class="mb-2 block text-sm font-medium text-argmin-dark">Monthly AI spend</label>
+            <select id="ai-spend" name="ai_spend" class={selectClass}>
+              <option value="">Select...</option>
+              <option value="under-50k">Under $50k</option>
+              <option value="50k-250k">$50k–$250k</option>
+              <option value="250k-1m">$250k–$1M</option>
+              <option value="over-1m">Over $1M</option>
+              <option value="unsure">Not sure</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="teams" class="mb-2 block text-sm font-medium text-argmin-dark">Teams using AI</label>
+          <select id="teams" name="teams_using_ai" class={selectClass}>
+            <option value="">Select...</option>
+            <option value="1-3">1–3 teams</option>
+            <option value="4-10">4–10 teams</option>
+            <option value="10-plus">10+ teams</option>
+            <option value="unsure">Not sure</option>
+          </select>
+        </div>
+      </div>
+    </details>
+
     <input type="text" id="gotcha" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
     <button
       id="submit-btn"
       type="submit"
       disabled={!hasEndpoint}
       aria-describedby={!hasEndpoint ? "form-config-error" : undefined}
-      data-default-label="Get in Touch"
+      data-default-label="Request a Demo"
+      data-question-label="Send Message"
       data-loading-label="Sending..."
       class={buttonClass}
     >
-      {hasEndpoint ? "Get in Touch" : "Form Unavailable"}
+      {hasEndpoint ? "Request a Demo" : "Form Unavailable"}
     </button>
     <p id="form-config-error" class:list={[helperTextClass, hasEndpoint && "hidden"]}>
       Form submissions are currently unavailable. Please email
@@ -244,18 +197,18 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
 
 <script is:inline define:vars={{ endpoint }}>
   (function () {
-    var form = document.getElementById("contact-form");
-    var button = document.getElementById("submit-btn");
-    var container = document.getElementById("form-container");
-    var error = document.getElementById("form-error");
-    var nameField = document.getElementById("name");
-    var emailField = document.getElementById("email");
-    var companyField = document.getElementById("company");
-    var cloudField = document.getElementById("cloud");
-    var aiSpendField = document.getElementById("ai-spend");
-    var teamsField = document.getElementById("teams");
-    var messageField = document.getElementById("message");
-    var gotchaField = document.getElementById("gotcha");
+    const form = document.getElementById("contact-form");
+    const button = document.getElementById("submit-btn");
+    const container = document.getElementById("form-container");
+    const error = document.getElementById("form-error");
+    const nameField = document.getElementById("name");
+    const emailField = document.getElementById("email");
+    const companyField = document.getElementById("company");
+    const cloudField = document.getElementById("cloud");
+    const aiSpendField = document.getElementById("ai-spend");
+    const teamsField = document.getElementById("teams");
+    const messageField = document.getElementById("message");
+    const gotchaField = document.getElementById("gotcha");
 
     if (
       !endpoint ||
@@ -265,17 +218,28 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
       !(nameField instanceof HTMLInputElement) ||
       !(emailField instanceof HTMLInputElement) ||
       !(companyField instanceof HTMLInputElement) ||
-      !(cloudField instanceof HTMLSelectElement) ||
-      !(aiSpendField instanceof HTMLSelectElement) ||
-      !(teamsField instanceof HTMLSelectElement) ||
       !(messageField instanceof HTMLTextAreaElement) ||
       !(gotchaField instanceof HTMLInputElement)
     ) {
       return;
     }
 
-    var defaultButtonLabel = button.dataset.defaultLabel || "Get in Touch";
-    var loadingButtonLabel = button.dataset.loadingLabel || "Sending...";
+    const defaultLabel = button.dataset.defaultLabel || "Request a Demo";
+    const questionLabel = button.dataset.questionLabel || "Send Message";
+    const loadingLabel = button.dataset.loadingLabel || "Sending...";
+
+    const intentRadios = form.querySelectorAll('input[name="intent"]');
+    function getIntent() {
+      const checked = form.querySelector('input[name="intent"]:checked');
+      return checked ? checked.value : "demo";
+    }
+    function syncButtonLabel() {
+      button.textContent = getIntent() === "question" ? questionLabel : defaultLabel;
+    }
+    intentRadios.forEach(function (r) {
+      r.addEventListener("change", syncButtonLabel);
+    });
+    syncButtonLabel();
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -284,30 +248,38 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
         return;
       }
 
-      var payload = {
+      const payload = {
+        intent: getIntent(),
         name: nameField.value.trim(),
         email: emailField.value.trim(),
         company: companyField.value.trim(),
-        cloud: cloudField.value,
-        ai_spend: aiSpendField.value,
-        teams_using_ai: teamsField.value,
         message: messageField.value.trim(),
         _gotcha: gotchaField.value.trim(),
       };
 
+      if (cloudField instanceof HTMLSelectElement && cloudField.value) {
+        payload.cloud = cloudField.value;
+      }
+      if (aiSpendField instanceof HTMLSelectElement && aiSpendField.value) {
+        payload.ai_spend = aiSpendField.value;
+      }
+      if (teamsField instanceof HTMLSelectElement && teamsField.value) {
+        payload.teams_using_ai = teamsField.value;
+      }
+
       button.disabled = true;
-      button.textContent = loadingButtonLabel;
+      button.textContent = loadingLabel;
       if (error) {
         error.classList.add("hidden");
       }
 
-      var controller = new AbortController();
-      var timeoutId = window.setTimeout(function () {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(function () {
         controller.abort();
       }, 10000);
 
       try {
-        var response = await fetch(endpoint, {
+        const response = await fetch(endpoint, {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -327,7 +299,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
       } catch (submissionError) {
         console.error("Contact form submission failed:", submissionError);
         button.disabled = false;
-        button.textContent = defaultButtonLabel;
+        syncButtonLabel();
         if (error) {
           error.classList.remove("hidden");
         }

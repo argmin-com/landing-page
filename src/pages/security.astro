@@ -8,37 +8,42 @@ const principles = [
     title: "Read-only connectors",
     description:
       "Argmin ingests cloud telemetry, billing, identity, and CI/CD data through read-only APIs. No write access to production systems, no agents running in your workloads.",
+    icon: "lock",
   },
   {
     title: "Inside your environment",
     description:
       "All data processing happens inside the customer trust boundary. Attribution graphs, cost models, and decision records stay in your cloud, never exfiltrated to ours.",
+    icon: "shield",
   },
   {
     title: "Advisory by default",
     description:
       "Argmin surfaces recommendations and decision records. Hard stops and enforcement are only activated when you explicitly opt in, never silently enabled.",
+    icon: "eye",
   },
   {
     title: "Fail-open architecture",
     description:
       "If Argmin is unreachable, requests proceed normally. The system operates within a 50ms latency budget and never blocks production traffic on failure.",
+    icon: "zap",
   },
 ];
 
-const comparisons = [
-  {
-    approach: "Observability platforms",
-    risk: "Require broad telemetry collection, often exfiltrating traces and logs to external infrastructure for analysis.",
-  },
-  {
-    approach: "Cloud cost tools",
-    risk: "Typically operate outside the customer environment, pulling billing and usage data into vendor-hosted dashboards.",
-  },
-  {
-    approach: "Argmin",
-    difference: "Processes all data inside your cloud. Read-only access. No telemetry exfiltration. Decision records stay in your environment.",
-  },
+const reads = [
+  "Cloud billing exports and cost allocation data",
+  "Identity and org mapping (SSO, IAM, HR systems)",
+  "CI/CD metadata and deployment history",
+  "Source control ownership (CODEOWNERS, commit metadata)",
+  "Model usage telemetry (tokens, latency, routes)",
+];
+
+const neverDoes = [
+  "Write access to production systems",
+  "Agents or sidecars in your workloads",
+  "Exfiltration of traces, logs, or cost data",
+  "Mandatory inline interception of model calls",
+  "Persistent storage outside your environment",
 ];
 ---
 
@@ -59,23 +64,10 @@ const comparisons = [
         { label: "Availability", value: "Fail-open architecture with a 50ms latency budget." },
       ]}
       actions={[
-        { href: "/platform#deployment-path", label: "See deployment path" },
-        { href: "/contact", label: "Discuss your environment", variant: "secondary" },
+        { href: "/contact", label: "Request a Demo" },
+        { href: "/contact", label: "Contact Us", variant: "secondary" },
       ]}
     />
-
-    <section class="px-6 pb-8 pt-0 md:pb-10">
-      <div class="site-shell">
-        <div class="surface-panel mx-auto max-w-4xl px-6 py-5 md:px-8">
-          <p class="section-kicker mb-3">Jump to section</p>
-          <nav class="quick-links" aria-label="Security page sections">
-            <a class="quick-link" href="#security-principles">Principles</a>
-            <a class="quick-link" href="#security-comparison">Comparison</a>
-            <a class="quick-link" href="#security-data-flow">Data flow</a>
-          </nav>
-        </div>
-      </div>
-    </section>
 
     <section id="security-principles" class="px-6 py-10 md:py-16">
       <div class="site-shell section-divider pt-10">
@@ -87,62 +79,91 @@ const comparisons = [
           </p>
         </div>
 
-        <div class="mt-10 border-t border-argmin-border">
+        <div class="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-2">
           {principles.map((principle) => (
-            <article class="grid gap-4 border-b border-argmin-border py-7 md:grid-cols-[minmax(0,0.35fr)_minmax(0,0.65fr)] md:gap-8">
-              <h3 class="text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">{principle.title}</h3>
-              <p class="text-base leading-8 text-argmin-mid">{principle.description}</p>
+            <article class="surface-panel px-6 py-6">
+              <div class="flex items-center gap-3 text-argmin-accent">
+                {principle.icon === "lock" && (
+                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="11" width="16" height="10" rx="2" />
+                    <path d="M8 11V7a4 4 0 018 0v4" />
+                  </svg>
+                )}
+                {principle.icon === "shield" && (
+                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3z" />
+                  </svg>
+                )}
+                {principle.icon === "eye" && (
+                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
+                {principle.icon === "zap" && (
+                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
+                  </svg>
+                )}
+                <h3 class="text-xl font-semibold tracking-[-0.03em] text-argmin-dark">{principle.title}</h3>
+              </div>
+              <p class="mt-4 text-base leading-7 text-argmin-mid">{principle.description}</p>
             </article>
           ))}
         </div>
       </div>
     </section>
 
-    <section id="security-comparison" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
-      <div class="site-shell section-divider pt-10">
-        <div class="max-w-3xl rise-in">
-          <p class="section-kicker">How Argmin Compares</p>
-          <h2 class="section-title mt-5 max-w-4xl">Most cost tools require data exfiltration. Argmin does not.</h2>
-        </div>
-
-        <div class="mt-8 grid gap-4 md:grid-cols-3">
-          {comparisons.map((item) => (
-            <div class:list={["surface-panel px-5 py-5", item.difference && "border-argmin-accent/30 bg-argmin-accent/5"]}>
-              <p class:list={["text-sm font-semibold", item.difference ? "text-argmin-accent" : "text-argmin-dark"]}>{item.approach}</p>
-              <p class="mt-3 text-sm leading-7 text-argmin-mid">{item.risk || item.difference}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <section id="security-data-flow" class="px-6 py-10 md:py-16">
+    <section id="security-data-flow" class="px-6 py-10 md:py-16 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
         <div class="max-w-3xl rise-in">
           <p class="section-kicker">Data Flow</p>
           <h2 class="section-title mt-5 max-w-4xl">What Argmin accesses and where it lives.</h2>
         </div>
 
-        <div class="mt-8 grid gap-6 md:grid-cols-2">
-          <div class="surface-panel px-6 py-6">
-            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">What Argmin reads</p>
-            <ul class="mt-4 space-y-3 text-base leading-7 text-argmin-mid">
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Cloud billing exports and cost allocation data</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Identity and org mapping (SSO, IAM, HR systems)</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>CI/CD metadata and deployment history</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Source control ownership (CODEOWNERS, commit metadata)</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-accent"></span>Model usage telemetry (tokens, latency, routes)</li>
-            </ul>
-          </div>
-          <div class="surface-panel px-6 py-6">
-            <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">What Argmin does not do</p>
-            <ul class="mt-4 space-y-3 text-base leading-7 text-argmin-mid">
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No write access to production systems</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No agents or sidecars in your workloads</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No exfiltration of traces, logs, or cost data</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No mandatory inline interception of model calls</li>
-              <li class="flex items-start gap-3"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-argmin-border"></span>No persistent storage outside your environment</li>
-            </ul>
+        <div class="mx-auto mt-10 max-w-5xl">
+          <div class="surface-panel overflow-hidden">
+            <div class="grid gap-0 md:grid-cols-[1fr_1px_1fr]">
+              <div class="p-6 md:p-8">
+                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12l5 5 9-10" />
+                  </svg>
+                  What we access
+                </p>
+                <ul class="mt-5 space-y-3">
+                  {reads.map((item) => (
+                    <li class="flex items-start gap-3 text-base leading-7 text-argmin-mid">
+                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-green-600" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12l5 5 9-10" />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="bg-argmin-border md:w-px h-px w-full md:h-auto" aria-hidden="true"></div>
+
+              <div class="p-6 md:p-8">
+                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-red-700">
+                  <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                  What we never do
+                </p>
+                <ul class="mt-5 space-y-3">
+                  {neverDoes.map((item) => (
+                    <li class="flex items-start gap-3 text-base leading-7 text-argmin-mid">
+                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-red-600" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -150,17 +171,14 @@ const comparisons = [
 
     <section class="px-6 pb-10 pt-8 md:pb-14">
       <div class="site-shell section-divider pt-10">
-        <div class="page-cta-shell grid gap-8 px-6 py-8 md:px-10 md:py-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,0.28fr)] lg:items-end">
-          <div>
-            <p class="section-kicker">Next Step</p>
-            <h2 class="section-title-lg mt-5 max-w-4xl">Ready to review the architecture?</h2>
-            <p class="mt-5 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
-              We walk through trust boundaries, data access, and deployment posture with your security and infrastructure teams before any connectors are deployed.
-            </p>
-          </div>
-          <div class="flex flex-col gap-3">
-            <a href="/demo" class="button-primary">Request a Demo</a>
-            <a href="/platform" class="button-secondary">See platform details</a>
+        <div class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
+          <h2 class="section-title max-w-3xl">Ready to review the architecture?</h2>
+          <p class="max-w-2xl text-base leading-8 text-argmin-mid">
+            We walk through trust boundaries, data access, and deployment posture with your security and infrastructure teams before any connectors are deployed.
+          </p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <a href="/contact" class="button-primary">Request a Demo</a>
+            <a href="/contact" class="button-secondary">Contact Us</a>
           </div>
         </div>
       </div>

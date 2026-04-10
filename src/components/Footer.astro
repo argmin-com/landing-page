@@ -1,5 +1,5 @@
 ---
-import { footerGroups, siteSummary } from "../content/site";
+import { footerLinks, siteSummary } from "../content/site";
 
 interface Props {
   compact?: boolean;
@@ -14,43 +14,30 @@ const { compact = false } = Astro.props;
     <p class="mt-2">&copy; 2026 Argmin</p>
   </footer>
 ) : (
-  <footer class="px-6 pb-10 pt-16 md:px-8 md:pb-14">
-    <div class="site-shell section-divider pt-10">
-      <div class="grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16">
-        <div class="max-w-md">
-          <p class="display-title text-[1.45rem] tracking-[0.08em] text-argmin-dark">{siteSummary.brand}</p>
-          <p class="mt-4 text-base leading-7 text-argmin-mid">{siteSummary.description}</p>
-          <div class="mt-6 flex flex-wrap gap-3">
-            <a href="/demo" class="button-primary text-sm">Request a Demo</a>
-            <a href="/contact" class="button-secondary text-sm">Contact Us</a>
-          </div>
+  <footer class="px-6 pb-10 pt-12 md:px-8 md:pb-12">
+    <div class="site-shell section-divider pt-8">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-8">
+        <div class="flex items-center gap-4 text-sm text-argmin-light">
+          <p class="site-wordmark text-argmin-dark">{siteSummary.brand}</p>
+          <p>&copy; 2026 Argmin</p>
         </div>
 
-        <div class="grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
-          {footerGroups.map((group) => (
-            <div>
-              <p class="section-kicker">{group.title}</p>
-              <ul class="mt-5 space-y-3">
-                {group.links.map((link) => (
-                  <li>
-                    <a
-                      href={link.href}
-                      class="text-base leading-7 text-argmin-mid transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm"
-                      target={link.href.startsWith("http") ? "_blank" : undefined}
-                      rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
+        <nav aria-label="Footer">
+          <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {footerLinks.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-argmin-mid transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <div class="mt-10 flex flex-col gap-3 border-t border-argmin-border pt-6 text-sm text-argmin-light md:flex-row md:items-center md:justify-end">
-        <p>&copy; 2026 Argmin</p>
+        <a href="/contact" class="button-primary text-sm">Request a Demo</a>
       </div>
     </div>
   </footer>

@@ -1,0 +1,207 @@
+---
+interface Section {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  sections: Section[];
+  ariaLabel: string;
+}
+
+const { sections, ariaLabel } = Astro.props;
+---
+
+<nav
+  class="section-nav site-shell px-6 md:px-8"
+  aria-label={ariaLabel}
+  data-section-nav
+>
+  <div class="section-nav-inner">
+    <ul class="section-nav-list">
+      {sections.map((section) => (
+        <li>
+          <a
+            href={`#${section.id}`}
+            class="section-nav-link"
+            data-section-target={section.id}
+          >
+            {section.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .section-nav-inner {
+    border: 1px solid rgb(var(--color-argmin-border));
+    border-radius: 999px;
+    background: rgb(var(--color-argmin-surface) / 0.92);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--page-shadow-soft);
+    padding: 0.3rem 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .section-nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .section-nav-list {
+    display: flex;
+    gap: 0.25rem;
+    white-space: nowrap;
+    min-width: max-content;
+  }
+
+  .section-nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgb(var(--color-argmin-light));
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  .section-nav-link:hover,
+  .section-nav-link:focus-visible {
+    color: rgb(var(--color-argmin-dark));
+    outline: none;
+  }
+
+  .section-nav-link[data-active] {
+    color: rgb(var(--color-argmin-accent));
+    background: rgb(var(--color-argmin-accent) / 0.1);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-nav-link {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    const navs = document.querySelectorAll("[data-section-nav]");
+    navs.forEach(function (nav) {
+      const links = nav.querySelectorAll("[data-section-target]");
+      if (links.length === 0) return;
+
+      const linkMap = {};
+      const sections = [];
+      links.forEach(function (link) {
+        const id = link.getAttribute("data-section-target");
+        if (!id) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        linkMap[id] = link;
+        sections.push(target);
+      });
+
+      if (sections.length === 0) return;
+
+      const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const navScrollContainer = nav.querySelector(".section-nav-inner");
+
+      function prefersReducedMotion() {
+        return reducedMotionMedia.matches;
+      }
+
+      function scrollLinkIntoView(link, isClick) {
+        if (!navScrollContainer) return;
+        // Only auto-scroll the pill bar when the active link is actually out of
+        // view horizontally. This avoids continuous smooth-scroll jank on every
+        // IntersectionObserver update during normal page scrolling.
+        const containerRect = navScrollContainer.getBoundingClientRect();
+        const linkRect = link.getBoundingClientRect();
+        const outOfView =
+          linkRect.left < containerRect.left + 8 ||
+          linkRect.right > containerRect.right - 8;
+        if (!outOfView && !isClick) return;
+        try {
+          link.scrollIntoView({
+            behavior: isClick && !prefersReducedMotion() ? "smooth" : "auto",
+            inline: "center",
+            block: "nearest",
+          });
+        } catch (e) {}
+      }
+
+      function setActive(id, isClick) {
+        links.forEach(function (l) {
+          l.removeAttribute("data-active");
+          l.removeAttribute("aria-current");
+        });
+        if (linkMap[id]) {
+          linkMap[id].setAttribute("data-active", "true");
+          linkMap[id].setAttribute("aria-current", "location");
+          scrollLinkIntoView(linkMap[id], Boolean(isClick));
+        }
+      }
+
+      const observer = new IntersectionObserver(
+        function (entries) {
+          // Pick the entry closest to the top of the viewport that is intersecting
+          const visible = entries
+            .filter(function (e) { return e.isIntersecting; })
+            .sort(function (a, b) {
+              return a.boundingClientRect.top - b.boundingClientRect.top;
+            });
+          if (visible.length > 0) {
+            setActive(visible[0].target.id, false);
+          }
+        },
+        {
+          rootMargin: "-15% 0px -70% 0px",
+          threshold: 0,
+        },
+      );
+
+      sections.forEach(function (section) { observer.observe(section); });
+
+      // Click handling: smooth scroll to target and immediately mark active
+      links.forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          const id = link.getAttribute("data-section-target");
+          if (!id) return;
+          const target = document.getElementById(id);
+          if (!target) return;
+          e.preventDefault();
+          setActive(id, true);
+          const top = target.getBoundingClientRect().top + window.scrollY - 24;
+          window.scrollTo({
+            top: top,
+            behavior: prefersReducedMotion() ? "auto" : "smooth",
+          });
+          history.replaceState(null, "", "#" + id);
+        });
+      });
+
+      // Set initial active from hash or first section
+      const hashId = window.location.hash.replace("#", "");
+      if (hashId && linkMap[hashId]) {
+        setActive(hashId, false);
+      } else {
+        setActive(sections[0].id, false);
+      }
+    });
+  })();
+</script>

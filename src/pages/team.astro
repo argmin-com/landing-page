@@ -11,10 +11,10 @@ const founders = [
     webp: "/richard.webp",
     jpg: "/richard.jpg",
     bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. He saw firsthand that AI cost attribution needs an identity-resolved, graph-based approach embedded in the deployment path.",
-    highlights: [
-      "$357M annual infrastructure savings delivered at Amazon.",
-      "Built global data platforms used across large engineering organizations.",
-      "Focused on making cost ownership operational, not retrospective.",
+    stats: [
+      { value: "$357M", label: "infra savings" },
+      { value: "3", label: "enterprise orgs" },
+      { value: "10+", label: "years in cost infra" },
     ],
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
@@ -25,10 +25,10 @@ const founders = [
     webp: "/charlotte.webp",
     jpg: "/charlotte.jpg",
     bio: "Charlotte brings deep expertise in AI systems from Oxford and the European Space Agency. She designed Argmin's reconciliation and attribution architecture to operate inside customer trust boundaries with read-only deployment.",
-    highlights: [
-      "Deep reinforcement learning background applied to attribution and routing.",
-      "Designed the confidence-scored reconciliation engine behind Argmin.",
-      "Built for customer environments where governance constraints are real.",
+    stats: [
+      { value: "Oxford", label: "+ ESA research" },
+      { value: "0.97", label: "model confidence" },
+      { value: "Zero-write", label: "deploy posture" },
     ],
     linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
   },
@@ -47,24 +47,21 @@ const founders = [
       title="Built by operators, not observers."
       lede="We have worked inside the infrastructure that creates this problem: cloud-scale cost ownership, security governance, and AI deployment. Argmin exists because we saw the gap from inside the systems that create it."
       actions={[
-        { href: "/contact", label: "Get in touch" },
-        { href: "/platform", label: "See the platform", variant: "secondary" },
+        { href: "/contact", label: "Request a Demo" },
+        { href: "/contact", label: "Contact Us", variant: "secondary" },
       ]}
     />
 
     <section class="px-6 pb-10 md:pb-14">
       <div class="site-shell section-divider pt-10">
-        <div class="page-section-intro mx-auto mb-8 max-w-4xl text-center">
-          <p class="section-kicker">Founders</p>
-          <p class="text-base leading-8 text-argmin-mid md:text-lg">
-            The founding team responds directly and brings operating experience from the systems where cloud cost ownership and AI deployment already intersect.
-          </p>
+        <div class="mx-auto max-w-4xl">
+          <p class="section-kicker text-center">Founders</p>
         </div>
 
-        <div class="mx-auto grid max-w-4xl gap-8 md:grid-cols-2">
+        <div class="mx-auto mt-10 grid max-w-5xl gap-8 md:grid-cols-2">
           {founders.map((founder) => (
             <article class="surface-panel overflow-hidden px-6 pb-10 pt-8 md:px-8">
-              <div class="flex items-start gap-5">
+              <div class="flex items-start gap-6">
                 <a
                   href={founder.linkedin}
                   target="_blank"
@@ -77,9 +74,9 @@ const founders = [
                     <img
                       src={founder.jpg}
                       alt={founder.alt}
-                      class="h-28 w-20 rounded-2xl object-cover shadow-[0_12px_30px_rgba(0,0,0,0.2)] grayscale transition-[filter] duration-300 group-hover:grayscale-0 md:h-36 md:w-24"
-                      width="96"
-                      height="144"
+                      class="h-[120px] w-[120px] rounded-2xl object-cover shadow-[0_12px_30px_rgba(0,0,0,0.2)] grayscale transition-all duration-300 group-hover:grayscale-0 group-hover:shadow-[0_16px_40px_rgba(0,0,0,0.25)]"
+                      width="120"
+                      height="120"
                       loading="lazy"
                     />
                   </picture>
@@ -102,43 +99,24 @@ const founders = [
                   <p class="mt-1.5 text-base font-semibold text-argmin-accent">{founder.title}</p>
                 </div>
               </div>
-              <p class="mt-8 text-base leading-8 text-argmin-mid">{founder.bio}</p>
-              <ul class="mt-6 grid gap-3">
-                {founder.highlights.map((highlight) => (
-                  <li class="rounded-2xl border border-argmin-border bg-argmin-surface-alt/45 px-4 py-3 text-sm leading-7 text-argmin-dark">
-                    {highlight}
-                  </li>
+
+              <p class="mt-6 text-base leading-8 text-argmin-mid">{founder.bio}</p>
+
+              <div class="mt-8 flex flex-wrap gap-6 border-t border-argmin-border pt-6">
+                {founder.stats.map((stat) => (
+                  <div class="text-center">
+                    <p class="font-mono text-xl font-semibold tracking-[-0.02em] text-argmin-accent md:text-2xl">{stat.value}</p>
+                    <p class="mt-1 text-xs text-argmin-light">{stat.label}</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </article>
           ))}
         </div>
-      </div>
-    </section>
 
-    <section class="px-6 pb-10 md:pb-14">
-      <div class="site-shell">
-        <div class="mx-auto max-w-4xl">
-          <div class="page-section-shell px-6 py-8 md:px-10 md:py-10">
-            <p class="section-kicker mb-4">Why Now</p>
-            <p class="text-base leading-8 text-argmin-dark md:text-lg">
-              Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.
-            </p>
-            <div class="mt-6 grid gap-4 md:grid-cols-3">
-              <div class="rounded-lg border border-argmin-border px-4 py-3">
-                <p class="text-sm font-semibold text-argmin-dark">Distributed systems</p>
-                <p class="mt-1 text-sm leading-6 text-argmin-mid">We built and operated the infrastructure that creates this problem at enterprise scale.</p>
-              </div>
-              <div class="rounded-lg border border-argmin-border px-4 py-3">
-                <p class="text-sm font-semibold text-argmin-dark">Security-first architecture</p>
-                <p class="mt-1 text-sm leading-6 text-argmin-mid">Read-only connectors, inside-environment deployment, and trust boundary design from day one.</p>
-              </div>
-              <div class="rounded-lg border border-argmin-border px-4 py-3">
-                <p class="text-sm font-semibold text-argmin-dark">AI-native approach</p>
-                <p class="mt-1 text-sm leading-6 text-argmin-mid">Graph-based attribution built specifically for AI workloads, not retrofitted onto cloud cost tools.</p>
-              </div>
-            </div>
-          </div>
+        <div class="mx-auto mt-12 flex max-w-4xl flex-wrap justify-center gap-3">
+          <a href="/contact" class="button-primary">Request a Demo</a>
+          <a href="/contact" class="button-secondary">Contact Us</a>
         </div>
       </div>
     </section>
