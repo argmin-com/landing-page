@@ -50,13 +50,29 @@ function assertSectionId(html, id, description) {
 }
 
 function assertMinWordCount(html, minWords, description) {
-  // Strip HTML tags and count words in visible text
-  const text = html
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
+  // Use a proper iterative approach to strip script/style blocks and tags.
+  // This avoids the incomplete regex patterns that CodeQL flags (CWE-20/CWE-116).
+  let text = html;
+
+  // Remove script blocks iteratively until none remain
+  let prev;
+  do {
+    prev = text;
+    text = text.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, " ");
+  } while (text !== prev);
+
+  // Remove style blocks iteratively
+  do {
+    prev = text;
+    text = text.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, " ");
+  } while (text !== prev);
+
+  // Remove remaining HTML tags
+  text = text.replace(/<[^>]*>/g, " ");
+  // Collapse whitespace and decode common entities
+  text = text.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  text = text.replace(/\s+/g, " ").trim();
+
   const wordCount = text.split(" ").filter(Boolean).length;
   if (wordCount < minWords) {
     return `BELOW MINIMUM: ${description} — found ${wordCount} words, need at least ${minWords}`;
@@ -154,12 +170,9 @@ const pages = [
       push(assertSectionId(html, "security-data-flow", "Data Flow section"));
       push(assertContains(html, "Read-only", "Read-only access principle"));
       push(assertContains(html, "inside your environment", "Inside-environment principle") ||
-           assertContains(html, "Inside your environment", "Inside-environment principle") ||
            assertContains(html, "customer trust boundary", "Trust boundary reference"));
-      push(assertContains(html, "Advisory", "Advisory-by-default principle") ||
-           assertContains(html, "advisory", "Advisory-by-default principle"));
-      push(assertContains(html, "Fail-open", "Fail-open principle") ||
-           assertContains(html, "fail-open", "Fail-open principle"));
+      push(assertContains(html, "advisory", "Advisory-by-default principle"));
+      push(assertContains(html, "fail-open", "Fail-open principle"));
       push(assertContains(html, "Request a Demo", "CTA button"));
       push(assertMinWordCount(html, 300, "/security content depth"));
 

@@ -16,19 +16,18 @@ const SRC_DIR = "src";
 // Patterns that indicate hardcoded colors bypassing the token system.
 // These should be replaced with argmin-* token classes or CSS variables.
 const FORBIDDEN_PATTERNS = [
-  // Hardcoded Tailwind color classes (non-argmin)
-  { pattern: /\b(?:text|bg|border|ring|from|to|via)-(?:amber|green|red|blue|yellow|orange|purple|pink|indigo|teal|cyan|emerald|lime|rose|fuchsia|violet|sky|slate|gray|zinc|neutral|stone)-\d{2,3}\b/g,
+  // Hardcoded Tailwind color classes (non-argmin), including fill/stroke/decoration/etc.
+  { pattern: /\b(?:text|bg|border|ring|from|to|via|fill|stroke|decoration|accent|caret|outline)-(?:(?:amber|green|red|blue|yellow|orange|purple|pink|indigo|teal|cyan|emerald|lime|rose|fuchsia|violet|sky|slate|gray|zinc|neutral|stone)-\d{2,3}|black|white|transparent)\b/g,
     message: "Hardcoded Tailwind color class — use argmin-* tokens instead",
-    // Allow these specific patterns that are intentional/approved
     allowlist: [],
   },
-  // Inline hex colors in style attributes
-  { pattern: /style="[^"]*(?:#[0-9a-fA-F]{3,8}|rgb\s*\(|rgba\s*\(|hsl\s*\()/g,
+  // Inline hex colors in style attributes (HTML string or JSX object syntax)
+  { pattern: /style=(?:"[^"]*|\{\{[^}]*)(?:#[0-9a-fA-F]{3,8}|rgb\s*\(|rgba\s*\(|hsl\s*\()/g,
     message: "Inline hardcoded color in style attribute — use CSS variable",
     allowlist: [],
   },
   // Hardcoded color values in Tailwind arbitrary value syntax
-  { pattern: /\b(?:text|bg|border)-\[#[0-9a-fA-F]{3,8}\]/g,
+  { pattern: /\b(?:text|bg|border|fill|stroke)-\[#[0-9a-fA-F]{3,8}\]/g,
     message: "Hardcoded hex in Tailwind arbitrary value — use token class",
     allowlist: [],
   },
@@ -67,7 +66,7 @@ for (const file of files) {
     const line = lines[lineNum];
 
     // Skip HTML comments and CSS variable definitions
-    if (line.trim().startsWith("<!--") || line.trim().startsWith("/*") || line.includes("--color-argmin")) {
+    if (line.trim().startsWith("<!--") || line.trim().startsWith("/*") || line.trim().startsWith("//") || line.includes("--color-argmin")) {
       continue;
     }
 
