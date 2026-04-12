@@ -73,6 +73,12 @@ jobs:
       - name: Validate contact fallbacks
         run: npm run validate:contact-fallbacks
 
+      - name: Validate page structure
+        run: npm run validate:page-structure
+
+      - name: Validate design tokens
+        run: npm run validate:design-tokens
+
       - name: Build configured contact site
         run: npm run build
         env:
