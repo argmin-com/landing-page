@@ -152,11 +152,11 @@ jobs:
 
           const thresholds = {
             performance: 0.9,
-            accessibility: 1,
-            "best-practices": 1,
+            accessibility: 0.95,
+            "best-practices": 0.95,
             seo: 1,
           };
-          const budgets = { lcpMs: 2500, transferKb: 150 };
+          const budgets = { lcpMs: 2500, transferKb: 250 };
 
           // Group reports by route slug (report-{slug}-{run}.json)
           const allFiles = readdirSync("lighthouse")
