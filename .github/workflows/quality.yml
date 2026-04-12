@@ -122,7 +122,7 @@ jobs:
       - name: Run Lighthouse (multi-route)
         run: |
           mkdir -p lighthouse
-          ROUTES="/ /platform /use-cases /contact /security"
+          ROUTES="/ /platform/ /use-cases/ /contact/ /security/"
 
           for route in $ROUTES; do
             slug=$(echo "$route" | sed 's|/|_|g; s|^_||')

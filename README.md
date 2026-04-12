@@ -42,7 +42,7 @@ Current Astro routes in `src/pages/`:
 
 ## Key UX Patterns
 
-- **SectionNav**: Sticky horizontal pill bar with IntersectionObserver-based active highlighting. Applied to `/platform` and `/privacy`.
+- **SectionNav**: Sticky horizontal pill bar with IntersectionObserver-based active highlighting. Applied to `/platform`, `/privacy`, `/use-cases`, and `/security`.
 - **Tabbed sections**: `/platform` uses tabs to consolidate Before/After, Comparison, and Why Current Tools Fail into one section. `/use-cases` uses tabs for persona switching (desktop) that collapse to stacked panels on mobile (<768px) with proper ARIA role swapping.
 - **Decision Rule collapse**: Mathematical notation hidden behind `<details>/<summary>` on `/platform`, showing plain-English summary by default.
 - **ContactForm**: Intent radio (demo/question), essential fields visible, optional qualification fields in collapsible `<details>`.
