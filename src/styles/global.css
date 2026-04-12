@@ -67,8 +67,8 @@ main > section:first-of-type {
   padding-top: 0;
 }
 
-main > section .section-divider > section,
-main > section .section-divider > div > section {
+main > section :is(section, article).section-divider,
+main > section .section-divider > :is(section, article, div) {
   padding-block: var(--subsection-gap);
 }
 

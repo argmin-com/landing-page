@@ -10,8 +10,11 @@ const routes = [
 for (const route of routes) {
   test(`${route.name} page renders correctly`, async ({ page }) => {
     await page.goto(route.path, { waitUntil: "networkidle" });
-    // Wait for animations to settle
-    await page.waitForTimeout(500);
+    // Disable all animations and transitions for deterministic screenshots
+    await page.addStyleTag({
+      content:
+        "*, *::before, *::after { animation: none !important; transition: none !important; }",
+    });
     await expect(page).toHaveScreenshot(`${route.name}.png`, {
       fullPage: true,
       maxDiffPixelRatio: 0.02,
