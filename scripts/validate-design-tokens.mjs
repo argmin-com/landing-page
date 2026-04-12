@@ -2,8 +2,8 @@
  * Design Token Validator
  *
  * Scans source .astro files for hardcoded color values that bypass the
- * design token system. Reports non-token colors found in component or
- * page markup and currently runs in warning mode during cleanup.
+ * design token system. Fails CI if non-token colors are found in
+ * component or page markup.
  *
  * See docs/design-system.md for the approved token palette.
  */
