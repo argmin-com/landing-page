@@ -8,8 +8,9 @@ tmp
 .playwright-cli
 output
 
-# claude code worktrees
-.claude/
+# claude code (track project settings, ignore everything else)
+.claude/*
+!.claude/settings.json
 .codex/
 
 # wrangler files
