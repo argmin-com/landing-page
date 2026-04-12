@@ -15,8 +15,11 @@
     "validate:contact-configured": "node scripts/validate-contact-configured.mjs",
     "validate:redirects": "node scripts/validate-redirects.mjs",
     "validate:navbar": "node scripts/validate-navbar.mjs",
-    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar",
-    "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page"
+    "validate:canonical": "node scripts/validate-canonical-urls.mjs",
+    "validate:formspree-health": "node scripts/validate-formspree-health.mjs",
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar && npm run validate:canonical",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page",
+    "postinstall": "npx simple-git-hooks"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
@@ -26,8 +29,12 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
     "wrangler": "^4.81.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm run check"
   },
   "overrides": {
     "yaml": ">=2.8.3"
