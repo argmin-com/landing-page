@@ -27,8 +27,9 @@ Run `npm run audit:site` locally to approximate the Lighthouse gate.
 - `src/components/ContactForm.astro` — shared form (3+ pages, HTML5 validation, honeypot, fail-closed Formspree)
 - `src/content/site.ts` — navigation + footer config
 - `src/styles/global.css` — theme tokens
-- `astro.config.mjs` — site URL (`https://argmin.co`), Tailwind Vite plugin
+- `astro.config.mjs` — site URL (`https://argmin.co`), Tailwind Vite plugin, @astrojs/sitemap
 - `public/_headers` — Cloudflare security headers
+- `wrangler.jsonc` — Cloudflare Workers config (observability traces enabled)
 
 ## Formspree Contract
 
@@ -38,24 +39,33 @@ The contact form requires `PUBLIC_FORMSPREE_URL`. When absent or invalid, the UI
 
 Skills installed globally at `~/.claude/skills/`:
 - **GSD** (65+ skills) — planning, execution, code review, verification workflows
-- **UI UX Pro Max** — auto-activating design intelligence (styles, palettes, typography)
-- **frontend-design** — opinionated visual design workflow (ECC)
-- **seo** — technical SEO audit and implementation (ECC)
-- **design-system** — generate/audit design tokens and visual consistency (ECC)
-- **browser-qa** — automated visual testing and interaction verification (ECC)
-- **e2e-testing** — Playwright patterns, POM, CI/CD integration (ECC)
-- **security-review** — OWASP checklist, input validation, secrets management (ECC)
-- **brand-voice** — source-derived writing style profiles (ECC)
+- **UI UX Pro Max** — auto-activating design intelligence (67 styles, 96 palettes, 57 font pairings, 13 tech stacks)
+- **frontend-design** — opinionated visual design workflow (ECC, self-contained)
+- **seo** — technical SEO audit and implementation (ECC, self-contained)
+- **design-system** — generate/audit design tokens and visual consistency (ECC, self-contained)
+- **browser-qa** — automated visual testing and interaction verification (ECC, self-contained)
+- **e2e-testing** — Playwright patterns, POM, CI/CD integration (ECC, self-contained)
+- **security-review** — OWASP checklist, input validation, secrets management (ECC, self-contained)
+- **brand-voice** — source-derived writing style profiles (ECC, self-contained)
+- **defuddle** — extract clean markdown from web pages, stripping clutter to save tokens
+
+Rules at `~/.claude/rules/`:
+- `web/design-quality.md` — anti-template policy; bans generic AI UI patterns (ECC)
+- `typescript/patterns.md` — TypeScript idioms and type design (ECC)
+- `common/security.md`, `patterns.md`, `testing.md`, `performance.md`, `coding-style.md`, `git-workflow.md` (ECC)
 
 Plugins:
-- **Claude Mem** — persistent cross-session memory (MCP search/timeline tools)
-- **Superpowers** — structured development workflow (brainstorm, plan, TDD, review)
+- **Claude Mem** — persistent cross-session memory (MCP search/timeline/corpus tools)
+- **Superpowers** — structured development workflow (brainstorm, plan, TDD, review, 14 composable skills)
 
 Hooks (settings.json):
-- **Stop** — blocks session end if tree is dirty or commits are unpushed
+- **Stop** — console.log check + blocks session end if tree is dirty or commits are unpushed
 - **SessionStart** — GSD update check + session state restore
-- **Pre/PostToolUse** — GSD guards (prompt, read, workflow, commit validation, context monitor, phase boundary)
+- **PreToolUse** — block-no-verify (vendored, blocks `--no-verify`/`core.hooksPath` bypass), config-protection (blocks linter/formatter config weakening), GSD guards (prompt, read, workflow, commit validation)
+- **PostToolUse** — GSD context monitor + phase boundary, design-quality-check (warns on generic template drift in `.astro`/`.css`/`.tsx` files)
 - **statusLine** — GSD project status
+
+Design system generated at `design-system/argmin/MASTER.md` via UI UX Pro Max.
 
 ## Project-Specific Rules
 
