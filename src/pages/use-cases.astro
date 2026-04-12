@@ -14,6 +14,7 @@ const roles = [
     label: "Engineering",
     question: "Which service or release changed the bill, and can we catch that before production?",
     trigger: "A deployment doubles inference cost overnight. No one knows which service or model change caused it.",
+    moment: "A model-route change shows projected monthly delta before the PR is approved.",
     signals: [
       "Cloud telemetry",
       "Source control",
@@ -30,6 +31,7 @@ const roles = [
     label: "Finance / FinOps",
     question: "Who owns this spend and which budget actually absorbs it?",
     trigger: "The board asks for AI ROI by business unit. Finance has invoice totals and no way to break them down.",
+    moment: "Approvers see owner, budget, and lower-cost alternatives before rollout.",
     signals: [
       "Billing exports",
       "Budget hierarchy",
@@ -46,6 +48,7 @@ const roles = [
     label: "Security",
     question: "Which identities and workflows can create ungoverned model spend inside our environment?",
     trigger: "An audit reveals service accounts with uncapped model access and no approval flow attached.",
+    moment: "A spend spike resolves to the exact service, team, and deploy that caused it.",
     signals: [
       "SSO / IAM",
       "Service accounts",
@@ -78,8 +81,8 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
   <main id="main-content">
     <PageHero
       eyebrow="Use Cases"
-      title="Three buyers. One decision layer."
-      lede="Different stakeholders come with different questions. Argmin meets each where they are while relying on a single, unified attribution layer underneath."
+      title="One platform. Every stakeholder's question answered."
+      lede="Engineering wants to catch regressions before production. Finance needs spend tied to owners and budgets. Security requires governance without broadening the attack surface. Argmin serves all three from a single attribution layer."
       notes={[
         { label: "Engineering", value: "Catch model-route regressions before they land in production." },
         { label: "Finance / FinOps", value: "Move from invoice totals to accountable budget decisions." },
@@ -137,9 +140,10 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
             <p class="role-panel-mobile-label section-kicker text-argmin-accent">{role.label}</p>
             <div>
               <h3 class="section-title-lg max-w-xl">{role.question}</h3>
+              <p class="mt-4 text-base leading-8 text-argmin-accent font-medium">{role.moment}</p>
 
-              <div class="mt-6 rounded-xl border-l-[3px] border-l-amber-500 border border-argmin-border bg-amber-50/50 p-5 dark:bg-amber-950/20 dark:border-amber-800/40">
-                <p class="text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400">What forces action</p>
+              <div class="mt-6 rounded-xl border-l-[3px] border-l-argmin-warning border border-argmin-border bg-argmin-warning-surface/50 p-5">
+                <p class="text-xs font-semibold uppercase tracking-[0.18em]" style={`color: rgb(var(--color-argmin-warning))`}>What forces action</p>
                 <p class="mt-2 text-base leading-7 text-argmin-dark">{role.trigger}</p>
               </div>
             </div>
@@ -323,8 +327,8 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
 
         <ul class="mx-auto mt-10 grid max-w-3xl gap-4">
           {bestFit.map((item) => (
-            <li class="flex items-start gap-4 rounded-xl border border-argmin-border bg-argmin-surface/80 p-5">
-              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-green-600" aria-hidden="true">
+            <li class="flex items-start gap-4 rounded-xl border border-argmin-border bg-argmin-surface/80 p-5 transition-transform duration-200 hover:translate-y-[-2px]">
+              <svg viewBox="0 0 24 24" class="mt-0.5 h-5 w-5 shrink-0 text-argmin-success" aria-hidden="true">
                 <path d="M5 12l5 5 9-10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
               <span class="text-base leading-7 text-argmin-dark">{item}</span>
@@ -332,7 +336,11 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
           ))}
         </ul>
 
-        <div class="mx-auto mt-10 flex max-w-3xl flex-wrap gap-3">
+        <p class="mx-auto mt-8 max-w-3xl text-center text-base leading-8 text-argmin-mid">
+          Start with the stakeholder already feeling the pain — usually an engineering owner plus finance or FinOps, and sometimes security when approval or access controls are part of the problem.
+        </p>
+
+        <div class="mx-auto mt-8 flex max-w-3xl flex-wrap justify-center gap-3">
           <a href="/contact" class="button-primary">Request a Demo</a>
           <a href="/contact" class="button-secondary">Contact Us</a>
         </div>

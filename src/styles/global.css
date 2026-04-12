@@ -11,6 +11,10 @@
   --color-argmin-surface: rgb(var(--color-argmin-surface));
   --color-argmin-surface-alt: rgb(var(--color-argmin-surface-alt));
   --color-argmin-border: rgb(var(--color-argmin-border));
+  --color-argmin-success: rgb(var(--color-argmin-success));
+  --color-argmin-warning: rgb(var(--color-argmin-warning));
+  --color-argmin-warning-surface: rgb(var(--color-argmin-warning-surface));
+  --color-argmin-danger: rgb(var(--color-argmin-danger));
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
@@ -33,6 +37,10 @@
   --page-shadow-strong: 0 28px 70px rgba(15, 23, 42, 0.12);
   --section-gap: 6rem;
   --subsection-gap: 3rem;
+  --color-argmin-success: 22 163 74;
+  --color-argmin-warning: 217 119 6;
+  --color-argmin-warning-surface: 255 251 235;
+  --color-argmin-danger: 220 38 38;
 }
 
 @media (max-width: 768px) {
@@ -89,6 +97,10 @@ html[data-theme="dark"] {
   --page-glow-tertiary: 73 86 124;
   --page-shadow-soft: 0 26px 80px rgba(0, 0, 0, 0.28);
   --page-shadow-strong: 0 40px 100px rgba(0, 0, 0, 0.42);
+  --color-argmin-success: 74 222 128;
+  --color-argmin-warning: 251 191 36;
+  --color-argmin-warning-surface: 30 25 12;
+  --color-argmin-danger: 248 113 113;
 }
 
 html {

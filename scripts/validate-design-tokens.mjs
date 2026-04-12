@@ -19,7 +19,8 @@ const FORBIDDEN_PATTERNS = [
   // Hardcoded Tailwind color classes (non-argmin), including fill/stroke/decoration/etc.
   { pattern: /\b(?:text|bg|border|ring|from|to|via|fill|stroke|decoration|accent|caret|outline)-(?:(?:amber|green|red|blue|yellow|orange|purple|pink|indigo|teal|cyan|emerald|lime|rose|fuchsia|violet|sky|slate|gray|zinc|neutral|stone)-\d{2,3}|black|white|transparent)\b/g,
     message: "Hardcoded Tailwind color class — use argmin-* tokens instead",
-    allowlist: [],
+    // border-transparent is a Tailwind utility for invisible borders, not a color
+    allowlist: ["border-transparent"],
   },
   // Inline hex colors in style attributes (HTML string or JSX object syntax)
   { pattern: /style=(?:"[^"]*|\{\{[^}]*)(?:#[0-9a-fA-F]{3,8}|rgb\s*\(|rgba\s*\(|hsl\s*\()/g,
@@ -100,10 +101,7 @@ if (violations.length > 0) {
   console.error(`\n${violations.length} violation(s). See docs/design-system.md.`);
   console.error("Replace hardcoded colors with argmin-* token classes or add");
   console.error("semantic tokens (--color-argmin-success, etc.) to global.css.");
-  // Warn but don't fail CI yet — existing code has violations that need
-  // to be cleaned up. Change to process.exit(1) once violations are resolved.
-  console.error("\n⚠ Running in warning mode. Will become a hard gate after cleanup.");
-  process.exit(0);
+  process.exit(1);
 } else {
   console.log("Design token validation passed — no hardcoded colors found.");
 }
