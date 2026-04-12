@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://argmin.co/sitemap.xml
+Sitemap: https://argmin.co/sitemap-index.xml

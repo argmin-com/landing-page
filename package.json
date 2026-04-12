@@ -19,6 +19,7 @@
     "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.2",
     "astro": "^6.1.5",
     "tailwindcss": "^4.2.2"
