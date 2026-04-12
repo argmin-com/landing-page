@@ -21,7 +21,7 @@ try {
   });
   clearTimeout(timeout);
 
-  if (response.status >= 500) {
+  if (response.status === 404 || response.status >= 500) {
     console.error(`Formspree health check failed: endpoint returned ${response.status} ${response.statusText}`);
     process.exit(1);
   }

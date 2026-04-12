@@ -17,7 +17,7 @@
     "validate:navbar": "node scripts/validate-navbar.mjs",
     "validate:canonical": "node scripts/validate-canonical-urls.mjs",
     "validate:formspree-health": "node scripts/validate-formspree-health.mjs",
-    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar && npm run validate:canonical",
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar && npm run validate:canonical && npm run validate:formspree-health",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page",
     "postinstall": "npx simple-git-hooks"
   },

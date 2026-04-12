@@ -1,6 +1,7 @@
 /**
  * Validates that every built HTML page has a <link rel="canonical"> tag
- * pointing at the correct https://argmin.co route.
+ * pointing at the correct https://argmin.co route, derived from the
+ * file's position in the dist/ tree.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve, join, relative } from "node:path";
@@ -14,7 +15,7 @@ function findHtmlFiles(dir) {
     const full = join(dir, entry.name);
     if (entry.isDirectory() && entry.name !== "_astro") {
       files.push(...findHtmlFiles(full));
-    } else if (entry.name === "index.html") {
+    } else if (entry.name.endsWith(".html")) {
       files.push(full);
     }
   }
@@ -26,10 +27,14 @@ const failures = [];
 
 for (const file of htmlFiles) {
   const content = readFileSync(file, "utf8");
-  const label = relative(distDir, file);
+  const label = relative(distDir, file).replace(/\\/g, "/");
 
-  // Skip redirect stubs (meta-refresh pages like /demo/index.html)
+  // Skip redirect stubs (meta-refresh pages like demo/index.html)
   if (content.includes('http-equiv="refresh"')) continue;
+
+  // Skip non-page HTML files: 404.html, generated diagrams/assets in subdirs
+  if (label === "404.html") continue;
+  if (!label.endsWith("index.html")) continue;
 
   const match = content.match(/<link\s+rel="canonical"\s+href="([^"]+)"/);
   if (!match) {
@@ -37,9 +42,15 @@ for (const file of htmlFiles) {
     continue;
   }
 
+  // Derive expected canonical from file path:
+  // "about/index.html" → "/about/"
+  // "index.html" → "/"
+  const route = "/" + label.replace(/index\.html$/, "").replace(/\.html$/, "");
+  const expectedCanonical = `${SITE}${route}`;
+
   const canonical = match[1];
-  if (!canonical.startsWith(SITE)) {
-    failures.push(`${label}: canonical "${canonical}" does not start with ${SITE}`);
+  if (canonical !== expectedCanonical) {
+    failures.push(`${label}: expected canonical "${expectedCanonical}", found "${canonical}"`);
   }
 }
 
