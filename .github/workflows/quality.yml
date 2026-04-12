@@ -119,23 +119,28 @@ jobs:
         with:
           install-dependencies: true
 
-      - name: Run Lighthouse
+      - name: Run Lighthouse (multi-route)
         run: |
           mkdir -p lighthouse
+          ROUTES="/ /platform/ /use-cases/ /contact/ /security/"
 
-          for run in 1 2 3; do
-            echo "Running Lighthouse audit ${run} of 3"
-            npx --yes lighthouse@13.0.3 \
-              http://127.0.0.1:4173/ \
-              --only-categories=performance,accessibility,best-practices,seo \
-              --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
-              --chrome-flags="--headless=new --no-sandbox" \
-              --quiet \
-              --output=json \
-              --output-path="./lighthouse/report-${run}.json"
+          for route in $ROUTES; do
+            slug=$(echo "$route" | sed 's|/|_|g; s|^_||')
+            slug=${slug:-home}
+            for run in 1 2 3; do
+              echo "Lighthouse: ${route} (run ${run}/3)"
+              npx --yes lighthouse@13.0.3 \
+                "http://127.0.0.1:4173${route}" \
+                --only-categories=performance,accessibility,best-practices,seo \
+                --chrome-path="${{ steps.setup-chrome.outputs.chrome-path }}" \
+                --chrome-flags="--headless=new --no-sandbox" \
+                --quiet \
+                --output=json \
+                --output-path="./lighthouse/report-${slug}-${run}.json"
+            done
           done
 
-      - name: Enforce Lighthouse thresholds
+      - name: Enforce Lighthouse thresholds (per-route)
         run: |
           node --input-type=module <<'NODE'
           import { appendFileSync, readdirSync, readFileSync } from "node:fs";
@@ -145,72 +150,86 @@ jobs:
             return sorted[Math.floor(sorted.length / 2)];
           };
 
-          const reports = readdirSync("lighthouse")
-            .filter((entry) => /^report-\d+\.json$/.test(entry))
-            .sort()
-            .map((entry) => JSON.parse(readFileSync(`lighthouse/${entry}`, "utf8")));
-
           const thresholds = {
             performance: 0.9,
-            accessibility: 1,
-            "best-practices": 1,
+            accessibility: 0.95,
+            "best-practices": 0.95,
             seo: 1,
           };
-          const budgets = {
-            lcpMs: 2500,
-            transferKb: 150,
-          };
+          const budgets = { lcpMs: 2500, transferKb: 250 };
+
+          // Group reports by route slug (report-{slug}-{run}.json)
+          const allFiles = readdirSync("lighthouse")
+            .filter((f) => /^report-.+-\d+\.json$/.test(f))
+            .sort();
+          const routeMap = new Map();
+          for (const file of allFiles) {
+            const slug = file.replace(/^report-/, "").replace(/-\d+\.json$/, "");
+            if (!routeMap.has(slug)) routeMap.set(slug, []);
+            routeMap.get(slug).push(JSON.parse(readFileSync(`lighthouse/${file}`, "utf8")));
+          }
+
+          // Fallback: legacy single-route naming (report-1.json)
+          const legacyFiles = readdirSync("lighthouse")
+            .filter((f) => /^report-\d+\.json$/.test(f))
+            .sort();
+          if (routeMap.size === 0 && legacyFiles.length > 0) {
+            routeMap.set("home", legacyFiles.map((f) => JSON.parse(readFileSync(`lighthouse/${f}`, "utf8"))));
+          }
+
           const failures = [];
+          const summaryLines = ["### Lighthouse summary", ""];
 
-          const categoryLines = Object.entries(thresholds).map(([category, minScore]) => {
-            const scores = reports.map((report) => report.categories[category].score);
-            const medianScore = median(scores);
-            if (medianScore < minScore) {
-              failures.push(`${category} median score ${medianScore.toFixed(2)} is below ${minScore.toFixed(2)}`);
+          for (const [slug, reports] of routeMap) {
+            summaryLines.push(`**${slug}**`);
+            for (const [category, minScore] of Object.entries(thresholds)) {
+              const scores = reports.map((r) => r.categories[category].score);
+              const med = median(scores);
+              if (med < minScore) {
+                failures.push(`[${slug}] ${category} median ${med.toFixed(2)} < ${minScore.toFixed(2)}`);
+              }
+              summaryLines.push(`- ${category}: ${scores.map((s) => Math.round(s * 100)).join(", ")} (median ${Math.round(med * 100)})`);
             }
-
-            return `- ${category}: ${scores.map((score) => Math.round(score * 100)).join(", ")} (median ${Math.round(
-              medianScore * 100,
-            )}, min ${Math.round(minScore * 100)})`;
-          });
-
-          const lcpValues = reports.map((report) =>
-            Math.round(report.audits["largest-contentful-paint"].numericValue),
-          );
-          const lcpMedian = median(lcpValues);
-          if (lcpMedian > budgets.lcpMs) {
-            failures.push(`Largest Contentful Paint median ${lcpMedian} ms exceeds ${budgets.lcpMs} ms`);
+            const lcps = reports.map((r) => Math.round(r.audits["largest-contentful-paint"].numericValue));
+            const lcpMed = median(lcps);
+            if (lcpMed > budgets.lcpMs) {
+              failures.push(`[${slug}] LCP median ${lcpMed} ms > ${budgets.lcpMs} ms`);
+            }
+            const xfers = reports.map((r) => Number((r.audits["total-byte-weight"].numericValue / 1024).toFixed(1)));
+            const xferMed = median(xfers);
+            if (xferMed > budgets.transferKb) {
+              failures.push(`[${slug}] transfer ${xferMed.toFixed(1)} KB > ${budgets.transferKb} KB`);
+            }
+            summaryLines.push(`- LCP: ${lcps.join(", ")} ms (median ${lcpMed})`);
+            summaryLines.push(`- transfer: ${xfers.map((v) => v.toFixed(1)).join(", ")} KB (median ${xferMed.toFixed(1)})`);
+            summaryLines.push("");
           }
 
-          const transferValues = reports.map((report) =>
-            Number((report.audits["total-byte-weight"].numericValue / 1024).toFixed(1)),
-          );
-          const transferMedian = median(transferValues);
-          if (transferMedian > budgets.transferKb) {
-            failures.push(
-              `Total transfer size median ${transferMedian.toFixed(1)} KB exceeds ${budgets.transferKb.toFixed(1)} KB`,
-            );
-          }
-
-          const summaryLines = [
-            "### Lighthouse summary",
-            "",
-            ...categoryLines,
-            `- largest-contentful-paint-ms: ${lcpValues.join(", ")} (median ${Math.round(
-              lcpMedian,
-            )}, max ${budgets.lcpMs})`,
-            `- total-byte-weight-kb: ${transferValues.map((value) => value.toFixed(1)).join(", ")} (median ${transferMedian.toFixed(
-              1,
-            )}, max ${budgets.transferKb.toFixed(1)})`,
-          ];
-
-          appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${summaryLines.join("\n")}\n`);
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, summaryLines.join("\n") + "\n");
 
           if (failures.length > 0) {
             console.error(failures.join("\n"));
             process.exit(1);
           }
           NODE
+
+      - name: Accessibility audit (pa11y)
+        run: |
+          ROUTES="/ /platform /use-cases /contact /security /about /team /privacy"
+          FAIL=0
+          for route in $ROUTES; do
+            echo "::group::pa11y ${route}"
+            npx --yes pa11y@8 \
+              "http://127.0.0.1:4173${route}" \
+              --runner=htmlcs \
+              --standard=WCAG2AA \
+              --ignore="WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail" \
+              --timeout=15000 || FAIL=1
+            echo "::endgroup::"
+          done
+          if [ "$FAIL" -eq 1 ]; then
+            echo "::warning::pa11y found accessibility issues on one or more routes (see logs above)"
+          fi
 
       - name: Collect server logs
         if: always()

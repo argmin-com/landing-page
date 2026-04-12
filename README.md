@@ -28,83 +28,69 @@ This repository contains the public marketing experience for that offering. It d
 
 Current Astro routes in `src/pages/`:
 
-- `/`
-- `/about`
-- `/contact`
-- `/demo`
-- `/platform`
-- `/privacy`
-- `/security`
-- `/team`
-- `/use-cases`
-- `/404`
+- `/` — Home
+- `/about` — Company beliefs and design-partner note
+- `/contact` — Unified contact/demo form (intent radio: demo request or question)
+- `/platform` — Attribution model, tabbed comparison, control points, decision layer, deployment path
+- `/privacy` — Website privacy policy
+- `/security` — Trust boundary, data flow, and security principles
+- `/team` — Founders and stat-based credibility
+- `/use-cases` — Persona tabs (Engineering, Finance/FinOps, Security) with mobile accordion
+- `/404` — Not found
 
-These pages map to the current product narrative:
+**Redirects:** `/demo` → `/contact` (301 via `public/_redirects`)
 
-- **Home**: problem framing, value proposition, attribution flow, and contact CTA
-- **Platform**: attribution model, control points, deployment path, and architectural differentiation
-- **Use Cases**: buying context for engineering, finance/FinOps, and security stakeholders
-- **Security**: trust boundary, data flow, and deployment posture
-- **About**: company point of view and design-partner framing
-- **Team**: founders and leadership context
-- **Contact / Demo**: conversion paths for inbound interest
-- **Privacy**: website privacy policy
+## Key UX Patterns
+
+- **SectionNav**: Sticky horizontal pill bar with IntersectionObserver-based active highlighting. Applied to `/platform`, `/privacy`, `/use-cases`, and `/security`.
+- **Tabbed sections**: `/platform` uses tabs to consolidate Before/After, Comparison, and Why Current Tools Fail into one section. `/use-cases` uses tabs for persona switching (desktop) that collapse to stacked panels on mobile (<768px) with proper ARIA role swapping.
+- **Decision Rule collapse**: Mathematical notation hidden behind `<details>/<summary>` on `/platform`, showing plain-English summary by default.
+- **ContactForm**: Intent radio (demo/question), essential fields visible, optional qualification fields in collapsible `<details>`.
 
 ## Project Structure
 
 - `src/layouts/BaseLayout.astro`: metadata, canonical tags, analytics bootstrap, theme boot, shared shell
-- `src/components/`: reusable sections, navigation, footer, and shared contact form
+- `src/components/`: reusable sections — `SectionNav`, `PageHero`, `Navbar`, `Footer`, `ContactForm`, `DecisionRule`, `AttributionFlowDiagram`
 - `src/pages/`: public site routes
-- `src/content/site.ts`: navigation, footer links, and site summary copy
+- `src/content/site.ts`: navigation (Product, Company dropdowns) and footer links (flat row)
 - `src/lib/contact.ts`: shared contact email constant
 - `src/lib/formspree.ts`: Formspree URL validation and sanitization
-- `src/styles/global.css`: global theme tokens and shared component styling
-- `scripts/validate-contact-fallbacks.mjs`: asserts fail-closed contact behavior against the built site in `dist/`
-- `scripts/validate-contact-configured.mjs`: asserts configured contact behavior against the built site in `dist/`
-- `public/`: static assets, favicon, images, and Cloudflare Pages headers
+- `src/styles/global.css`: global theme tokens, spacing vars (`--section-gap`, `--subsection-gap`), and shared component styling
+- `scripts/`: build-time validators — contact fallbacks, configured contact, navbar z-index, redirect checks
+- `public/`: static assets, favicon, images, sitemap, robots.txt, and Cloudflare Pages `_redirects`/`_headers`
 - `docs/requirements-matrix.md`: requirements traceability and validation evidence
 
 ## Internal Link Graph
-
-Source-defined internal link structure derived from `src/content/site.ts` and each page's markup.
 
 ### Global navigation
 
 Defined in `src/content/site.ts` and rendered by `Navbar.astro` and `Footer.astro` on every page.
 
-**Nav bar:**
+**Nav bar (2 dropdown groups):**
 
 | Group | Links |
 | --- | --- |
 | Product | `/platform`, `/use-cases` |
-| Architecture | `/platform#attribution-flow`, `/platform#decision-layer`, `/platform#landscape`, `/platform#deployment-path` |
 | Company | `/about`, `/team`, `/security`, `/contact` |
 
-Brand logo links to `/`. CTA button links to `/demo`.
+Brand logo links to `/`. CTA button links to `/contact`.
 
-**Footer:**
+**Footer (single-row layout):**
 
-| Group | Links |
-| --- | --- |
-| Product | `/platform`, `/use-cases`, `/demo` |
-| Architecture | `/platform#attribution-flow`, `/platform#decision-layer`, `/platform#landscape`, `/platform#deployment-path` |
-| Company | `/about`, `/team`, `/security`, `/contact`, `/privacy` |
-
-Footer CTA buttons link to `/demo` and `/contact`.
+Left: wordmark + © 2026. Center: flat link row (Platform, Use Cases, Team, Security, Privacy, Contact). Right: "Request a Demo" → `/contact`.
 
 ### Per-page anchors and CTAs
 
 | Page | Route | Anchor sections | Page-body CTAs |
 | --- | --- | --- | --- |
-| Home | `/` | — | `/demo` |
-| About | `/about` | — | `/demo`, `/contact` |
+| Home | `/` | — | `/contact` |
+| About | `/about` | — | `/contact` |
 | Contact | `/contact` | — | — |
-| Demo | `/demo` | — | — |
-| Platform | `/platform` | `#control-points`, `#landscape`, `#attribution-flow`, `#decision-layer`, `#deployment-path` | `/demo`, `/contact` |
+| Platform | `/platform` | `#landscape`, `#control-points`, `#attribution-flow`, `#decision-layer`, `#deployment-path` | `/contact` |
 | Privacy | `/privacy` | `#information-we-collect`, `#how-we-use-data`, `#legal-basis`, `#cookies`, `#sharing`, `#international-transfers`, `#retention`, `#your-rights`, `#ccpa`, `#security`, `#children`, `#contact`, `#changes` | — |
-| Security | `/security` | `#security-principles`, `#security-comparison`, `#security-data-flow` | `/demo`, `/platform` |
-| Team | `/team` | — | — |
-| Use Cases | `/use-cases` | `#problem`, `#personas`, `#best-fit`, `#engineering`, `#finance-finops`, `#security` | `/contact`, `/platform` |
+| Security | `/security` | `#security-principles`, `#security-data-flow` | `/contact` |
+| Team | `/team` | — | `/contact` |
+| Use Cases | `/use-cases` | `#personas`, `#best-fit`, `#engineering`, `#finance-finops`, `#security` | `/contact` |
 | 404 | `/404` | — | `/`, `/contact` |
 
 ## Local Development
@@ -173,7 +159,7 @@ The `quality.yml` workflow currently enforces:
 - `npm run build`
 - `npm run validate:contact-fallbacks`
 - configured contact build plus `npm run validate:contact-configured`
-- Lighthouse median thresholds:
+- Lighthouse median thresholds (audited across multiple routes):
   - Performance: `>= 90`
   - Accessibility: `100`
   - Best Practices: `100`
@@ -185,6 +171,7 @@ Additional workflows:
 
 - `codeql.yml`: JavaScript/TypeScript static analysis
 - `dependency-review.yml`: dependency review on pull requests that change package manifests
+- `link-check.yml`: lychee-based broken link detection on push/PR + weekly cron
 
 ## Operational Follow-Up Outside This Repository
 

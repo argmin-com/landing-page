@@ -58,6 +58,20 @@
   gap: 0.4rem;
 }
 
+/* Vertical rhythm: apply section spacing vars to page sections */
+main > section {
+  padding-block: var(--section-gap);
+}
+
+main > section:first-of-type {
+  padding-top: 0;
+}
+
+main > section :is(section, article).section-divider,
+main > section .section-divider > :is(section, article, div) {
+  padding-block: var(--subsection-gap);
+}
+
 html[data-theme="dark"] {
   color-scheme: dark;
   --color-argmin-dark: 239 243 248;
