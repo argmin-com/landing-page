@@ -9,7 +9,7 @@
  */
 
 import { readFileSync, readdirSync, statSync } from "node:fs";
-import { resolve, join, extname } from "node:path";
+import { join, extname } from "node:path";
 
 const SRC_DIR = "src";
 
