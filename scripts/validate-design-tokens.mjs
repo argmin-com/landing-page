@@ -2,8 +2,8 @@
  * Design Token Validator
  *
  * Scans source .astro files for hardcoded color values that bypass the
- * design token system. Fails CI if non-token colors are found in
- * component or page markup.
+ * design token system. Reports non-token colors found in component or
+ * page markup and currently runs in warning mode during cleanup.
  *
  * See docs/design-system.md for the approved token palette.
  */
@@ -66,7 +66,9 @@ for (const file of files) {
     const line = lines[lineNum];
 
     // Skip HTML comments and CSS variable definitions
-    if (line.trim().startsWith("<!--") || line.trim().startsWith("/*") || line.trim().startsWith("//") || line.includes("--color-argmin")) {
+    // Skip comment lines and CSS variable definition lines (--color-argmin-*: value)
+    const trimmed = line.trim();
+    if (trimmed.startsWith("<!--") || trimmed.startsWith("/*") || trimmed.startsWith("//") || /^\s*--color-argmin/.test(line)) {
       continue;
     }
 

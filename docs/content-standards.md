@@ -31,9 +31,13 @@ sacred — it represents strategic decisions, not filler.
 
 ## Per-Page Content Requirements
 
-The `scripts/validate-page-structure.mjs` CI script enforces these
-minimums against the built HTML in `dist/`. If a page drops below its
-requirements, CI fails.
+The `scripts/validate-page-structure.mjs` CI script enforces a subset
+of these structural minimums against the built HTML in `dist/`. The
+full requirements below remain the content standard for each page, but
+not every item is currently CI-enforced. If a page drops below the
+validator checks implemented in `scripts/validate-page-structure.mjs`,
+CI fails; requirements not covered by that script must still be
+preserved and are reviewed in PRs.
 
 ### /platform
 

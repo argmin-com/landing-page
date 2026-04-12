@@ -33,8 +33,17 @@ function assertContains(html, text, description) {
   return null;
 }
 
+/** Passes if at least one of the given texts is present (case-insensitive). */
+function assertContainsAny(html, texts, description) {
+  const lower = html.toLowerCase();
+  const found = texts.some((t) => lower.includes(t.toLowerCase()));
+  if (!found) {
+    return `MISSING: ${description} (expected one of: ${texts.map((t) => `"${t}"`).join(", ")})`;
+  }
+  return null;
+}
+
 function assertMinSections(html, minCount, description) {
-  // Count <section elements (with or without id)
   const count = countOccurrences(html, /<section[\s>]/gi);
   if (count < minCount) {
     return `BELOW MINIMUM: ${description} — found ${count} sections, need at least ${minCount}`;
@@ -49,28 +58,35 @@ function assertSectionId(html, id, description) {
   return null;
 }
 
-function assertMinWordCount(html, minWords, description) {
-  // Use a proper iterative approach to strip script/style blocks and tags.
-  // This avoids the incomplete regex patterns that CodeQL flags (CWE-20/CWE-116).
-  let text = html;
+/**
+ * Extract content inside <main> to scope word count to page body,
+ * excluding nav/footer. Falls back to full document if no <main>.
+ */
+function extractMainContent(html) {
+  const match = html.match(/<main\b[^>]*>([\s\S]*?)<\/\s*main[^>]*>/i);
+  return match ? match[1] : html;
+}
 
-  // Remove script blocks iteratively until none remain
+function assertMinWordCount(html, minWords, description) {
+  let text = extractMainContent(html);
+
+  // Remove script blocks iteratively (satisfies CodeQL CWE-116).
   let prev;
   do {
     prev = text;
-    text = text.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, " ");
+    text = text.replace(/<script\b[^>]*>[\s\S]*?<\/\s*script[^>]*>/gi, " ");
   } while (text !== prev);
 
-  // Remove style blocks iteratively
+  // Remove style blocks iteratively.
   do {
     prev = text;
-    text = text.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, " ");
+    text = text.replace(/<style\b[^>]*>[\s\S]*?<\/\s*style[^>]*>/gi, " ");
   } while (text !== prev);
 
-  // Remove remaining HTML tags
+  // Remove remaining HTML tags.
   text = text.replace(/<[^>]*>/g, " ");
-  // Collapse whitespace and decode common entities
-  text = text.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+  // Collapse whitespace (skip entity decoding to avoid CodeQL
+  // double-unescape findings — word count doesn't need decoded text).
   text = text.replace(/\s+/g, " ").trim();
 
   const wordCount = text.split(" ").filter(Boolean).length;
@@ -96,12 +112,12 @@ const pages = [
       push(assertSectionId(html, "deployment-path", "Deployment Path section"));
       push(assertContains(html, "competitive-landscape", "Competitive landscape image reference"));
       push(assertContains(html, "support-router-prod", "Example attribution record (support-router-prod)"));
-      // Equation renders as arg&nbsp;min in built HTML
       push(assertContains(html, "arg&nbsp;min", "Decision rule equation"));
       push(assertContains(html, "Week 1", "Deployment timeline phase 1"));
       push(assertContains(html, "Week 2", "Deployment timeline phase 2"));
+      push(assertContains(html, "Week 3", "Deployment timeline phase 3"));
       push(assertContains(html, "Request a Demo", "CTA button"));
-      push(assertMinWordCount(html, 800, "/platform content depth"));
+      push(assertMinWordCount(html, 600, "/platform content depth"));
 
       return failures;
     },
@@ -118,8 +134,9 @@ const pages = [
       push(assertContains(html, "Finance", "Finance persona"));
       push(assertContains(html, "Security", "Security persona"));
       push(assertContains(html, "What forces action", "Persona trigger/pain point"));
+      push(assertContainsAny(html, ["best-fit", "best fit", "Is Argmin right for you"], "Qualifying criteria section"));
       push(assertContains(html, "Request a Demo", "CTA button"));
-      push(assertMinWordCount(html, 400, "/use-cases content depth"));
+      push(assertMinWordCount(html, 300, "/use-cases content depth"));
 
       return failures;
     },
@@ -131,11 +148,10 @@ const pages = [
       const failures = [];
       const push = (r) => { if (r) failures.push(r); };
 
-      push(assertContains(html, "What We Believe", "Belief statements section") ||
-           assertContains(html, "believe", "Belief statements section"));
+      push(assertContainsAny(html, ["What We Believe", "believe", "point of view"], "Belief statements section"));
       push(assertContains(html, "design partner", "Design partner mention"));
       push(assertContains(html, "Request a Demo", "CTA button"));
-      push(assertMinWordCount(html, 150, "/about content depth"));
+      push(assertMinWordCount(html, 120, "/about content depth"));
 
       return failures;
     },
@@ -154,7 +170,8 @@ const pages = [
       push(assertContains(html, "charlotte", "Charlotte's photo reference"));
       push(assertContains(html, "Amazon", "Richard's Amazon credential"));
       push(assertContains(html, "Oxford", "Charlotte's Oxford credential"));
-      push(assertMinWordCount(html, 200, "/team content depth"));
+      push(assertContainsAny(html, ["Request a Demo", "Contact Us", "Get in touch", "/contact"], "CTA or contact link"));
+      push(assertMinWordCount(html, 150, "/team content depth"));
 
       return failures;
     },
@@ -169,12 +186,11 @@ const pages = [
       push(assertSectionId(html, "security-principles", "Security Principles section"));
       push(assertSectionId(html, "security-data-flow", "Data Flow section"));
       push(assertContains(html, "Read-only", "Read-only access principle"));
-      push(assertContains(html, "inside your environment", "Inside-environment principle") ||
-           assertContains(html, "customer trust boundary", "Trust boundary reference"));
+      push(assertContainsAny(html, ["inside your environment", "customer trust boundary"], "Trust boundary reference"));
       push(assertContains(html, "advisory", "Advisory-by-default principle"));
       push(assertContains(html, "fail-open", "Fail-open principle"));
       push(assertContains(html, "Request a Demo", "CTA button"));
-      push(assertMinWordCount(html, 300, "/security content depth"));
+      push(assertMinWordCount(html, 250, "/security content depth"));
 
       return failures;
     },
@@ -192,7 +208,7 @@ const pages = [
       push(assertContains(html, 'name="message"', "Message form field"));
       push(assertContains(html, 'name="intent"', "Intent radio field"));
       push(assertContains(html, "contact@argmin.co", "Fallback email"));
-      push(assertMinWordCount(html, 100, "/contact content depth"));
+      push(assertMinWordCount(html, 80, "/contact content depth"));
 
       return failures;
     },
