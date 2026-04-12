@@ -27,6 +27,41 @@ const checks = [
     description: "legacy richard@argmin.co fallback is absent from the built pages",
     pass: pages.every(({ html }) => !html.includes("richard@argmin.co")),
   },
+  // --- Regression guards for removed AI-spend-centric scope ---
+  {
+    description: "removed field 'Primary cloud' does not appear on contact pages",
+    pass: pages.every(({ html }) => !html.includes('name="cloud"') && !html.includes("Primary cloud")),
+  },
+  {
+    description: "removed field 'Monthly AI spend' does not appear on contact pages",
+    pass: pages.every(({ html }) => !html.includes('name="ai_spend"') && !html.includes("Monthly AI spend")),
+  },
+  {
+    description: "removed field 'Teams using AI' does not appear on contact pages",
+    pass: pages.every(({ html }) => !html.includes('name="teams_using_ai"') && !html.includes("Teams using AI")),
+  },
+  {
+    description: "removed 'Help us prepare' collapsible section is absent",
+    pass: pages.every(({ html }) => !html.includes("Help us prepare")),
+  },
+  {
+    description: "contact page uses the broader message placeholder",
+    pass: pages
+      .filter(({ label }) => label === "contact")
+      .every(({ html }) => html.includes("Tell us about the decision, ownership, or governance problem")),
+  },
+  {
+    description: "trust-badge chips are absent from the contact page",
+    pass: pages
+      .filter(({ label }) => label === "contact")
+      .every(({ html }) => !html.includes("Read-only access") && !html.includes("Runs in your environment") && !html.includes("No data exfiltration")),
+  },
+  {
+    description: "whitespace-trim validation is wired up (setCustomValidity present)",
+    pass: pages
+      .filter(({ label }) => label === "contact")
+      .every(({ html }) => html.includes("setCustomValidity")),
+  },
 ];
 
 const failures = collectFailures(checks);

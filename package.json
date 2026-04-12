@@ -13,7 +13,9 @@
     "check": "astro check",
     "validate:contact-fallbacks": "node scripts/validate-contact-fallbacks.mjs",
     "validate:contact-configured": "node scripts/validate-contact-configured.mjs",
-    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks",
+    "validate:redirects": "node scripts/validate-redirects.mjs",
+    "validate:navbar": "node scripts/validate-navbar.mjs",
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page"
   },
   "dependencies": {
