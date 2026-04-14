@@ -34,7 +34,7 @@
     "@playwright/test": "^1.59.1",
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
-    "wrangler": "^4.81.1"
+    "wrangler": "^4.82.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run check"
