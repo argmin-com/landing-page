@@ -13,6 +13,11 @@ const founders = [
     bio: "Richard spent a decade building enterprise data and cost infrastructure at Amazon, Salesforce, and Cruise. He saw firsthand that attribution and accountable control need an identity-resolved, graph-based approach embedded in the deployment path.",
     bioExtended:
       "At Amazon, his work delivered $357M in annual infrastructure savings on top of global data platforms used across large engineering organizations. That track record shaped Argmin's focus on making ownership operational rather than retrospective, so decisions happen where the work does.",
+    highlights: [
+      "$357M annual infrastructure savings delivered at Amazon.",
+      "Built global data platforms used across large engineering organizations.",
+      "Focused on making cost ownership operational, not retrospective.",
+    ],
     linkedin: "https://www.linkedin.com/in/richardcmckinney",
   },
   {
@@ -24,6 +29,11 @@ const founders = [
     bio: "Charlotte brings deep expertise in systems research from Oxford and the European Space Agency. She designed Argmin's reconciliation and attribution architecture to operate inside customer trust boundaries with read-only deployment.",
     bioExtended:
       "Her deep reinforcement learning background powers the confidence-scored reconciliation engine behind Argmin, built from the start for customer environments where governance constraints are real and the answer has to be defensible, not just plausible.",
+    highlights: [
+      "Deep reinforcement learning background applied to attribution and routing.",
+      "Designed the confidence-scored reconciliation engine behind Argmin.",
+      "Built for customer environments where governance constraints are real.",
+    ],
     linkedin: "https://www.linkedin.com/in/charlotte-wargniez",
   },
 ];
@@ -40,9 +50,13 @@ const founders = [
       eyebrow="Team"
       title="Built by operators, not observers."
       lede="We have worked inside the infrastructure that creates this problem: cloud-scale cost ownership, security governance, and production AI deployment. Argmin exists because we saw the gap from inside the systems that create it."
+      actions={[
+        { href: "/contact", label: "Request a Demo" },
+        { href: "/platform", label: "See the platform", variant: "secondary" },
+      ]}
     />
 
-    <section class="px-6 pb-12 md:pb-20">
+    <section class="px-6">
       <div class="site-shell">
         <div class="mx-auto mb-10 max-w-4xl text-center">
           <p class="section-kicker">Founders</p>
@@ -92,8 +106,33 @@ const founders = [
 
               <p class="mt-6 text-base leading-8 text-argmin-mid">{founder.bio}</p>
               <p class="mt-5 text-base leading-8 text-argmin-mid">{founder.bioExtended}</p>
+
+              <ul class="mt-6 grid gap-2.5 border-t border-argmin-border pt-6">
+                {founder.highlights.map((highlight) => (
+                  <li class="rounded-xl border border-argmin-border bg-argmin-surface-alt/45 px-4 py-3 text-sm leading-7 text-argmin-dark">
+                    {highlight}
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto max-w-3xl rise-in">
+          <p class="section-kicker">Why Now</p>
+          <p class="mt-5 text-base leading-8 text-argmin-dark md:text-lg">
+            Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications.
+            Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.
+          </p>
+        </div>
+
+        <div class="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
+          <a href="/contact" class="button-primary">Request a Demo</a>
+          <a href="/contact" class="button-secondary">Contact Us</a>
         </div>
       </div>
     </section>

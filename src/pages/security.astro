@@ -63,7 +63,7 @@ const neverDoes = [
     <PageHero
       eyebrow="Security"
       title="Your data never leaves your environment."
-      lede="Argmin runs inside your cloud with read-only access. The product does not depend on broad telemetry exfiltration, write paths, or agents to resolve AI cost ownership."
+      lede="Argmin runs inside your cloud with read-only access. The product does not depend on broad telemetry exfiltration, write paths, or agents to deliver attribution and governance."
       notes={[
         { label: "Trust boundary", value: "Signals stay inside the customer environment." },
         { label: "Operating mode", value: "Advisory first, enforcement only by explicit opt-in." },
@@ -133,7 +133,7 @@ const neverDoes = [
           <div class="surface-panel overflow-hidden">
             <div class="grid gap-0 md:grid-cols-[1fr_1px_1fr]">
               <div class="p-6 md:p-8">
-                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-green-700">
+                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-argmin-success">
                   <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12l5 5 9-10" />
                   </svg>
@@ -142,7 +142,7 @@ const neverDoes = [
                 <ul class="mt-5 space-y-3">
                   {reads.map((item) => (
                     <li class="flex items-start gap-3 text-base leading-7 text-argmin-mid">
-                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-green-600" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-argmin-success" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M5 12l5 5 9-10" />
                       </svg>
                       <span>{item}</span>
@@ -154,7 +154,7 @@ const neverDoes = [
               <div class="bg-argmin-border md:w-px h-px w-full md:h-auto" aria-hidden="true"></div>
 
               <div class="p-6 md:p-8">
-                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-red-700">
+                <p class="flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-argmin-danger">
                   <svg viewBox="0 0 24 24" class="h-5 w-5" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M6 6l12 12M18 6L6 18" />
                   </svg>
@@ -163,7 +163,7 @@ const neverDoes = [
                 <ul class="mt-5 space-y-3">
                   {neverDoes.map((item) => (
                     <li class="flex items-start gap-3 text-base leading-7 text-argmin-mid">
-                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-red-600" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                      <svg viewBox="0 0 24 24" class="mt-1 h-4 w-4 shrink-0 text-argmin-danger" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M6 6l12 12M18 6L6 18" />
                       </svg>
                       <span>{item}</span>
@@ -186,7 +186,7 @@ const neverDoes = [
           </p>
           <div class="flex flex-wrap justify-center gap-3">
             <a href="/contact" class="button-primary">Request a Demo</a>
-            <a href="/contact" class="button-secondary">Contact Us</a>
+            <a href="/platform" class="button-secondary">See the platform</a>
           </div>
         </div>
       </div>

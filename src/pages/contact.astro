@@ -17,16 +17,16 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
   <main id="main-content">
     <PageHero
       eyebrow="Contact"
-      title="Bring the workload where AI spend already hurts."
-      lede="Show us the route change, approval bottleneck, or budget ambiguity that is already creating friction. We scope one workload first, connect read-only, and show the attribution path before you commit further."
+      title="Let's talk about what you're building."
+      lede="Whether you're managing AI spend, building governance workflows, or trying to trace ownership across services — start with one workload. We connect read-only and show the attribution path before you commit further."
       notes={[
-        { label: "Best input", value: "One service, one route change, or one spend spike that already needs an answer." },
-        { label: "What you see", value: "Owner, budget path, confidence, and lower-cost alternatives tied to the same event." },
-        { label: "Who joins", value: "Usually an engineering owner plus finance or security, depending on the blocker." },
+        { label: "Good starting points", value: "A spend spike, a governance gap, a route change, or an ownership question that needs an answer." },
+        { label: "Typical deployment", value: "2–4 weeks to first attributable insight. Single cloud, 1–2 workloads to start." },
+        { label: "Who joins", value: "Usually an engineering owner plus finance or security, depending on the challenge." },
       ]}
     />
 
-    <section class="px-6 pb-10 md:pb-14">
+    <section class="px-6">
       <div class="site-shell">
         <div class="mx-auto max-w-2xl">
           <div class="page-section-intro mb-6 text-center">
@@ -42,6 +42,12 @@ const formspreeUrl = sanitizeFormspreeUrl(import.meta.env.PUBLIC_FORMSPREE_URL);
             headingText="Get in touch"
             variant="standalone"
           />
+
+          <div class="mt-6 flex flex-wrap justify-center gap-3 text-sm text-argmin-mid">
+            <span class="rounded-full border border-argmin-border px-4 py-2">Read-only access</span>
+            <span class="rounded-full border border-argmin-border px-4 py-2">Runs in your environment</span>
+            <span class="rounded-full border border-argmin-border px-4 py-2">No data exfiltration</span>
+          </div>
         </div>
       </div>
     </section>

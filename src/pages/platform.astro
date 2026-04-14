@@ -112,7 +112,7 @@ const deploymentPhases = [
 
 <BaseLayout
   title="Platform | Argmin"
-  description="Argmin resolves AI spend to services, owners, budgets, and deployment decisions before costs compound."
+  description="Argmin gives engineering, finance, and security teams a shared system of record for AI attribution, governance, and decision-time control."
   canonicalUrl="https://argmin.co/platform"
   showMobileThemeToggle={false}
 >
@@ -121,9 +121,9 @@ const deploymentPhases = [
     "@type": "SoftwareApplication",
     "name": "Argmin",
     "applicationCategory": "BusinessApplication",
-    "applicationSubCategory": "FinOps / AI Cost Governance",
+    "applicationSubCategory": "AI Attribution and Governance",
     "operatingSystem": "Cloud (AWS, Azure, GCP)",
-    "description": "Identity-resolved attribution and decision-time control for enterprise AI spend. Runs inside the customer environment with read-only connectors.",
+    "description": "Identity-resolved attribution, governance, and decision-time control for enterprise AI. Runs inside the customer environment with read-only connectors.",
     "url": "https://argmin.co/platform",
     "publisher": {
       "@type": "Organization",
@@ -138,12 +138,12 @@ const deploymentPhases = [
   <main id="main-content">
     <PageHero
       eyebrow="Platform"
-      title="You're already spending millions on AI. Can you explain where it goes?"
-      lede="Most teams cannot attribute AI spend by team, model, and outcome. Argmin resolves who used which model, from which service, under whose budget, and what should happen next before the expensive route becomes the default."
+      title="AI spend grows fast. Ownership should keep up."
+      lede="As teams adopt AI across more services and use cases, the gap between what is spent and who owns it widens. Argmin gives engineering, finance, and security a shared system of record — resolving every model call to a service, owner, and budget before costs compound."
       notes={[
-        { label: "Variance", value: "The same AI model can cost up to 700x more depending on how it is used." },
-        { label: "Chain", value: "Model -> service -> code -> identity -> org -> budget." },
-        { label: "Posture", value: "Read-only connectors, advisory by default, and inside-your-environment deployment." },
+        { label: "Attribution", value: "Model → service → code → identity → org → budget, resolved automatically." },
+        { label: "Variance", value: "The same AI model can cost up to 700x more depending on how it is called." },
+        { label: "Posture", value: "Read-only connectors, advisory by default, inside-your-environment deployment." },
       ]}
       actions={[
         { href: "/contact", label: "Request a Demo" },
@@ -231,6 +231,10 @@ const deploymentPhases = [
           </div>
 
           <div role="tabpanel" id="ppanel-1" aria-labelledby="ptab-1" class="platform-panel hidden py-9">
+            <p class="mb-6 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
+              If you already have telemetry and cost views, the real question is whether they tell you who owns
+              the spend and what to change before the next release. Usually they do not.
+            </p>
             <div class="surface-panel overflow-hidden">
               <div class="grid grid-cols-[minmax(0,0.33fr)_minmax(0,0.33fr)_minmax(0,0.34fr)] gap-4 border-b-2 border-argmin-accent/30 bg-argmin-surface-alt px-6 py-5 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-argmin-light md:px-8">
                 <p>Dimension</p>
@@ -351,7 +355,11 @@ const deploymentPhases = [
           </div>
         </div>
 
-        <div class="mx-auto mt-10 max-w-[960px]">
+        <div class="mx-auto mt-10 max-w-[960px] rise-in">
+          <p class="mb-6 max-w-3xl text-base leading-8 text-argmin-mid md:text-lg">
+            Each stage adds evidence. The result is not just attribution — it is an attributable decision
+            record with visible confidence and a next action.
+          </p>
           <div class="rounded-xl border border-argmin-accent/30 border-l-[4px] border-l-argmin-accent bg-argmin-accent/5 p-6 md:p-8">
             <h3 class="text-xl font-semibold tracking-[-0.03em] text-argmin-dark md:text-2xl">What an attribution record looks like</h3>
             <dl class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">

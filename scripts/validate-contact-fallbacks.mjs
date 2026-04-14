@@ -51,10 +51,10 @@ const checks = [
       .every(({ html }) => html.includes("Tell us about the decision, ownership, or governance problem")),
   },
   {
-    description: "trust-badge chips are absent from the contact page",
+    description: "trust-badge chips are present on the contact page",
     pass: pages
       .filter(({ label }) => label === "contact")
-      .every(({ html }) => !html.includes("Read-only access") && !html.includes("Runs in your environment") && !html.includes("No data exfiltration")),
+      .every(({ html }) => html.includes("Read-only access") && html.includes("Runs in your environment") && html.includes("No data exfiltration")),
   },
   {
     description: "whitespace-trim validation is wired up (setCustomValidity present)",
