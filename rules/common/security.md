@@ -5,7 +5,7 @@ Security rules for this Astro static site deployed on Cloudflare Pages.
 ## No hardcoded secrets
 
 - Never commit API keys, tokens, passwords, or credentials.
-- Files matching `.env`, `.dev.vars`, `credentials.*` are gitignored. Keep them that way.
+- Files matching `.env` and `.dev.vars` are gitignored. Do not assume `credentials.*` files are ignored unless the repository explicitly adds that rule.
 - If you need a secret at build time, use environment variables configured in Cloudflare dashboard or CI secrets.
 
 ## Environment variables
@@ -48,7 +48,7 @@ The contact form includes a honeypot field (hidden input not visible to humans).
 - Referrer-Policy
 - Permissions-Policy
 
-Do not weaken these headers without explicit security review. The `security-reviewer` agent should evaluate any proposed changes.
+Do not weaken these headers without explicit security review. The `code-reviewer` agent should evaluate any proposed changes to security headers.
 
 ## Dependency management
 
@@ -58,7 +58,7 @@ Do not weaken these headers without explicit security review. The `security-revi
 
 ## When in doubt
 
-Invoke the `security-reviewer` agent for any change that:
+Invoke the `code-reviewer` agent for any change that:
 - Modifies `public/_headers` or `wrangler.jsonc`
 - Adds a new external script or dependency
 - Changes form handling logic

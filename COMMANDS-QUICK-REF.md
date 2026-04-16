@@ -14,7 +14,7 @@ All available slash commands grouped by category. For detailed docs, see [`docs/
 
 | Command | Description |
 |---|---|
-| `/audit-site` | Run the full local audit chain (mirrors quality.yml CI gates). Fast pre-PR sanity check. |
+| `/audit-site` | Run the full local audit chain. Fast pre-PR sanity check with broader validation coverage than the CI gates in quality.yml. |
 | `/full-audit` | Parallel audit by all specialist subagents. Produces a consolidated quality report with scores. |
 
 ## Review

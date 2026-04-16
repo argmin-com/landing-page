@@ -14,7 +14,7 @@ Rules adapted for this Astro 6 + TypeScript 5.9 + Tailwind CSS 4 codebase.
 - Target: 200-400 lines per file.
 - Warning threshold: 400 lines. Consider extracting a component or utility.
 - Hard maximum: 800 lines. Files above this must be split before merging.
-- Astro page files may exceed 400 lines if they contain substantial markup, but logic sections (frontmatter, inline scripts) must stay under 100 lines each.
+- Astro page files may exceed 400 lines if they contain substantial markup, but logic sections (frontmatter, inline scripts) must stay under 50 lines each.
 
 ## Function size
 
@@ -39,7 +39,7 @@ Rules adapted for this Astro 6 + TypeScript 5.9 + Tailwind CSS 4 codebase.
 
 - Remove `console.log` before committing. Use it for debugging only.
 - Validation scripts and build tools may use `console.log`/`console.error` for output.
-- Astro components must never contain `console.log` — the pre-commit hook blocks it.
+- Astro components must never contain `console.log`.
 
 ## Naming
 

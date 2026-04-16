@@ -16,7 +16,7 @@ npm run build
 ```
 
 If the error persists after a clean install, check:
-1. Node version: requires >= 22.12.0 (check `.nvmrc`).
+1. Node version: requires >= 22.12.0 (check `package.json` `engines`; `.nvmrc` reflects the major version).
 2. `npm run check` for type errors -- fix those first.
 3. Recent changes to `astro.config.mjs` or `tsconfig.json`.
 

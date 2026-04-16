@@ -3,7 +3,7 @@ description: Run the complete verification chain — build, typecheck, all valid
 allowed-tools: Bash(npm run check), Bash(npm run build), Bash(npm run validate:*), Bash(npm run audit:site), Bash(npm ci), Bash(PUBLIC_FORMSPREE_URL=*)
 ---
 
-Run the full verification chain (mirrors `quality.yml` CI):
+Run the full verification chain (superset of `quality.yml` CI — includes local-only validators):
 
 ```bash
 npm run check                           # Astro typecheck

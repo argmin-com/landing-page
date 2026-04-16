@@ -1,6 +1,6 @@
 ---
 description: Evaluate and improve the Claude Code harness itself. Delegates to harness-optimizer subagent.
-allowed-tools: Read, Grep, Glob, Agent
+allowed-tools: Read, Grep, Glob, Agent, Edit, Write, Bash(git add*), Bash(git commit*)
 ---
 
 Invoke the `harness-optimizer` subagent to audit the current harness and propose improvements.

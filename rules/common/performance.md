@@ -7,13 +7,13 @@ Performance rules enforced by CI Lighthouse gates and manual review.
 | Metric | Threshold | CI enforcement |
 |---|---|---|
 | Lighthouse Performance | >= 90 | Blocking |
-| Lighthouse Accessibility | = 100 | Blocking |
-| Lighthouse Best Practices | = 100 | Blocking |
+| Lighthouse Accessibility | >= 95 | Blocking |
+| Lighthouse Best Practices | >= 95 | Blocking |
 | Lighthouse SEO | = 100 | Blocking |
 | LCP | <= 2500ms | Blocking |
-| Total transfer size | <= 250KB | Blocking (CI uses 150KB) |
+| Total transfer size | <= 250KB | Blocking |
 
-These are not aspirational targets. CI fails if any threshold is missed.
+These are CI-enforced blocking thresholds (see `.github/workflows/quality.yml`).
 
 ## Images
 

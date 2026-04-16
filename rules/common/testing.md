@@ -50,11 +50,11 @@ PUBLIC_FORMSPREE_URL=https://formspree.io/f/test000 npm run validate:contact-con
 
 CI runs Lighthouse on 5 routes with these thresholds:
 - Performance >= 90
-- Accessibility = 100
-- Best Practices = 100
+- Accessibility >= 95
+- Best Practices >= 95
 - SEO = 100
 - LCP <= 2500ms
-- Total transfer <= 150KB
+- Total transfer <= 250KB
 
 Run `npm run audit:site` locally to approximate. For full Lighthouse, use browser DevTools or `npx lighthouse`.
 
@@ -79,4 +79,4 @@ When writing new validators in `scripts/`:
 - Read the built HTML from `dist/` (not source files).
 - Exit with code 0 on success, non-zero on failure.
 - Print clear pass/fail output with file paths and line numbers.
-- Use the `validators.instructions.md` patterns if working with Copilot.
+- See `.github/instructions/validators.instructions.md` for Copilot-specific validator patterns.
