@@ -1,5 +1,27 @@
 import { collectFailures, readContactPages, reportFailures } from "./contact-validation.mjs";
 
+function extractAttributeUrls(html) {
+  const urls = [];
+  const attrRegex = /\b(?:action|href|src)\s*=\s*("([^"]*)"|'([^']*)'|([^\s>]+))/gi;
+  let match;
+  while ((match = attrRegex.exec(html)) !== null) {
+    const value = match[2] ?? match[3] ?? match[4] ?? "";
+    if (value) urls.push(value);
+  }
+  return urls;
+}
+
+function hasHardcodedFormspreeEndpoint(html) {
+  return extractAttributeUrls(html).some((rawUrl) => {
+    try {
+      const parsed = new URL(rawUrl, "https://example.invalid");
+      return parsed.hostname === "formspree.io" && parsed.pathname.startsWith("/f/");
+    } catch {
+      return false;
+    }
+  });
+}
+
 const pages = readContactPages();
 
 const checks = [
@@ -17,7 +39,7 @@ const checks = [
   },
   {
     description: "no hardcoded Formspree endpoint ships in the fallback build",
-    pass: pages.every(({ html }) => !html.includes("https://formspree.io/f/")),
+    pass: pages.every(({ html }) => !hasHardcodedFormspreeEndpoint(html)),
   },
   {
     description: "noscript fallback routes to contact@argmin.co on all contact entrypoints",
