@@ -1,0 +1,14 @@
+---
+applyTo: "src/styles/**/*.css"
+---
+- This file defines the design token system. See `docs/design-system.md` for rules.
+- All colors are space-separated RGB triplets: e.g. `--color-argmin-dark: 17 17 17;`
+- Every `:root` token must have a `html[data-theme="dark"]` counterpart.
+- Semantic tokens: `--color-argmin-success`, `--color-argmin-warning`, `--color-argmin-warning-surface`, `--color-argmin-danger`.
+- New tokens must also be registered in the `@theme inline {}` block at the top.
+- Section spacing: `--section-gap` (6rem desktop, 4rem mobile), `--subsection-gap` (3rem/2rem).
+- Three border-radius tiers: panel (1.75rem), card (0.75rem / rounded-xl), pill (999px / rounded-full).
+- Two shadow levels: `--page-shadow-soft`, `--page-shadow-strong`.
+- Typography classes (`.page-title`, `.section-title`, `.section-kicker`, `.page-lede`) are authoritative.
+- `prefers-reduced-motion: reduce` must disable all animations and transitions.
+- Run `npm run validate:design-tokens` after any change.
