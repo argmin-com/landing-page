@@ -5,6 +5,10 @@ const routes = [
   { path: "/platform", name: "platform" },
   { path: "/use-cases", name: "use-cases" },
   { path: "/contact", name: "contact" },
+  { path: "/about", name: "about" },
+  { path: "/team", name: "team" },
+  { path: "/security", name: "security" },
+  { path: "/privacy", name: "privacy" },
 ];
 
 for (const route of routes) {
