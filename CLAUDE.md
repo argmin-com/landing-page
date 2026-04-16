@@ -2,6 +2,17 @@
 
 Read `docs/assistant-guide.md` before making any changes. It contains the shared repo invariants, architecture map, core commands, and working rules.
 
+**For multi-agent orchestration guidance, read [`docs/agents/README.md`](docs/agents/README.md).** It documents the specialist subagents in `.claude/agents/`, the custom slash commands in `.claude/commands/`, and the standard workflows for coordinating them.
+
+## Cardinal rules (never violate)
+
+1. **Content is sacred.** Restructure to present better — never delete to simplify. See `docs/content-standards.md`.
+2. **Use design tokens.** Never hardcode colors. See `docs/design-system.md`. The `validate-design-tokens` CI gate is blocking.
+3. **The homepage (`src/pages/index.astro`) is off-limits** unless the user explicitly requests a change. Subpages and components are fair game.
+4. **Every visual change needs before/after screenshots** at 375px + 1440px in both light and dark themes.
+5. **Never bypass hooks** (`--no-verify`, `core.hooksPath=/dev/null`, etc.).
+6. **Check dark mode before committing.**
+
 ## Tech Stack
 
 Astro 6 + Tailwind CSS 4 + TypeScript 5.9 (strict) on Cloudflare Pages. Static output only (`npm run build` -> `dist/`). Node >= 22.12.0.

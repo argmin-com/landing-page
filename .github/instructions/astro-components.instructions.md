@@ -1,0 +1,15 @@
+---
+applyTo: "src/**/*.astro"
+---
+- Read `docs/content-standards.md` before modifying page content. Content is sacred.
+- Read `docs/design-system.md` before adding or changing styles.
+- Use `--color-argmin-*` tokens only. Never hardcode Tailwind palette colors.
+- Headings must use `.section-title`, `.section-title-lg`, or `.page-title`. Not raw `text-3xl`.
+- Overlines must use `.section-kicker`.
+- Section spacing comes from `--section-gap`. Do not add `py-*` to `<section>` elements.
+- Three border-radius values only: panel (1.75rem / `.surface-panel`), card (`rounded-xl`), pill (`rounded-full`).
+- Every interactive element needs hover, `:focus-visible`, and active states.
+- Cards (`.surface-panel`) must have `transition-transform duration-200 hover:translate-y-[-2px]`.
+- Check dark mode before committing. Toggle `data-theme` attribute.
+- Apply `.rise-in` entrance animations to section headings and key content blocks.
+- Run `npm run validate:page-structure` and `npm run validate:design-tokens` after changes.
