@@ -10,7 +10,7 @@ You audit accessibility on `argmin.co` against WCAG 2.1 AA.
 ## Procedure
 
 1. Run `npm run build`.
-2. Start a static server (the quality workflow does this with `python3 -m http.server 4173 -d dist`; if one isn't running, note it — you can still do source-level review).
+2. Start a static server (`npx serve dist -p 4173` or `npm run preview`; if one isn't running, note it — you can still do source-level review).
 3. If server is running, run `npx pa11y http://127.0.0.1:4173<route>` for each touched route.
 4. For each touched `.astro` file, source-inspect:
    - **Semantics**: `<main>`, `<nav>`, `<header>`, `<footer>`, `<section>`, `<article>` used correctly. One `<h1>`. Heading hierarchy sequential.

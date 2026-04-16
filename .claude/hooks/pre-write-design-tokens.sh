@@ -5,46 +5,52 @@
 #   {"tool_name":"Edit|Write","tool_input":{"file_path":"...","new_string":"...","content":"..."}}
 # We respond with JSON:
 #   {"decision":"block","reason":"..."} to block, or {} to allow.
+#
+# Color pattern is aligned with scripts/validate-design-tokens.mjs so the hook
+# catches the same violations CI would catch. Runs BEFORE the write lands so
+# violations never reach the working tree.
 
 set -euo pipefail
 
 input=$(cat)
-# Extract file and content without requiring jq; fall back gracefully.
 file=$(printf '%s' "$input" | python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path') or '')")
 content=$(printf '%s' "$input" | python3 -c "import json,sys; d=json.load(sys.stdin); ti=d.get('tool_input',{}); print(ti.get('new_string') or ti.get('content') or '')")
 
-# Only check source files, skip docs and the validator itself
+# Only check source files that should follow the token system.
+# Use explicit matchers that cover nested paths (src/pages/*, src/components/*, src/styles/*, etc.).
 case "$file" in
-  */src/*.astro|*/src/*.css|*/src/*.tsx|*/src/*.jsx)
-    ;;
-  *)
-    echo '{}'
-    exit 0
-    ;;
+  *src/*.astro|*src/*.css|*src/*.tsx|*src/*.jsx|*src/*.ts|*src/*.js) ;;
+  *) echo '{}'; exit 0 ;;
 esac
 
-# Skip the tokens themselves — CSS var definitions legitimately have rgb() values
-if printf '%s' "$content" | grep -qE '^\s*--color-argmin-' 2>/dev/null; then
-  echo '{}'
+# Path-scoped exemptions:
+# - global.css defines the token palette itself; rgb() values are expected there.
+# - argmin_enterprise_system_er_diagram.jsx is a legacy standalone artifact.
+case "$file" in
+  *src/styles/global.css|*src/components/argmin_enterprise_system_er_diagram.jsx)
+    echo '{}'; exit 0 ;;
+esac
+
+block() {
+  local reason="$1"
+  python3 -c "import json,sys; print(json.dumps({'decision':'block','reason':sys.argv[1]}))" "$reason"
   exit 0
+}
+
+# Check 1: Hardcoded Tailwind palette classes, including base colors (black/white/transparent)
+# and gradient stop utilities (from/to/via). Aligned with validate-design-tokens.mjs.
+if printf '%s' "$content" | grep -qE '\b(text|bg|border|ring|from|to|via|fill|stroke|decoration|accent|caret|outline)-((amber|emerald|sky|rose|red|green|blue|yellow|orange|purple|pink|indigo|teal|cyan|lime|fuchsia|violet|slate|gray|zinc|neutral|stone)-[0-9]{2,3}|black|white|transparent)\b' 2>/dev/null; then
+  block "Hardcoded Tailwind palette class in $file. Use --color-argmin-* tokens or semantic tokens (success/warning/danger). See docs/design-system.md."
 fi
 
-# Detect hardcoded Tailwind palette
-if printf '%s' "$content" | grep -qE '\b(text|bg|border|ring|fill|stroke|decoration|accent|caret|outline)-(amber|emerald|sky|rose|red|green|blue|yellow|orange|purple|pink|indigo|teal|cyan|lime|fuchsia|violet|slate|gray|zinc|neutral|stone)-[0-9]{2,3}\b' 2>/dev/null; then
-  python3 -c "import json; print(json.dumps({'decision':'block','reason':'Hardcoded Tailwind palette class detected. Use --color-argmin-* tokens or semantic tokens (success/warning/danger). See docs/design-system.md. Block applied to: $file'}))"
-  exit 0
+# Check 2: Inline hex literals in style attributes (HTML string or JSX object syntax)
+if printf '%s' "$content" | grep -qE 'style=(\"[^\"]*|\{\{?[^}]*)(#[0-9a-fA-F]{3,8}|rgb\s*\(|rgba\s*\(|hsl\s*\()' 2>/dev/null; then
+  block "Inline hardcoded color in style attribute in $file. Use a token class or a CSS variable. See docs/design-system.md."
 fi
 
-# Detect hex literals in style attrs
-if printf '%s' "$content" | grep -qE 'style=.*#[0-9a-fA-F]{3,8}' 2>/dev/null; then
-  python3 -c "import json; print(json.dumps({'decision':'block','reason':'Inline hex color in style attribute. Use CSS variable from --color-argmin-* tokens. See docs/design-system.md. Block applied to: $file'}))"
-  exit 0
-fi
-
-# Detect arbitrary hex in Tailwind
+# Check 3: Hardcoded hex in Tailwind arbitrary values
 if printf '%s' "$content" | grep -qE '(text|bg|border|fill|stroke)-\[#[0-9a-fA-F]{3,8}\]' 2>/dev/null; then
-  python3 -c "import json; print(json.dumps({'decision':'block','reason':'Hardcoded hex in Tailwind arbitrary value. Use token class. See docs/design-system.md. Block applied to: $file'}))"
-  exit 0
+  block "Hardcoded hex in Tailwind arbitrary value in $file. Use a token class. See docs/design-system.md."
 fi
 
 echo '{}'

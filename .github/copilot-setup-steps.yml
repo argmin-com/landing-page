@@ -1,6 +1,6 @@
 steps:
   - name: Set up Node
-    uses: actions/setup-node@v6
+    uses: actions/setup-node@v4
     with:
       node-version-file: .nvmrc
       cache: npm

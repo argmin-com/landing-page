@@ -13,7 +13,7 @@ For any task:
 
 1. **Diff inspection**: `git diff --name-only origin/main...HEAD` — identify what changed.
 2. **Dependency changes** (`package.json`, `package-lock.json`):
-   - Check Dependabot config — was this change allowed? (TypeScript 6.x is blocked, major Astro bumps may need validation.)
+   - Check Dependabot config — was this change allowed? (Major version bumps may need validation.)
    - Run `npm ci` clean to ensure the lockfile is consistent.
    - Check for supply-chain anomalies: new top-level deps, unexpected transitive additions.
 3. **Workflow changes** (`.github/workflows/*.yml`):
