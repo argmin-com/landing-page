@@ -1,6 +1,6 @@
 ---
 description: Pull a PR diff and run the full UX review checklist + specialist subagent review against it.
-allowed-tools: Bash(gh pr view*), Bash(gh pr diff*), Bash(gh pr checks*), Bash(git fetch*), Bash(git checkout*), Bash(npm run audit:site), Bash(npm run validate:*), Bash(npm run check), Bash(npm run build), Read, Grep, Glob
+allowed-tools: Bash(gh pr view*), Bash(gh pr diff*), Bash(gh pr checks*), Bash(git fetch*), Bash(git checkout*), Bash(npm run audit:site), Bash(npm run validate:*), Bash(npm run check), Bash(npm run build), Read, Grep, Glob, Agent
 argument-hint: "<PR number>"
 ---
 

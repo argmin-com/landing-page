@@ -50,6 +50,43 @@ function stripMarkdown(text) {
     .trim();
 }
 
+/**
+ * Extract visible marketing copy from an Astro/MDX/HTML file.
+ * - Strips frontmatter (between --- markers at top of file)
+ * - Strips <script> and <style> blocks (including is:inline)
+ * - Strips HTML/JSX tags, keeping their inner text
+ * - Collapses entities and whitespace
+ *
+ * The result is passed to the banned-phrase matchers so that code/frontmatter
+ * tokens do not produce false-positive violations.
+ */
+function extractCopy(text) {
+  let t = text;
+
+  // Remove Astro/YAML frontmatter at top of file (--- ... ---).
+  t = t.replace(/^\s*---\n[\s\S]*?\n---\n?/m, "");
+
+  // Remove <script>...</script> and <style>...</style> blocks (iterative for safety).
+  let prev;
+  do {
+    prev = t;
+    t = t.replace(/<script\b[^>]*>[\s\S]*?<\/\s*script[^>]*>/gi, " ");
+  } while (t !== prev);
+  do {
+    prev = t;
+    t = t.replace(/<style\b[^>]*>[\s\S]*?<\/\s*style[^>]*>/gi, " ");
+  } while (t !== prev);
+
+  // Remove Astro/JSX expressions in braces: {expr}. Conservative single-pass.
+  t = t.replace(/\{[^{}]*\}/g, " ");
+
+  // Remove remaining HTML tags, decode a few common entities.
+  t = t.replace(/<[^>]*>/g, " ");
+  t = t.replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+
+  return t.replace(/\s+/g, " ").trim();
+}
+
 function sentences(text) {
   return text
     .split(/[.!?]+/)
@@ -79,12 +116,15 @@ function flesch(text) {
 }
 
 function run(text) {
-  const clean = stripMarkdown(text);
+  // Extract visible marketing copy only — strip Astro frontmatter, script/style blocks,
+  // JSX expressions, and HTML tags. Code tokens do not count as prose.
+  const copy = extractCopy(text);
+  const clean = stripMarkdown(copy);
   const findings = [];
 
-  // Banned phrases
+  // Banned phrases (matched against extracted copy, not raw file text)
   for (const { pattern, suggest } of BANNED) {
-    const hits = [...text.matchAll(pattern)];
+    const hits = [...copy.matchAll(pattern)];
     for (const hit of hits) {
       findings.push({
         kind: "banned",
@@ -97,7 +137,7 @@ function run(text) {
 
   // Exclusionary framing
   for (const { pattern, reason } of EXCLUSIONARY) {
-    const hits = [...text.matchAll(pattern)];
+    const hits = [...copy.matchAll(pattern)];
     for (const hit of hits) {
       findings.push({
         kind: "exclusionary",

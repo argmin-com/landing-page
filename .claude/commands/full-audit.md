@@ -1,6 +1,6 @@
 ---
 description: Parallel audit of the site by all specialist subagents. Produces a consolidated quality report.
-allowed-tools: Bash(npm run audit:site), Bash(npm run build), Bash(npm run check), Bash(npm run validate:*), Bash(git diff*), Bash(git log*), Read, Grep, Glob
+allowed-tools: Bash(npm run audit:site), Bash(npm run build), Bash(npm run check), Bash(npm run validate:*), Bash(git diff*), Bash(git log*), Read, Grep, Glob, Agent
 ---
 
 Run a comprehensive multi-agent audit of the current branch (or main if on main).

@@ -39,7 +39,9 @@ block() {
 
 # Check 1: Hardcoded Tailwind palette classes, including base colors (black/white/transparent)
 # and gradient stop utilities (from/to/via). Aligned with validate-design-tokens.mjs.
-if printf '%s' "$content" | grep -qE '\b(text|bg|border|ring|from|to|via|fill|stroke|decoration|accent|caret|outline)-((amber|emerald|sky|rose|red|green|blue|yellow|orange|purple|pink|indigo|teal|cyan|lime|fuchsia|violet|slate|gray|zinc|neutral|stone)-[0-9]{2,3}|black|white|transparent)\b' 2>/dev/null; then
+# Strip the allowlisted `border-transparent` utility before matching (mirrors validator allowlist).
+check1_content=$(printf '%s' "$content" | sed 's/\bborder-transparent\b//g')
+if printf '%s' "$check1_content" | grep -qE '\b(text|bg|border|ring|from|to|via|fill|stroke|decoration|accent|caret|outline)-((amber|emerald|sky|rose|red|green|blue|yellow|orange|purple|pink|indigo|teal|cyan|lime|fuchsia|violet|slate|gray|zinc|neutral|stone)-[0-9]{2,3}|black|white|transparent)\b' 2>/dev/null; then
   block "Hardcoded Tailwind palette class in $file. Use --color-argmin-* tokens or semantic tokens (success/warning/danger). See docs/design-system.md."
 fi
 
