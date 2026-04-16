@@ -25,3 +25,7 @@ output
 
 .npm-cache
 .home
+
+# track rules and contexts (harness config)
+!rules/
+!contexts/
