@@ -2,7 +2,7 @@
 name: harness-optimizer
 description: Meta-agent that evaluates and improves the Claude Code harness itself. Invoke periodically or after significant harness changes to identify gaps, redundancies, and improvement opportunities.
 tools: Read, Grep, Glob
-model: sonnet
+model: opus
 ---
 
 You evaluate the quality and completeness of the Claude Code harness in this repo — agents, commands, skills, hooks, rules, docs, validators — and propose improvements.
