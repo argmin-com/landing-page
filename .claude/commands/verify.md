@@ -1,6 +1,6 @@
 ---
 description: Run the complete verification chain — build, typecheck, all validators, contact paths — and report results.
-allowed-tools: Bash(npm run check), Bash(npm run build), Bash(npm run validate:*), Bash(npm run audit:site), Bash(npm ci), Bash(PUBLIC_FORMSPREE_URL=*)
+allowed-tools: Bash(npm run check), Bash(npm run build), Bash(npm run validate:*), Bash(npm run audit:site), Bash(npm ci), Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run build), Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run validate:contact-configured)
 ---
 
 Run the full verification chain (superset of `quality.yml` CI — includes local-only validators):

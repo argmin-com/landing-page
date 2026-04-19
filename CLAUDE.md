@@ -48,6 +48,13 @@ The contact form requires `PUBLIC_FORMSPREE_URL`. When absent or invalid, the UI
 
 ## Active Claude Code Harness
 
+Project-local skills at `.claude/skills/`:
+- **argmin-brand-voice** — voice rules, banned phrases, lint script for argmin.co copy
+- **content-engine** — end-to-end marketing copy workflow (brand voice → validation → publish)
+- **search-first** — pre-implementation codebase search to prevent duplication
+- **verification-loop** — verify-fix-verify cycle pattern for CI gate compliance
+- **strategic-compact** — context window management (summarize state, suggest compaction)
+
 Skills installed globally at `~/.claude/skills/`:
 - **GSD** (65+ skills) — planning, execution, code review, verification workflows
 - **UI UX Pro Max** — auto-activating design intelligence (67 styles, 96 palettes, 57 font pairings, 13 tech stacks)

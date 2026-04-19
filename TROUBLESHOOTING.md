@@ -99,7 +99,7 @@ ls -la dist/**/*.html
 ls -la dist/**/*.{png,jpg,webp,svg} 2>/dev/null
 ```
 
-### Total transfer exceeds 150KB
+### Total transfer exceeds 250KB
 
 **Fix:**
 - Compress images further.
@@ -166,3 +166,17 @@ npm run audit:site # Full validation
 npm ci            # Re-install in case deps changed
 npm run audit:site # Verify everything still passes
 ```
+
+## Claude Code harness
+
+### GitHub MCP server fails to start
+
+**Symptom:** `mcp__github__*` tools are missing or `gh mcp-server-github` errors out.
+
+**Fix:** The `.mcp.json` `github` server shells out to the `gh` CLI. It requires `gh` >= 2.50.0 (the version that ships `mcp-server-github`). Check with `gh --version`; upgrade via `brew upgrade gh` or your distro's package manager. You must also be authenticated: `gh auth status`.
+
+### Playwright MCP server fails
+
+**Symptom:** `mcp__playwright__*` tools fail to initialize.
+
+**Fix:** The server is pinned to `@anthropic-ai/mcp-server-playwright@0.1.2` via `npx`. Clear the npx cache if a corrupted download is suspected: `rm -rf ~/.npm/_npx`.

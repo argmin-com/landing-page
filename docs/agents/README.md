@@ -37,6 +37,10 @@ Specialist agents that run in isolated context windows. They produce verdicts, n
 | `seo-auditor` | `.claude/agents/seo-auditor.md` | Meta tags, canonical URLs, JSON-LD, sitemap |
 | `a11y-reviewer` | `.claude/agents/a11y-reviewer.md` | Interactive components, ARIA, focus management |
 | `release-engineer` | `.claude/agents/release-engineer.md` | Dependencies, CI workflows, deploy config |
+| `code-reviewer` | `.claude/agents/code-reviewer.md` | PR review for security, quality, and patterns |
+| `planner` | `.claude/agents/planner.md` | Complex features, architecture, refactoring (model: opus) |
+| `doc-updater` | `.claude/agents/doc-updater.md` | After significant changes — keeps docs in sync with code |
+| `harness-optimizer` | `.claude/agents/harness-optimizer.md` | Periodic or post-change harness gap analysis |
 
 ### How to invoke
 
@@ -62,10 +66,14 @@ One-keystroke workflows the orchestrator can invoke:
 
 | Command | File | What it does |
 |---|---|---|
-| `/audit-site` | `.claude/commands/audit-site.md` | Runs `npm run audit:site` + configured contact build |
+| `/audit-site` | `.claude/commands/audit-site.md` | Quick pre-PR sanity: `npm run audit:site` + configured contact build |
+| `/verify` | `.claude/commands/verify.md` | Full verification chain: clean install → typecheck → build → all validators → contact paths. Verbose per-step PASS/FAIL. |
 | `/ship-pr` | `.claude/commands/ship-pr.md` | Build, validate, commit, push, open PR, monitor CI |
 | `/review-pr <N>` | `.claude/commands/review-pr.md` | Pull PR diff + parallel specialist review |
-| `/full-audit` | `.claude/commands/full-audit.md` | All 6 specialist agents in parallel → consolidated score |
+| `/full-audit` | `.claude/commands/full-audit.md` | All specialist agents in parallel → consolidated score |
+| `/plan` | `.claude/commands/plan.md` | Delegates to `planner` for implementation plans |
+| `/update-docs` | `.claude/commands/update-docs.md` | Delegates to `doc-updater` to sync docs with code |
+| `/evolve` | `.claude/commands/evolve.md` | Delegates to `harness-optimizer` for harness gap analysis (scoped to harness paths) |
 | `/triage-ci` | `.claude/commands/triage-ci.md` | Diagnose CI failures with root-cause classification |
 | `/handoff-to-copilot` | `.claude/commands/handoff-to-copilot.md` | Create labeled issue or request Copilot review |
 
@@ -78,6 +86,10 @@ Deep domain knowledge bundles with embedded tools:
 | Skill | Path | Purpose |
 |---|---|---|
 | `argmin-brand-voice` | `.claude/skills/argmin-brand-voice/` | Voice rules, banned phrases, lint script, tone anchors |
+| `content-engine` | `.claude/skills/content-engine/` | End-to-end marketing copy workflow: brand voice → validation → publish |
+| `search-first` | `.claude/skills/search-first/` | Pre-implementation codebase search to prevent duplication |
+| `verification-loop` | `.claude/skills/verification-loop/` | Verify-fix-verify cycle pattern for CI gate compliance |
+| `strategic-compact` | `.claude/skills/strategic-compact/` | Context window management: summarize state, suggest compaction |
 
 The brand voice skill includes a runnable lint script:
 ```bash
@@ -132,18 +144,26 @@ Use `/handoff-to-copilot` to create an issue with `agent:copilot` label. Copilot
 4. `/ship-pr`
 
 ### C: New subpage or section
-1. `content-guardian` confirms no duplication
-2. `copywriter` drafts content
-3. `seo-auditor` validates meta + canonical + sitemap
-4. `a11y-reviewer` checks structural accessibility
-5. Orchestrator implements
-6. `/full-audit` for comprehensive check
-7. `/ship-pr`
+1. `/plan` — `planner` produces the implementation plan
+2. `content-guardian` confirms no duplication
+3. `copywriter` drafts content (loads `content-engine` skill)
+4. `seo-auditor` validates meta + canonical + sitemap
+5. `a11y-reviewer` checks structural accessibility
+6. Orchestrator implements
+7. `/full-audit` for comprehensive check
+8. `/ship-pr`
 
 ### D: CI fix or dependency update
 1. `release-engineer` diagnoses the issue
-2. Orchestrator applies the fix
-3. `/audit-site` to verify
+2. `code-reviewer` evaluates the proposed fix for security and correctness
+3. Orchestrator applies the fix
+4. `/verify` to run the full chain
+5. `/ship-pr`
+
+### E: Harness improvement
+1. `/evolve` — `harness-optimizer` inventories harness and proposes changes
+2. Orchestrator reviews proposals and gets user approval
+3. `/update-docs` — `doc-updater` syncs documentation
 4. `/ship-pr`
 
 ---

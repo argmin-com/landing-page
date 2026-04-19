@@ -7,16 +7,56 @@
       "Bash(npm run validate:*)",
       "Bash(npm run audit:site)",
       "Bash(npm run preview)",
+      "Bash(npm ci)",
       "Bash(npx astro check)",
+      "Bash(npx astro sync)",
       "Bash(npx playwright *)",
       "Bash(git status*)",
       "Bash(git log*)",
       "Bash(git diff*)",
       "Bash(git branch*)",
       "Bash(git fetch*)",
+      "Bash(git add*)",
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(git rev-parse*)",
+      "Bash(git rev-list*)",
+      "Bash(git show*)",
+      "Bash(gh pr*)",
+      "Bash(gh issue*)",
+      "Bash(gh run*)",
+      "Bash(gh api repos/*)",
+      "Bash(gh auth status)",
       "Bash(ls *)",
       "Bash(cat package.json)",
-      "Bash(node scripts/*)"
+      "Bash(node scripts/*)",
+      "Bash(node .claude/skills/argmin-brand-voice/lint.mjs *)",
+      "Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run build)",
+      "Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run validate:contact-configured)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-write-design-tokens.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/post-stage-visual-reminder.sh"
+          }
+        ]
+      }
     ]
   }
 }
