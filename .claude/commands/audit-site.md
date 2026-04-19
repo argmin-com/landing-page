@@ -1,6 +1,6 @@
 ---
 description: Run the full local audit chain (mirrors quality.yml). Fast pre-PR sanity check.
-allowed-tools: Bash(npm run audit:site), Bash(npm ci), Bash(npm run check), Bash(npm run build), Bash(npm run validate:*), Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run*)
+allowed-tools: Bash(npm run audit:site), Bash(npm ci), Bash(npm run check), Bash(npm run build), Bash(npm run validate:*), Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run build), Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run validate:contact-configured)
 ---
 
 Run the local audit chain and report results.

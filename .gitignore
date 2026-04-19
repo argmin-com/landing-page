@@ -29,3 +29,6 @@ output
 # track rules and contexts (harness config)
 !rules/
 !contexts/
+
+# credentials
+credentials.*

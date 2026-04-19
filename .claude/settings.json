@@ -31,7 +31,8 @@
       "Bash(cat package.json)",
       "Bash(node scripts/*)",
       "Bash(node .claude/skills/argmin-brand-voice/lint.mjs *)",
-      "Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run*)"
+      "Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run build)",
+      "Bash(PUBLIC_FORMSPREE_URL=https://formspree.io/f/* npm run validate:contact-configured)"
     ]
   },
   "hooks": {

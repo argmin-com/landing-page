@@ -99,7 +99,7 @@ ls -la dist/**/*.html
 ls -la dist/**/*.{png,jpg,webp,svg} 2>/dev/null
 ```
 
-### Total transfer exceeds 150KB
+### Total transfer exceeds 250KB
 
 **Fix:**
 - Compress images further.

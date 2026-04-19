@@ -1,6 +1,6 @@
 ---
 description: Refresh repository documentation to match current code state. Delegates to doc-updater subagent.
-allowed-tools: Read, Grep, Glob, Agent, Edit, Write, Bash(git diff*), Bash(git log*), Bash(npm run validate:page-structure)
+allowed-tools: Read, Grep, Glob, Agent, Edit(docs/**), Write(docs/**), Edit(CLAUDE.md), Edit(AGENTS.md), Edit(SOUL.md), Edit(TROUBLESHOOTING.md), Edit(COMMANDS-QUICK-REF.md), Edit(README.md), Write(README.md), Bash(git diff*), Bash(git log*), Bash(npm run validate:page-structure)
 ---
 
 Invoke the `doc-updater` subagent to audit all documentation for staleness.
