@@ -6,6 +6,7 @@ interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
+  robots?: string;
   showNavbarImmediately?: boolean;
   homeHeroOnlyInitially?: boolean;
   showMobileThemeToggle?: boolean;
@@ -16,6 +17,7 @@ const {
   description =
     "Argmin deploys inside your environment, attributes AI spend to teams and budgets, and intervenes at decision time. Enterprise AI cost intelligence.",
   canonicalUrl = "https://argmin.co/",
+  robots = "index, follow",
   showNavbarImmediately = true,
   homeHeroOnlyInitially = false,
   showMobileThemeToggle = true,
@@ -181,7 +183,7 @@ const homeHeroNoscriptStyles = homeHeroOnlyInitially
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="theme-color" content={themeColor} />
     <link rel="canonical" href={normalizedCanonicalUrl} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

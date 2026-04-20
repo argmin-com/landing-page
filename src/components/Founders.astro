@@ -30,9 +30,9 @@ const founders = [
 const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.props;
 ---
 
-<section id="founders" class="bg-argmin-surface-alt/60 px-6 py-10 md:py-14">
+<section id="founders" class="bg-argmin-surface-alt/60 px-6">
   <div class="mx-auto max-w-6xl">
-    <h2 class="text-center text-sm font-semibold uppercase tracking-[0.24em] text-argmin-dark">{title}</h2>
+    <h2 class="section-kicker text-center">{title}</h2>
     {intro && <p class="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-argmin-dark">{intro}</p>}
     <div class:list={["mt-8 grid grid-cols-1 gap-8", stack ? "max-w-4xl mx-auto" : "max-w-3xl mx-auto md:grid-cols-2"]}>
       {founders.map((founder) => (
@@ -49,7 +49,7 @@ const { title = "Founders", intro, stack = false, imagesOnly = false } = Astro.p
               <img
                 src={founder.jpg}
                 alt={founder.alt}
-                class="mx-auto mb-4 h-52 w-40 rounded-3xl object-cover shadow-[0_18px_40px_rgba(0,0,0,0.35)] md:h-64 md:w-48"
+                class="mx-auto mb-4 h-52 w-40 rounded-xl object-cover shadow-[var(--page-shadow-strong)] md:h-64 md:w-48"
                 width="200"
                 height="200"
                 loading="lazy"

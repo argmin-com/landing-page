@@ -128,7 +128,7 @@ jobs:
       - name: Run Lighthouse (multi-route)
         run: |
           mkdir -p lighthouse
-          ROUTES="/ /platform/ /use-cases/ /contact/ /security/"
+          ROUTES="/ /platform/ /use-cases/ /contact/ /security/ /about/ /team/"
 
           for route in $ROUTES; do
             slug=$(echo "$route" | sed 's|/|_|g; s|^_||')
@@ -158,8 +158,8 @@ jobs:
 
           const thresholds = {
             performance: 0.9,
-            accessibility: 0.95,
-            "best-practices": 0.95,
+            accessibility: 1,
+            "best-practices": 1,
             seo: 1,
           };
           const budgets = { lcpMs: 2500, transferKb: 250 };
@@ -234,7 +234,8 @@ jobs:
             echo "::endgroup::"
           done
           if [ "$FAIL" -eq 1 ]; then
-            echo "::warning::pa11y found accessibility issues on one or more routes (see logs above)"
+            echo "::error::pa11y found accessibility issues on one or more routes (see logs above)"
+            exit 1
           fi
 
       - name: Collect server logs

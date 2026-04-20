@@ -73,8 +73,8 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
 ---
 
 <BaseLayout
-  title="Use Cases | Argmin"
-  description="How engineering, finance, and security teams use Argmin to trace AI spend and intervene earlier."
+  title="Use Cases: Engineering, Finance & Security Teams | Argmin"
+  description="How engineering, finance, and security teams use Argmin to trace AI spend to owners, surface waste, and intervene before budgets overrun. Three roles, one platform."
   canonicalUrl="https://argmin.co/use-cases"
   showMobileThemeToggle={false}
 >
@@ -137,10 +137,10 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
           >
             {/* Hash-target anchor so /use-cases#engineering etc. actually scroll to the panel */}
             <span id={roleAnchors[index]} class="role-panel-anchor" aria-hidden="true"></span>
-            <p class="role-panel-mobile-label section-kicker text-argmin-accent">{role.label}</p>
+            <p class="role-panel-mobile-label section-kicker">{role.label}</p>
             <div>
               <h3 class="section-title-lg max-w-xl">{role.question}</h3>
-              <p class="mt-4 text-base leading-8 text-argmin-accent font-medium">{role.moment}</p>
+              <p class="mt-4 text-base leading-8 text-argmin-dark font-medium">{role.moment}</p>
 
               <div class="mt-6 rounded-xl border-l-[3px] border-l-argmin-warning border border-argmin-border bg-argmin-warning-surface/50 p-5">
                 <p class="text-xs font-semibold uppercase tracking-[0.18em] text-argmin-warning">What forces action</p>

@@ -120,7 +120,7 @@ const isGroupActive = (items: { href: string }[]) =>
                       href={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
                       class:list={[
-                        "block rounded-2xl border border-transparent bg-argmin-surface-alt/50 px-4 py-3 text-base font-semibold text-argmin-dark transition-colors duration-200 hover:border-argmin-border",
+                        "block rounded-xl border border-transparent bg-argmin-surface-alt/50 px-4 py-3 text-base font-semibold text-argmin-dark transition-colors duration-200 hover:border-argmin-border",
                         isActive(item.href) && "border-argmin-border bg-argmin-surface",
                       ]}
                     >
@@ -234,9 +234,10 @@ const isGroupActive = (items: { href: string }[]) =>
     panel.addEventListener("mouseenter", () => clearTimeout(closeTimer));
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
+      if (event.key === "Escape" && !panel.classList.contains("hidden")) {
         panel.classList.add("hidden");
         trigger.setAttribute("aria-expanded", "false");
+        trigger.focus();
       }
     });
 

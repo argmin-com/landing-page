@@ -530,11 +530,16 @@ const dashboardTeamCosts = [
     transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
   }
 
-  .diagram-keyword:hover,
+  .diagram-keyword:hover {
+    border-color: var(--diagram-accent);
+    color: var(--diagram-text);
+  }
+
   .diagram-keyword:focus-visible {
     border-color: var(--diagram-accent);
     color: var(--diagram-text);
-    outline: none;
+    outline: 2px solid var(--diagram-accent);
+    outline-offset: 2px;
   }
 
   .attribution-diagram[data-active="inputs"] [data-group="attribution"],
