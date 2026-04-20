@@ -41,6 +41,9 @@ Specialist agents that run in isolated context windows. They produce verdicts, n
 | `planner` | `.claude/agents/planner.md` | Complex features, architecture, refactoring (model: opus) |
 | `doc-updater` | `.claude/agents/doc-updater.md` | After significant changes — keeps docs in sync with code |
 | `harness-optimizer` | `.claude/agents/harness-optimizer.md` | Periodic or post-change harness gap analysis |
+| `directive-router` | `.claude/agents/directive-router.md` | Classifies a user directive into the right workflow (used by autopilot) |
+| `visual-polish-reviewer` | `.claude/agents/visual-polish-reviewer.md` | UI/UX quality audit beyond WCAG and tokens (hierarchy, density, motion, polish) |
+| `deploy-verifier` | `.claude/agents/deploy-verifier.md` | Confirms Cloudflare Workers Builds success and live site reflects the change |
 
 ### How to invoke
 
@@ -74,6 +77,7 @@ One-keystroke workflows the orchestrator can invoke:
 | `/plan` | `.claude/commands/plan.md` | Delegates to `planner` for implementation plans |
 | `/update-docs` | `.claude/commands/update-docs.md` | Delegates to `doc-updater` to sync docs with code |
 | `/evolve` | `.claude/commands/evolve.md` | Delegates to `harness-optimizer` for harness gap analysis (scoped to harness paths) |
+| `/autopilot <directive>` | `.claude/commands/autopilot.md` | **End-to-end autonomous executor.** Audit → implement → verify → ship → confirm-live. Does not stop for mechanical fixes. |
 | `/triage-ci` | `.claude/commands/triage-ci.md` | Diagnose CI failures with root-cause classification |
 | `/handoff-to-copilot` | `.claude/commands/handoff-to-copilot.md` | Create labeled issue or request Copilot review |
 
@@ -90,6 +94,7 @@ Deep domain knowledge bundles with embedded tools:
 | `search-first` | `.claude/skills/search-first/` | Pre-implementation codebase search to prevent duplication |
 | `verification-loop` | `.claude/skills/verification-loop/` | Verify-fix-verify cycle pattern for CI gate compliance |
 | `strategic-compact` | `.claude/skills/strategic-compact/` | Context window management: summarize state, suggest compaction |
+| `autopilot` | `.claude/skills/autopilot/` | **Autonomous execution pattern** — codifies the audit → implement → verify → ship → confirm-live loop |
 
 The brand voice skill includes a runnable lint script:
 ```bash
@@ -178,6 +183,32 @@ Use when the directive is broad ("improve everything", "audit and fix"). The orc
 7. Report consolidated summary to user
 
 **Autonomy rule**: Only pause for user input when a change would alter page copy meaning, delete content, or restructure navigation. Mechanical fixes (contrast, radius, heading hierarchy, meta tags, CI thresholds) proceed without check-in.
+
+### G: UI/UX deep polish (autopilot default for visual directives)
+Use when the directive specifically targets visual/UX quality ("subpages look bad", "polish the site", "improve UI"). Builds on Workflow F with a visual-polish layer.
+
+1. Launch 4 parallel audits: `ux-reviewer`, `visual-polish-reviewer`, `design-token-auditor`, `a11y-reviewer`
+2. Consolidate into P0/P1/P2 with specific class/token diffs (not vague "improve spacing")
+3. Implement all P0 (hierarchy breaks, contract violations) + all P1 (hover states, animation gaps, empty states) + curated P2
+4. `/verify` — full validation chain
+5. Commit, push, confirm deploy via `deploy-verifier`
+6. Report
+
+**Signature check before shipping**: Does the page now feel coherent, have intentional hover/motion, use accent color intentionally (not drowning in gray), have visible hierarchy, feel polished at 375px and 1440px in both themes?
+
+### H: Autopilot (any directive, end-to-end)
+The top-level autonomous workflow. Invoked via `/autopilot <directive>`.
+
+1. `directive-router` classifies the directive and picks the base workflow (A-G)
+2. Launch specialist audits in parallel
+3. Consolidate P0/P1/P2 — no approval step
+4. Implement all P0/P1, curated P2
+5. Verify
+6. Ship (commit + push + PR if protected)
+7. `deploy-verifier` confirms Cloudflare Workers Builds success and live response reflects changes
+8. Report
+
+**Stop conditions (CRITICAL only):** copy meaning changes, content deletion, nav restructure, security surfaces beyond tightening, force-push, `src/pages/index.astro`. All other changes proceed automatically.
 
 ---
 

@@ -254,8 +254,20 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
           throw new Error("Form submission failed");
         }
 
-        container.innerHTML =
-          '<p class="py-8 text-center text-xl text-argmin-dark">Thank you. We will be in touch shortly.</p>';
+        container.innerHTML = [
+          '<div class="rounded-[1.75rem] border border-argmin-border bg-argmin-surface/90 px-6 py-10 text-center shadow-[var(--page-shadow-soft)] backdrop-blur md:px-10 md:py-14">',
+          '<div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full border-2 border-argmin-accent bg-argmin-accent/10 text-argmin-accent">',
+          '<svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7" /></svg>',
+          '</div>',
+          '<p class="section-kicker mt-5">Message received</p>',
+          '<h3 class="section-title mt-3">We\'ll be in touch shortly.</h3>',
+          '<p class="mx-auto mt-4 max-w-md text-base leading-7 text-argmin-mid">A member of the founding team will reply within one business day. While you wait, explore how Argmin resolves spend to owners at the request layer.</p>',
+          '<div class="mt-7 flex flex-wrap justify-center gap-3">',
+          '<a href="/platform" class="button-primary">See the platform</a>',
+          '<a href="/use-cases" class="button-secondary">Browse use cases</a>',
+          '</div>',
+          '</div>',
+        ].join("");
         window.plausible && window.plausible("form_submit");
       } catch (submissionError) {
         console.error("Contact form submission failed:", submissionError);

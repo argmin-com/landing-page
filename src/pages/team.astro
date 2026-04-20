@@ -75,8 +75,8 @@ const founders = [
     />
 
     <section class="px-6">
-      <div class="site-shell">
-        <div class="mx-auto mb-10 max-w-4xl text-center">
+      <div class="site-shell section-divider pt-10">
+        <div class="mx-auto mb-10 max-w-4xl text-center rise-in">
           <p class="section-kicker">Founders</p>
         </div>
 
@@ -127,7 +127,7 @@ const founders = [
 
               <ul class="mt-6 grid gap-2.5 border-t border-argmin-border pt-6">
                 {founder.highlights.map((highlight) => (
-                  <li class="rounded-xl border border-argmin-border bg-argmin-surface-alt/45 px-4 py-3 text-sm leading-7 text-argmin-dark">
+                  <li class="rounded-xl border border-argmin-border bg-argmin-surface-alt/45 px-4 py-3 text-sm leading-7 text-argmin-dark transition-colors duration-200 hover:border-argmin-accent/40">
                     {highlight}
                   </li>
                 ))}
@@ -141,10 +141,10 @@ const founders = [
     <section class="px-6">
       <div class="site-shell section-divider pt-10">
         <div class="mx-auto max-w-3xl rise-in">
-          <h2 class="section-kicker">Why Now</h2>
-          <p class="mt-5 text-base leading-8 text-argmin-dark md:text-lg">
-            Enterprise AI spend is scaling faster than the systems designed to govern it. Cloud billing tools see accounts, not applications.
-            Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.
+          <p class="section-kicker">Why Now</p>
+          <h2 class="section-title mt-5">Enterprise AI spend is scaling faster than the systems designed to govern it.</h2>
+          <p class="mt-5 text-base leading-8 text-argmin-mid md:text-lg">
+            Cloud billing tools see accounts, not applications. Observability platforms see traces, not owners. FinOps frameworks were built for static infrastructure, not model calls that vary 700x in cost.
           </p>
         </div>
 

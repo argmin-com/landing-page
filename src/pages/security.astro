@@ -89,7 +89,7 @@ const neverDoes = [
 
         <div class="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-2">
           {principles.map((principle) => (
-            <article class="surface-panel px-6 py-6">
+            <article class="surface-panel px-6 py-6 transition-transform duration-200 hover:translate-y-[-2px]">
               <div class="flex items-center gap-3 text-argmin-accent">
                 {principle.icon === "lock" && (
                   <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -177,7 +177,7 @@ const neverDoes = [
       </div>
     </section>
 
-    <section class="px-6 pb-10 pt-8 md:pb-14">
+    <section class="px-6">
       <div class="site-shell section-divider pt-10">
         <div class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
           <h2 class="section-title max-w-3xl">Ready to review the architecture?</h2>

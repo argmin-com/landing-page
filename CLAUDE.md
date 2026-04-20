@@ -13,9 +13,36 @@ Read `docs/assistant-guide.md` before making any changes. It contains the shared
 5. **Never bypass hooks** (`--no-verify`, `core.hooksPath=/dev/null`, etc.).
 6. **Check dark mode before committing.**
 
-## Autonomous execution
+## Autonomous execution (autopilot)
 
-When the user gives a broad directive ("improve everything", "audit and fix", "proceed"), execute end-to-end using Workflow F in `docs/agents/README.md`. Do not pause for confirmation on mechanical fixes (contrast, radius, heading hierarchy, meta tags, CI thresholds, token compliance). Only pause when a change would alter page copy meaning, delete content, or restructure navigation. Run `/verify` before every commit. Report a consolidated summary when done.
+**Default mode for broad directives is autonomous.** When the user gives any of these:
+- "improve the subpages" / "audit and fix" / "polish the site"
+- "proceed" / "do whatever you need to do" / "ship it"
+- "fix all X" (where X is a concern area: WCAG, SEO, CI, etc.)
+- A follow-up to an audit
+
+...engage the **autopilot** pattern from `.claude/skills/autopilot/SKILL.md` (invoked via `/autopilot <directive>`). The autopilot loop is:
+
+1. Classify directive via `directive-router` agent
+2. Launch specialist agents in PARALLEL (single message, multiple Agent calls)
+3. Consolidate findings into P0/P1/P2 list — do NOT present for approval
+4. Implement all P0 and P1 fixes directly
+5. Run full verification chain (`npm run audit:site` + configured contact)
+6. Commit with structured message; push to main (or open PR if protected)
+7. Confirm deploy via `deploy-verifier` agent (polls Workers Builds + fetches live URL)
+8. Report consolidated summary
+
+**Only stop to ask the user when CRITICAL:**
+- Change would alter a claim's factual meaning
+- Change would delete page content (cardinal rule 1)
+- Change would restructure navigation / URL routes
+- Change touches security surfaces beyond tightening (CSP, auth, secrets, IAM)
+- Change requires force-push or main reset
+- Target is `src/pages/index.astro` (cardinal rule 3)
+
+**Always proceed without check-in on:** contrast fixes, focus rings, ARIA attributes, meta tags, canonical URLs, JSON-LD additions, heading corrections, typography class substitution, design token normalization (radius/shadow/spacing), CI thresholds, validator additions, dependency patches, doc updates, hover/focus/motion states, mobile responsive tweaks.
+
+If a broad directive comes in and autopilot isn't explicitly invoked, still default to the autopilot pattern — the user expects end-to-end execution until the change is live.
 
 ## Tech Stack
 
