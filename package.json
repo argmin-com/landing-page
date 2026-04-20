@@ -21,14 +21,15 @@
     "validate:formspree-health": "node scripts/validate-formspree-health.mjs",
     "validate:page-structure": "node scripts/validate-page-structure.mjs",
     "validate:design-tokens": "node scripts/validate-design-tokens.mjs",
-    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar && npm run validate:canonical && npm run validate:formspree-health && npm run validate:page-structure && npm run validate:design-tokens",
+    "validate:anchor-links": "node scripts/validate-anchor-links.mjs",
+    "audit:site": "npm run check && npm run build && npm run validate:contact-fallbacks && npm run validate:redirects && npm run validate:navbar && npm run validate:canonical && npm run validate:formspree-health && npm run validate:page-structure && npm run validate:design-tokens && npm run validate:anchor-links",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=landing-page",
     "postinstall": "npx simple-git-hooks 2>/dev/null || true"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.5",
+    "astro": "6.1.8",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
@@ -37,7 +38,7 @@
     "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
     "vitest": "^4.1.4",
-    "wrangler": "^4.82.1"
+    "wrangler": "4.83.0"
   },
   "simple-git-hooks": {
     "pre-commit": "npm run check"
