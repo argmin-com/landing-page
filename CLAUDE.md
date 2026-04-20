@@ -13,6 +13,10 @@ Read `docs/assistant-guide.md` before making any changes. It contains the shared
 5. **Never bypass hooks** (`--no-verify`, `core.hooksPath=/dev/null`, etc.).
 6. **Check dark mode before committing.**
 
+## Autonomous execution
+
+When the user gives a broad directive ("improve everything", "audit and fix", "proceed"), execute end-to-end using Workflow F in `docs/agents/README.md`. Do not pause for confirmation on mechanical fixes (contrast, radius, heading hierarchy, meta tags, CI thresholds, token compliance). Only pause when a change would alter page copy meaning, delete content, or restructure navigation. Run `/verify` before every commit. Report a consolidated summary when done.
+
 ## Tech Stack
 
 Astro 6 + Tailwind CSS 4 + TypeScript 5.9 (strict) on Cloudflare Pages. Static output only (`npm run build` -> `dist/`). Node >= 22.12.0.

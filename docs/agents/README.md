@@ -166,6 +166,19 @@ Use `/handoff-to-copilot` to create an issue with `agent:copilot` label. Copilot
 3. `/update-docs` — `doc-updater` syncs documentation
 4. `/ship-pr`
 
+### F: Full-spectrum quality sweep (autonomous)
+Use when the directive is broad ("improve everything", "audit and fix"). The orchestrator runs end-to-end without user check-ins unless a change is architecturally ambiguous.
+
+1. Launch 4 specialist audits in parallel: `seo-auditor`, `a11y-reviewer`, `design-token-auditor`, `release-engineer`
+2. Consolidate findings into a prioritized P0/P1/P2 list
+3. Implement P0 fixes directly (spec violations, WCAG failures, CI misconfigurations)
+4. Implement P1 fixes (SEO metadata, token consistency, dark mode parity)
+5. `/verify` — full validation chain
+6. Commit and push to main (or `/ship-pr` if branch protection is enforced)
+7. Report consolidated summary to user
+
+**Autonomy rule**: Only pause for user input when a change would alter page copy meaning, delete content, or restructure navigation. Mechanical fixes (contrast, radius, heading hierarchy, meta tags, CI thresholds) proceed without check-in.
+
 ---
 
 ## Quality gates (what CI enforces)
@@ -179,8 +192,8 @@ Every PR is gated by:
 | Contact fallbacks | `quality.yml` | Yes |
 | Page structure | `quality.yml` | Yes |
 | Design tokens | `quality.yml` | Yes |
-| Lighthouse (5 routes) | `quality.yml` | Yes |
-| pa11y WCAG AA | `quality.yml` | Warning |
+| Lighthouse (7 routes) | `quality.yml` | Yes |
+| pa11y WCAG AA | `quality.yml` | Yes |
 | CodeQL SAST | `codeql.yml` | Yes |
 | Dependency review | `dependency-review.yml` | Yes |
 | Link check | `link-check.yml` | Yes |
