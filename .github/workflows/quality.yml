@@ -79,6 +79,19 @@ jobs:
       - name: Validate design tokens
         run: npm run validate:design-tokens
 
+      - name: Validate redirects
+        run: npm run validate:redirects
+
+      - name: Validate navbar
+        run: npm run validate:navbar
+
+      - name: Validate canonical URLs
+        run: npm run validate:canonical
+
+      - name: Validate anchor links
+        run: npm run validate:anchor-links
+
+      # Second build with Formspree configured to validate contact-configured path
       - name: Build configured contact site
         run: npm run build
         env:

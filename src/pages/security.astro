@@ -60,6 +60,28 @@ const neverDoes = [
   showMobileThemeToggle={false}
 >
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        ...principles.map(p => ({
+          "@type": "Question",
+          "name": `How does Argmin handle ${p.title.toLowerCase()}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": p.description
+          }
+        })),
+        ...neverDoes.map(item => ({
+          "@type": "Question",
+          "name": `How does Argmin handle ${item.toLowerCase()}?`,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": `Argmin never does this: ${item}.`
+          }
+        }))
+      ]
+    })} />
     <PageHero
       eyebrow="Security"
       title="Your data never leaves your environment."
@@ -90,26 +112,26 @@ const neverDoes = [
         <div class="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-2">
           {principles.map((principle) => (
             <article class="surface-panel px-6 py-6 transition-transform duration-200 hover:translate-y-[-2px]">
-              <div class="flex items-center gap-3 text-argmin-accent">
+              <div class="flex items-center gap-3">
                 {principle.icon === "lock" && (
-                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 24 24" class="h-6 w-6 text-argmin-accent" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="4" y="11" width="16" height="10" rx="2" />
                     <path d="M8 11V7a4 4 0 018 0v4" />
                   </svg>
                 )}
                 {principle.icon === "shield" && (
-                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 24 24" class="h-6 w-6 text-argmin-accent" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6l8-3z" />
                   </svg>
                 )}
                 {principle.icon === "eye" && (
-                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 24 24" class="h-6 w-6 text-argmin-accent" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
                 )}
                 {principle.icon === "zap" && (
-                  <svg viewBox="0 0 24 24" class="h-6 w-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <svg viewBox="0 0 24 24" class="h-6 w-6 text-argmin-accent" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
                   </svg>
                 )}
@@ -177,9 +199,9 @@ const neverDoes = [
       </div>
     </section>
 
-    <section class="px-6">
+    <section class="px-6 bg-argmin-surface-alt/30">
       <div class="site-shell section-divider pt-10">
-        <div class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center">
+        <div class="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center rise-in">
           <h2 class="section-title max-w-3xl">Ready to review the architecture?</h2>
           <p class="max-w-2xl text-base leading-8 text-argmin-mid">
             We walk through trust boundaries, data access, and deployment posture with your security and infrastructure teams before any connectors are deployed.

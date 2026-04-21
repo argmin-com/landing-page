@@ -74,11 +74,23 @@ const roleAnchors = ["engineering", "finance-finops", "security"];
 
 <BaseLayout
   title="Use Cases: Engineering, Finance & Security Teams | Argmin"
-  description="How engineering, finance, and security teams use Argmin to trace AI spend to owners, surface waste, and intervene before budgets overrun. Three roles, one platform."
+  description="How engineering, finance, and security teams use Argmin to trace AI spend to owners, surface waste, and intervene before budgets overrun."
   canonicalUrl="https://argmin.co/use-cases"
   showMobileThemeToggle={false}
 >
   <main id="main-content">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": roles.map(role => ({
+        "@type": "Question",
+        "name": role.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": role.outcome
+        }
+      }))
+    })} />
     <PageHero
       eyebrow="Use Cases"
       title="One platform. Every stakeholder's question answered."

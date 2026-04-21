@@ -217,12 +217,12 @@ const deploymentPhases = [
 
           <div role="tabpanel" id="ppanel-0" aria-labelledby="ptab-0" class="platform-panel py-9">
             <div class="grid gap-6 md:grid-cols-2">
-              <div class="rounded-xl border border-argmin-border bg-argmin-surface-alt/60 p-5">
+              <div class="rounded-xl border border-argmin-border bg-argmin-surface-alt/60 p-5 transition-transform duration-200 hover:translate-y-[-2px]">
                 <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-light">Without Argmin</p>
                 <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M AI spend</p>
                 <p class="mt-2 text-base leading-7 text-argmin-mid">Unknown ownership. No budget attribution. No way to tell which teams, models, or use cases drive the bill. Finance gets invoice totals and guesswork.</p>
               </div>
-              <div class="rounded-xl border border-argmin-accent/30 bg-argmin-accent/5 p-5">
+              <div class="rounded-xl border border-argmin-accent/30 bg-argmin-accent/5 p-5 transition-transform duration-200 hover:translate-y-[-2px]">
                 <p class="text-sm font-semibold uppercase tracking-[0.18em] text-argmin-dark">With Argmin</p>
                 <p class="mt-3 text-2xl font-semibold tracking-[-0.04em] text-argmin-dark">$2M → 14 teams, 6 use cases, 3 waste clusters</p>
                 <p class="mt-2 text-base leading-7 text-argmin-mid">Every dollar resolved to an owner, budget, and decision. Typical result: 10–25% cost reduction within six months.</p>
@@ -402,7 +402,7 @@ const deploymentPhases = [
                   {index + 1}
                 </div>
                 {index < deploymentPhases.length - 1 && (
-                  <div class="w-px flex-1 bg-argmin-border" />
+                  <div class="w-px flex-1 bg-argmin-accent/20" />
                 )}
               </div>
               <article class="pb-10">

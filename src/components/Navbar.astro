@@ -29,7 +29,7 @@ const isGroupActive = (items: { href: string }[]) =>
 
 <header class:list={["relative z-[90] px-6 pb-6 pt-8 md:px-8 md:pt-10", navClass]}>
   <div class="site-shell">
-    <div class="navbar-bar flex items-center justify-between gap-3 rounded-[2rem] border border-argmin-border px-5 py-3 shadow-[var(--page-shadow-soft)] md:gap-5 md:px-6">
+    <div class="navbar-bar flex items-center justify-between gap-3 rounded-full border border-argmin-border px-5 py-3 shadow-[var(--page-shadow-soft)] md:gap-5 md:px-6">
       <a
         href="/"
         class="site-wordmark shrink-0 text-argmin-dark transition-opacity duration-200 hover:opacity-72"
@@ -45,7 +45,7 @@ const isGroupActive = (items: { href: string }[]) =>
                 <button
                   type="button"
                   class:list={[
-                    "inline-flex items-center gap-1 text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-sm",
+                    "inline-flex items-center gap-1 text-sm font-semibold tracking-[0.02em] text-argmin-light transition-colors duration-200 hover:text-argmin-dark focus-visible:text-argmin-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-argmin-accent focus-visible:ring-offset-2 rounded-full",
                     isGroupActive(group.items) && "nav-link-active",
                   ]}
                   aria-expanded="false"
@@ -67,7 +67,7 @@ const isGroupActive = (items: { href: string }[]) =>
                           href={item.href}
                           aria-current={isActive(item.href) ? "page" : undefined}
                           class:list={[
-                            "block rounded-lg px-3.5 py-2 text-sm font-medium text-argmin-mid transition-colors duration-150 hover:bg-argmin-surface-alt hover:text-argmin-dark",
+                            "block rounded-xl px-3.5 py-2 text-sm font-medium text-argmin-mid transition-colors duration-150 hover:bg-argmin-surface-alt hover:text-argmin-dark",
                             isActive(item.href) && "bg-argmin-surface-alt text-argmin-dark",
                           ]}
                         >

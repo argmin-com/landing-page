@@ -26,10 +26,10 @@ const containerClass = isStandalone
 const formClass = isStandalone ? "space-y-5" : "space-y-4 p-6 md:p-8";
 const textInputClass = isStandalone
   ? "w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light transition-colors duration-150 hover:border-argmin-accent/40 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent"
-  : "w-full rounded-lg border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent";
+  : "w-full rounded-xl border border-argmin-border bg-argmin-surface px-4 py-3 text-base text-argmin-dark placeholder:text-argmin-light focus:border-transparent focus:outline-none focus:ring-2 focus:ring-argmin-accent";
 const buttonClass = isStandalone
   ? "button-primary w-full py-4 text-base"
-  : "w-full rounded-lg bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-accent-ink transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50";
+  : "w-full rounded-full bg-argmin-accent px-8 py-4 text-lg font-semibold text-argmin-accent-ink transition-colors duration-200 hover:bg-argmin-accent-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-argmin-accent disabled:cursor-not-allowed disabled:opacity-50";
 const helperTextClass = isStandalone
   ? "text-center text-sm text-argmin-mid"
   : "text-center text-sm text-argmin-dark";
@@ -68,7 +68,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
 
     <div class:list={[isStandalone ? "grid gap-5 sm:grid-cols-2" : ""]}>
       <div>
-        <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name</label>
+        <label for="name" class="mb-2 block text-sm font-medium text-argmin-dark">Name <span aria-hidden="true" class="text-argmin-danger">*</span></label>
         <input
           id="name"
           name="name"
@@ -79,7 +79,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
         />
       </div>
       <div class:list={[!isStandalone && "mt-4"]}>
-        <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email</label>
+        <label for="email" class="mb-2 block text-sm font-medium text-argmin-dark">Email <span aria-hidden="true" class="text-argmin-danger">*</span></label>
         <input
           id="email"
           name="email"
@@ -91,7 +91,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
       </div>
     </div>
     <div>
-      <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company</label>
+      <label for="company" class="mb-2 block text-sm font-medium text-argmin-dark">Company <span aria-hidden="true" class="text-argmin-danger">*</span></label>
       <input
         id="company"
         name="company"
@@ -103,7 +103,7 @@ const noScriptClass = "mt-6 text-center text-sm text-argmin-dark";
     </div>
 
     <div>
-      <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message</label>
+      <label for="message" class="mb-2 block text-sm font-medium text-argmin-dark">Message <span aria-hidden="true" class="text-argmin-danger">*</span></label>
       <textarea
         id="message"
         name="message"
