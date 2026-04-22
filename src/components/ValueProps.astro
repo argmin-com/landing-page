@@ -6,9 +6,9 @@ const items = [
       "Cloud bills show totals. We show which team called which model, from which service, for what purpose, and at what cost.",
   },
   {
-    title: "Decision-time intervention",
+    title: "Control at the decision point",
     description:
-      "We act at the moment of inference: routing to cheaper equivalent models, enforcing budgets, flagging waste before money is spent.",
+      "We sit in the path of every inference call. Route to lower-cost equivalent models, apply team-level budgets, flag waste before it lands on the bill. Advisory by default; enforcement is opt-in.",
   },
   {
     title: "Zero operational risk",
@@ -25,7 +25,10 @@ const items = [
 
 <section id="value" class="bg-argmin-surface-alt/60 px-6">
   <div class="mx-auto max-w-6xl">
-    <h2 class="sr-only">Value propositions</h2>
+    <div class="mx-auto mb-10 max-w-3xl rise-in">
+      <p class="section-kicker">Value</p>
+      <h2 class="section-title mt-5">What Argmin gives you</h2>
+    </div>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-12">
       {items.map((item) => (
         <article class="rounded-xl border border-argmin-border bg-argmin-surface/80 p-6 shadow-[var(--page-shadow-soft)] backdrop-blur md:p-8">

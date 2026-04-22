@@ -1,5 +1,6 @@
 ---
 import AttributionFlowDiagram from "../components/AttributionFlowDiagram.astro";
+import CompetitiveLandscapeFigure from "../components/CompetitiveLandscapeFigure.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import DecisionRule from "../components/DecisionRule.astro";
 import Footer from "../components/Footer.astro";
@@ -58,7 +59,7 @@ const controlPoints = [
   },
   {
     stage: "Planning",
-    title: "Portfolio optimization",
+    title: "Portfolio control",
     description:
       "Benchmark model routes, services, and teams across the estate. Identify where a different model or cache strategy would reduce cost without affecting quality.",
   },
@@ -105,14 +106,14 @@ const deploymentPhases = [
     label: "Week 3+",
     title: "Layer decisions into approvals and budget review",
     description:
-      "The record becomes operational: projected deltas in change review, budget-aware approvals, and portfolio optimization across services.",
+      "The record becomes operational: projected deltas in change review, budget-aware approvals, and portfolio control across services.",
   },
 ];
 ---
 
 <BaseLayout
-  title="AI Cost Attribution & Governance Platform | Argmin"
-  description="Argmin gives engineering, finance, and security teams a shared system of record for AI attribution, governance, and decision-time control."
+  title="Platform | The attribution layer for enterprise AI | Argmin"
+  description="Argmin gives enterprises attributed visibility into their AI consumption, and the control to act on it, across every team, model, and workload."
   canonicalUrl="https://argmin.co/platform"
   showMobileThemeToggle={false}
 >
@@ -139,7 +140,7 @@ const deploymentPhases = [
     <PageHero
       eyebrow="Platform"
       title="AI spend grows fast. Ownership should keep up."
-      lede="As teams adopt AI across more services and use cases, the gap between what is spent and who owns it widens. Argmin gives engineering, finance, and security a shared system of record — resolving every model call to a service, owner, and budget before costs compound."
+      lede="As teams adopt AI across more services and use cases, the gap between what is spent and who owns it widens. Argmin gives engineering, finance, and security a shared attribution layer — resolving every model call to a service, owner, and budget before costs compound."
       notes={[
         { label: "Attribution", value: "Model → service → code → identity → org → budget, resolved automatically." },
         { label: "Variance", value: "The same AI model can cost up to 700x more depending on how it is called." },
@@ -160,19 +161,8 @@ const deploymentPhases = [
           <h2 class="section-title mt-5 max-w-4xl">Existing tools each see only part of the picture.</h2>
         </div>
 
-        <div class="mx-auto mt-10 w-full max-w-[960px] overflow-hidden rounded-xl">
-          <picture>
-            <source srcset="/images/competitive-landscape.webp" type="image/webp" />
-            <img
-              src="/images/competitive-landscape.png"
-              alt="AI operations landscape showing LLM observability, AI gateways, APM, and FinOps tools each operating within a single layer, while Argmin spans all three as the AI consumption system of record."
-              loading="lazy"
-              decoding="async"
-              width="1200"
-              height="819"
-              class="block h-auto w-full"
-            />
-          </picture>
+        <div class="mx-auto mt-6 w-full max-w-[960px]">
+          <CompetitiveLandscapeFigure />
         </div>
 
         <div class="mx-auto mt-6 max-w-[720px] text-center">

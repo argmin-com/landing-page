@@ -1,0 +1,263 @@
+<svg
+  viewBox="0 0 1170 810"
+  role="img"
+  aria-labelledby="competitive-landscape-title competitive-landscape-desc"
+  class="competitive-landscape-figure"
+>
+  <title id="competitive-landscape-title">AI operations competitive landscape</title>
+  <desc id="competitive-landscape-desc">
+    Two-axis competitive map. Vertical axis: post-hoc analytics at the bottom, decision-time intervention at the top. Horizontal axis: per-request visibility on the left, organizational attribution on the right. Existing categories cluster in the lower-left and lower-right; Argmin occupies the upper-right structural gap where workload-level intervention meets organizational attribution.
+  </desc>
+
+  <defs>
+    <radialGradient id="clf-argmin-glow" cx="50%" cy="50%" r="50%">
+      <stop class="clf-accent-stop-strong" offset="0%" />
+      <stop class="clf-accent-stop-soft" offset="60%" />
+      <stop class="clf-accent-stop-clear" offset="100%" />
+    </radialGradient>
+    <linearGradient id="clf-gap-zone" x1="0.5" y1="1" x2="1" y2="0">
+      <stop class="clf-accent-stop-clear" offset="0%" />
+      <stop class="clf-accent-stop-faint" offset="40%" />
+      <stop class="clf-accent-stop-mid" offset="100%" />
+    </linearGradient>
+  </defs>
+
+  <rect x="630" y="100" width="410" height="340" rx="3" fill="url(#clf-gap-zone)" />
+
+  <line x1="600" y1="100" x2="600" y2="760" class="clf-quad" />
+  <line x1="160" y1="430" x2="1040" y2="430" class="clf-quad" />
+
+  <line x1="160" y1="760" x2="160" y2="100" class="clf-axis" />
+  <polygon points="160,100 155,112 165,112" class="clf-axis-arrow" />
+  <line x1="160" y1="760" x2="1040" y2="760" class="clf-axis" />
+  <polygon points="1040,760 1028,755 1028,765" class="clf-axis-arrow" />
+
+  <text x="72" y="130" text-anchor="middle" class="clf-axis-label-strong">Decision-time</text>
+  <text x="72" y="146" text-anchor="middle" class="clf-axis-label-strong">intervention</text>
+  <text x="72" y="730" text-anchor="middle" class="clf-axis-label-dim">Post-hoc</text>
+  <text x="72" y="746" text-anchor="middle" class="clf-axis-label-dim">analytics</text>
+
+  <text x="200" y="790" text-anchor="start" class="clf-axis-label-dim">Per-request visibility</text>
+  <text x="1000" y="790" text-anchor="end" class="clf-axis-label-strong">Organizational attribution</text>
+
+  <text x="305" y="558" text-anchor="middle" class="clf-cat-label">LLM Observability</text>
+  <text x="330" y="368" text-anchor="middle" class="clf-cat-label">LLM Evaluation</text>
+  <text x="485" y="215" text-anchor="middle" class="clf-cat-label">AI Gateways</text>
+  <text x="690" y="510" text-anchor="middle" class="clf-cat-label">Enterprise APM</text>
+  <text x="665" y="640" text-anchor="middle" class="clf-cat-label">Cloud FinOps</text>
+
+  <rect x="213" y="576" width="145" height="40" rx="20" class="clf-pill" />
+  <text x="286" y="600" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Arize Phoenix</text>
+
+  <rect x="240" y="625" width="115" height="40" rx="20" class="clf-pill" />
+  <text x="298" y="649" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Langfuse</text>
+
+  <rect x="370" y="596" width="125" height="40" rx="20" class="clf-pill" />
+  <text x="433" y="620" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">LangSmith</text>
+
+  <rect x="224" y="680" width="120" height="40" rx="20" class="clf-pill" />
+  <text x="284" y="704" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">W&amp;B Weave</text>
+
+  <rect x="265" y="382" width="130" height="40" rx="20" class="clf-pill" />
+  <text x="330" y="406" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Braintrust</text>
+
+  <rect x="420" y="286" width="115" height="40" rx="20" class="clf-pill" />
+  <text x="478" y="310" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Helicone</text>
+
+  <rect x="448" y="228" width="105" height="40" rx="20" class="clf-pill" />
+  <text x="501" y="252" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Portkey</text>
+
+  <rect x="630" y="524" width="120" height="40" rx="20" class="clf-pill" />
+  <text x="690" y="548" text-anchor="middle" dominant-baseline="central" class="clf-pill-text">Datadog</text>
+
+  <rect x="586" y="656" width="158" height="40" rx="20" class="clf-pill" />
+  <text x="665" y="680" text-anchor="middle" dominant-baseline="central" class="clf-pill-text clf-pill-text-small">Apptio / Kubecost</text>
+
+  <ellipse cx="895" cy="210" rx="140" ry="85" fill="url(#clf-argmin-glow)" />
+  <rect x="810" y="186" width="170" height="48" rx="24" class="clf-argmin-pill" />
+  <text x="895" y="214" text-anchor="middle" dominant-baseline="central" class="clf-argmin-text">Argmin</text>
+  <text x="895" y="258" text-anchor="middle" class="clf-argmin-sub">Organizational attribution</text>
+  <text x="895" y="274" text-anchor="middle" class="clf-argmin-sub">+ decision-time control</text>
+
+  <line x1="1055" y1="580" x2="1055" y2="760" class="clf-layer-bracket" />
+  <line x1="1050" y1="580" x2="1060" y2="580" class="clf-layer-bracket" />
+  <line x1="1050" y1="760" x2="1060" y2="760" class="clf-layer-bracket" />
+  <text x="1068" y="666" class="clf-layer-num-dim">LAYER 1</text>
+  <text x="1068" y="680" class="clf-layer-name">Measurement</text>
+
+  <line x1="1055" y1="380" x2="1055" y2="570" class="clf-layer-bracket" />
+  <line x1="1050" y1="380" x2="1060" y2="380" class="clf-layer-bracket" />
+  <line x1="1050" y1="570" x2="1060" y2="570" class="clf-layer-bracket" />
+  <text x="1068" y="471" class="clf-layer-num-dim">LAYER 2</text>
+  <text x="1068" y="485" class="clf-layer-name">Attribution</text>
+
+  <line x1="1055" y1="100" x2="1055" y2="370" class="clf-layer-bracket-strong" />
+  <line x1="1050" y1="100" x2="1060" y2="100" class="clf-layer-bracket-strong" />
+  <line x1="1050" y1="370" x2="1060" y2="370" class="clf-layer-bracket-strong" />
+  <text x="1068" y="231" class="clf-layer-num-strong">LAYER 3</text>
+  <text x="1068" y="245" class="clf-layer-name">Intervention</text>
+
+  <rect x="630" y="105" width="405" height="325" rx="8" class="clf-gap-stroke" />
+  <text x="832" y="136" text-anchor="middle" class="clf-gap-label">Structural gap</text>
+</svg>
+
+<style>
+  .competitive-landscape-figure {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .clf-axis {
+    stroke: rgb(var(--color-argmin-border));
+    stroke-width: 1.5;
+  }
+
+  .clf-axis-arrow {
+    fill: rgb(var(--color-argmin-border));
+  }
+
+  .clf-quad {
+    stroke: rgb(var(--color-argmin-border) / 0.88);
+    stroke-width: 0.75;
+    stroke-dasharray: 4 4;
+  }
+
+  .clf-axis-label-strong,
+  .clf-axis-label-dim,
+  .clf-cat-label,
+  .clf-gap-label,
+  .clf-layer-num-dim,
+  .clf-layer-num-strong {
+    font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .clf-axis-label-strong {
+    fill: rgb(var(--color-argmin-dark));
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .clf-axis-label-dim {
+    fill: rgb(var(--color-argmin-light));
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .clf-cat-label {
+    fill: rgb(var(--color-argmin-light));
+    font-size: 10px;
+    letter-spacing: 0.18em;
+  }
+
+  .clf-pill {
+    fill: rgb(var(--color-argmin-surface));
+    stroke: rgb(var(--color-argmin-border));
+    stroke-width: 1;
+  }
+
+  .clf-pill-text,
+  .clf-layer-name,
+  .clf-argmin-sub {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+  }
+
+  .clf-pill-text {
+    fill: rgb(var(--color-argmin-dark));
+    font-size: 14px;
+  }
+
+  .clf-pill-text-small {
+    font-size: 13px;
+  }
+
+  .clf-argmin-pill {
+    fill: rgb(var(--color-argmin-accent) / 0.12);
+    stroke: rgb(var(--color-argmin-accent));
+    stroke-width: 2.5;
+  }
+
+  .clf-argmin-text {
+    fill: rgb(var(--color-argmin-accent));
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .clf-argmin-sub {
+    fill: rgb(var(--color-argmin-accent));
+    font-size: 12px;
+    opacity: 0.85;
+  }
+
+  .clf-gap-stroke {
+    fill: none;
+    stroke: rgb(var(--color-argmin-accent));
+    stroke-width: 1;
+    stroke-dasharray: 6 4;
+    opacity: 0.4;
+  }
+
+  .clf-gap-label {
+    fill: rgb(var(--color-argmin-accent));
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    opacity: 0.7;
+  }
+
+  .clf-layer-bracket {
+    stroke: rgb(var(--color-argmin-light));
+    stroke-width: 1;
+  }
+
+  .clf-layer-bracket-strong {
+    stroke: rgb(var(--color-argmin-accent));
+    stroke-width: 1;
+  }
+
+  .clf-layer-num-dim {
+    fill: rgb(var(--color-argmin-light));
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .clf-layer-num-strong {
+    fill: rgb(var(--color-argmin-accent));
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .clf-layer-name {
+    fill: rgb(var(--color-argmin-mid));
+    font-size: 9.5px;
+  }
+
+  .clf-accent-stop-strong {
+    stop-color: rgb(var(--color-argmin-accent));
+    stop-opacity: 0.18;
+  }
+
+  .clf-accent-stop-soft {
+    stop-color: rgb(var(--color-argmin-accent));
+    stop-opacity: 0.04;
+  }
+
+  .clf-accent-stop-mid {
+    stop-color: rgb(var(--color-argmin-accent));
+    stop-opacity: 0.08;
+  }
+
+  .clf-accent-stop-faint {
+    stop-color: rgb(var(--color-argmin-accent));
+    stop-opacity: 0.03;
+  }
+
+  .clf-accent-stop-clear {
+    stop-color: rgb(var(--color-argmin-accent));
+    stop-opacity: 0;
+  }
+</style>

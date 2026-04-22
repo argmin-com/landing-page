@@ -34,5 +34,5 @@ export const footerLinks = [
 export const siteSummary = {
   brand: "Argmin",
   description:
-    "Decision control for enterprise AI spend, with attribution that reaches from model call to budget owner before costs compound.",
+    "Argmin gives enterprises attributed visibility into their AI consumption, and the control to act on it, across every team, model, and workload.",
 } as const;
